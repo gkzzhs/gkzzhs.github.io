@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20260912T102523861Z-81328-1cbebd5203aa",
+  "runId": "20260912T102523861Z-81328-1cbebd5203aa",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": []
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": null,
+  "diffHash": "0f061861120b2513e1eb9903ed855e9d710557c5b8d853a98eabce2be9460502",
+  "rulesVersion": "unavailable",
+  "sessionHash": "75c73da5f927df9cb3d3bcd20c992f5625a468ff6c68ec7ed456af5d04605445",
+  "reportRef": ".mimosa/reports/task-review-sess_548447a2-22fe-4fb5-9453-815a8acbff12-20260912T102523861Z-81328-1cbebd5203aa.json",
+  "events": [
+    {
+      "eventId": "hook-b1bb20d008dd58a0a15aba4bd43a0677",
+      "findingId": "mimosa-a774ba6ef9125b1cff7cd2ed",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.216Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "c44527773297cff5c97d9e677ff013b88a698513ebdd485a1dc94752db0fc369",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 122,
+      "endLine": 122,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "c44527773297cff5c97d9e677ff013b88a698513ebdd485a1dc94752db0fc369"
+      },
+      "sequence": 0
+    },
+    {
+      "eventId": "hook-06e78086cebb2e5c54bc8d137e6a5da7",
+      "findingId": "mimosa-1163a2171d08378a9d8c384a",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.216Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "45c055da8fe71ddd511a207a9e2bc834f6df959a50256d6ff12dfe7f7f92ea8c",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 123,
+      "endLine": 123,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "45c055da8fe71ddd511a207a9e2bc834f6df959a50256d6ff12dfe7f7f92ea8c"
+      },
+      "sequence": 1
+    },
+    {
+      "eventId": "hook-ec7ea6d2b39cf31228bd660076c4e766",
+      "findingId": "mimosa-3cfdd07531d6cdd9423e1c09",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "f4b9f4fa442ed38bf5b51f7fdcc57970a63a053b27a869ad980f7eddee922e76",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 124,
+      "endLine": 124,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "f4b9f4fa442ed38bf5b51f7fdcc57970a63a053b27a869ad980f7eddee922e76"
+      },
+      "sequence": 2
+    },
+    {
+      "eventId": "hook-4199b320b5aa53ff39a6fac6859693d4",
+      "findingId": "mimosa-656bb41a7d1a8f7d94e1fa37",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "ebd9b0fb54fb058e29331be2967f820084a3c4fd3f11b3b35a7f31dbe66d44aa",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 125,
+      "endLine": 125,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "ebd9b0fb54fb058e29331be2967f820084a3c4fd3f11b3b35a7f31dbe66d44aa"
+      },
+      "sequence": 3
+    },
+    {
+      "eventId": "hook-dec423fbe070ea8ce778510221d8ef1e",
+      "findingId": "mimosa-c51deb86443b60506a73575c",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "33c0c36de4a673efbfe801c9b473c15ebbe8f2c65157e533b25418285c0eb9cb",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 127,
+      "endLine": 127,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "33c0c36de4a673efbfe801c9b473c15ebbe8f2c65157e533b25418285c0eb9cb"
+      },
+      "sequence": 4
+    },
+    {
+      "eventId": "hook-5b9ed8348b0dcd807026f8065f20a857",
+      "findingId": "mimosa-3c7604cce3309c0cbb6bfbf2",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "fd7fc32bcb2ef51588f58707e93a9e0825967a2c8cc88869f1abfdef624e9a5c",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 169,
+      "endLine": 169,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "fd7fc32bcb2ef51588f58707e93a9e0825967a2c8cc88869f1abfdef624e9a5c"
+      },
+      "sequence": 5
+    },
+    {
+      "eventId": "hook-5df3cee11460ebef1d081bd534b79b5b",
+      "findingId": "mimosa-09c33846e54aa98ab056a71e",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "8935705ec816c820653e6b0a9dceb7494ef4f6985304966ec1742ba70755f782",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 180,
+      "endLine": 180,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "8935705ec816c820653e6b0a9dceb7494ef4f6985304966ec1742ba70755f782"
+      },
+      "sequence": 6
+    },
+    {
+      "eventId": "hook-c19ee21400166cbb5ae9232a9ec599be",
+      "findingId": "mimosa-c88c2030090a163a5887dd73",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "fe27951c8bb553100f98bcfaf27d919a02eeeadb8449c4d06aced3c75575c980",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 202,
+      "endLine": 202,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "fe27951c8bb553100f98bcfaf27d919a02eeeadb8449c4d06aced3c75575c980"
+      },
+      "sequence": 7
+    },
+    {
+      "eventId": "hook-b286a3536d8ebed04b347011d02cd372",
+      "findingId": "mimosa-2633c1e227bf4d9f0182a50b",
+      "type": "finding_observed",
+      "at": "2026-09-12T09:43:27.217Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "4ae88028654d067e2f605de32a6135835b5f72b13767c8d36dd4a4b361d05230",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 207,
+      "endLine": 207,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "4ae88028654d067e2f605de32a6135835b5f72b13767c8d36dd4a4b361d05230"
+      },
+      "sequence": 8
+    },
+    {
+      "eventId": "hook-a772cc9f78afb7f4f6b5a20076978d31",
+      "findingId": "mimosa-6023325d2e243aab72b7bfd3",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:04:00.537Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 16,
+      "endLine": 16,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65"
+      },
+      "sequence": 9
+    },
+    {
+      "eventId": "hook-e4d7043fa2f996f4a7c5e394cc4c3de4",
+      "findingId": "mimosa-cc44f84e5485ff0ee8a3bac0",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:04:00.538Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 17,
+      "endLine": 17,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b"
+      },
+      "sequence": 10
+    },
+    {
+      "eventId": "hook-e756842af34ebca9b60158df9d0f48a6",
+      "findingId": "mimosa-6023325d2e243aab72b7bfd3",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:20:13.340Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 2,
+      "endLine": 2,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65"
+      },
+      "sequence": 11
+    },
+    {
+      "eventId": "hook-bc5d483036bf1e751619a1213fbd30d9",
+      "findingId": "mimosa-cc44f84e5485ff0ee8a3bac0",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:20:13.340Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 3,
+      "endLine": 3,
+      "reasonCode": "advisory",
+      "reportedToAgent": true,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b"
+      },
+      "sequence": 12
+    },
+    {
+      "eventId": "hook-1f88abb008af70ddcd9f5fed8cda161b",
+      "findingId": "mimosa-a774ba6ef9125b1cff7cd2ed",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "c44527773297cff5c97d9e677ff013b88a698513ebdd485a1dc94752db0fc369",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 122,
+      "endLine": 122,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "c44527773297cff5c97d9e677ff013b88a698513ebdd485a1dc94752db0fc369"
+      },
+      "sequence": 13
+    },
+    {
+      "eventId": "hook-0cd890473aa4c4e9d3a653c73b11716d",
+      "findingId": "mimosa-1163a2171d08378a9d8c384a",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "45c055da8fe71ddd511a207a9e2bc834f6df959a50256d6ff12dfe7f7f92ea8c",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 123,
+      "endLine": 123,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "45c055da8fe71ddd511a207a9e2bc834f6df959a50256d6ff12dfe7f7f92ea8c"
+      },
+      "sequence": 14
+    },
+    {
+      "eventId": "hook-1fc3f34c2768bc9331ad6002280fd34f",
+      "findingId": "mimosa-3cfdd07531d6cdd9423e1c09",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "f4b9f4fa442ed38bf5b51f7fdcc57970a63a053b27a869ad980f7eddee922e76",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 124,
+      "endLine": 124,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "f4b9f4fa442ed38bf5b51f7fdcc57970a63a053b27a869ad980f7eddee922e76"
+      },
+      "sequence": 15
+    },
+    {
+      "eventId": "hook-e8305fcc186d1e4e501d313fedadcec0",
+      "findingId": "mimosa-656bb41a7d1a8f7d94e1fa37",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "ebd9b0fb54fb058e29331be2967f820084a3c4fd3f11b3b35a7f31dbe66d44aa",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 125,
+      "endLine": 125,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "ebd9b0fb54fb058e29331be2967f820084a3c4fd3f11b3b35a7f31dbe66d44aa"
+      },
+      "sequence": 16
+    },
+    {
+      "eventId": "hook-0f15d777550b4aee8c9566c844ba7310",
+      "findingId": "mimosa-c51deb86443b60506a73575c",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "33c0c36de4a673efbfe801c9b473c15ebbe8f2c65157e533b25418285c0eb9cb",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 127,
+      "endLine": 127,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "33c0c36de4a673efbfe801c9b473c15ebbe8f2c65157e533b25418285c0eb9cb"
+      },
+      "sequence": 17
+    },
+    {
+      "eventId": "hook-0efa945bc507c83f0a48cfb799bace74",
+      "findingId": "mimosa-3c7604cce3309c0cbb6bfbf2",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "fd7fc32bcb2ef51588f58707e93a9e0825967a2c8cc88869f1abfdef624e9a5c",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 169,
+      "endLine": 169,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "fd7fc32bcb2ef51588f58707e93a9e0825967a2c8cc88869f1abfdef624e9a5c"
+      },
+      "sequence": 18
+    },
+    {
+      "eventId": "hook-343e80cf510c7451ec6eb076e15ff7d8",
+      "findingId": "mimosa-09c33846e54aa98ab056a71e",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "8935705ec816c820653e6b0a9dceb7494ef4f6985304966ec1742ba70755f782",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 180,
+      "endLine": 180,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "8935705ec816c820653e6b0a9dceb7494ef4f6985304966ec1742ba70755f782"
+      },
+      "sequence": 19
+    },
+    {
+      "eventId": "hook-e7e479ae61a25ba2836b2433520739b0",
+      "findingId": "mimosa-6023325d2e243aab72b7bfd3",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 208,
+      "endLine": 208,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "e997d9443e4c4e3b824b4f1bd0d0966a9f3550a46b2e9db036ae8655f2ddde65"
+      },
+      "sequence": 20
+    },
+    {
+      "eventId": "hook-e83f5468280a6f932396673240b9e4a2",
+      "findingId": "mimosa-cc44f84e5485ff0ee8a3bac0",
+      "type": "finding_observed",
+      "at": "2026-09-12T10:25:23.861Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 209,
+      "endLine": 209,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "63fea15e9e51bea14b453042ee2d5329b42b351d179c5b43e67b5eebaba54e1b"
+      },
+      "sequence": 21
+    }
+  ],
+  "observedFindingIds": [
+    "mimosa-a774ba6ef9125b1cff7cd2ed",
+    "mimosa-1163a2171d08378a9d8c384a",
+    "mimosa-3cfdd07531d6cdd9423e1c09",
+    "mimosa-656bb41a7d1a8f7d94e1fa37",
+    "mimosa-c51deb86443b60506a73575c",
+    "mimosa-3c7604cce3309c0cbb6bfbf2",
+    "mimosa-09c33846e54aa98ab056a71e",
+    "mimosa-6023325d2e243aab72b7bfd3",
+    "mimosa-cc44f84e5485ff0ee8a3bac0"
+  ],
+  "verifiedFiles": [
+    {
+      "file": "src/motion/press.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/motion/reveal.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/motion/index.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/data/site.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-09-12T10:25:24.964Z"
+}

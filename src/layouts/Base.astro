@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import '../styles/components.css';
+interface Props { title: string; description: string; lang: 'zh' | 'en'; }
+const { title, description, lang } = Astro.props;
+const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
+const siteOrigin = Astro.site ?? new URL('https://ryanwang.dev');
+const zhHref = new URL('/', siteOrigin).href;
+const enHref = new URL('/en/', siteOrigin).href;
+---
+<!DOCTYPE html>
+<html lang={htmlLang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#000000" />
+  <link rel="alternate" hreflang="zh-CN" href={zhHref} />
+  <link rel="alternate" hreflang="en" href={enHref} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <!-- 关键字体预载：可变标题字 + 标注字 -->
+  <link rel="preload" href="/fonts/space-mono-400.woff2" as="font" type="font/woff2" crossorigin />
+  <!--
+    绘制前打两个标记：
+    · anim  —— 允许「先藏后演」的入场编排（无 JS 时缺省 = 内容直接可见）
+    · rm    —— 用户偏好减少动效：一切直接可见，引擎不启动
+  -->
+  <script is:inline>
+    (() => {
+      const root = document.documentElement;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        root.classList.add('rm');
+      } else {
+        root.classList.add('anim');
+      }
+      if (matchMedia('(pointer: fine)').matches && !('ontouchstart' in window)) {
+        root.classList.add('no-touch');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div id="cursor" aria-hidden="true"></div>
+  <slot />
+  <!--
+    动效入口：空闲时动态加载（代码分割），首帧绘制不被动效包阻塞。
+    粒子排版机 / Lenis / reveal / 计数器都在里面。
+  -->
+  <script>
+    const startMotion = () =>
+      import('../motion')
+        .then((m) => m.initMotion())
+        .catch((err) => console.warn('[motion] 初始化失败：', err));
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(startMotion, { timeout: 600 });
+    } else {
+      setTimeout(startMotion, 200);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+---
+/**
+ * ParticleHero — 墨点成字首屏（整站招牌）
+ * 结构：sticky 舞台（canvas + 静态 h1 兜底 + 铸字进度条）+ 四角 mono HUD
+ * data-morphs 由动效引擎读取；reduced / 无 JS 时静态 h1 直接可见
+ */
+interface Props {
+  hero: {
+    morphs: readonly string[];
+    cornerTL: string;
+    cornerTR: string;
+    cornerBL: string;
+    cornerBR: string;
+  };
+}
+const { hero } = Astro.props;
+---
+<section class="press" id="top">
+  <div class="press-stage">
+    <canvas
+      id="press-canvas"
+      data-morphs={JSON.stringify(hero.morphs)}
+      aria-hidden="true"
+    ></canvas>
+    <h1 class="press-fallback giant">{hero.morphs[0]}</h1>
+    <div class="press-hud" aria-hidden="true">
+      <span class="mono-muted">{hero.cornerTL}</span>
+      <span class="mono-muted">{hero.cornerTR}</span>
+      <span class="mono-muted">{hero.cornerBL}</span>
+      <span class="mono-muted">{hero.cornerBR}</span>
+    </div>
+    <div class="press-bar" aria-hidden="true"><i id="press-bar"></i></div>
+  </div>
+</section>

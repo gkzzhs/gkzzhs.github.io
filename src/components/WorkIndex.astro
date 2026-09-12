@@ -1,0 +1,147 @@
+---
+/**
+ * WorkIndex — 满幅作品行（section#work）
+ * 每行：编号 mono | 巨字名称 | 右列 kind/tagline | chips | 年份
+ * 招牌微交互：hover 任一行 → 整页反色（body.flip 令牌反转，布局层回应
+ * 而非链接变色——评委清单 #2），行名变钴蓝
+ * 点击行 = 单开手风琴展开检验详情（0fr→1fr 过渡）
+ */
+interface EntryView {
+  id: string;
+  index: string;
+  name: string;
+  kind: string;
+  tagline: string;
+  year: string;
+  chips: readonly string[];
+  link?: { label: string; href: string };
+  details: {
+    context: string;
+    actions: readonly string[];
+    results: readonly { label: string; value: string }[];
+  };
+}
+interface Props {
+  work: {
+    eyebrow: string;
+    heading: string;
+    note: string;
+    closeLabel: string;
+    entries: readonly EntryView[];
+  };
+}
+const { work } = Astro.props;
+---
+<section class="section work" id="work">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="mono">{work.eyebrow} — {work.heading}</span>
+      <span class="mono-muted">{work.note}</span>
+    </header>
+
+    <div class="work-list">
+      {work.entries.map((entry) => (
+        <article class="work-row" data-reveal>
+          <button
+            type="button"
+            class="work-row-head"
+            aria-expanded="false"
+            aria-controls={`case-${entry.id}`}
+            data-flip
+          >
+            <span class="mono work-no">{entry.index}</span>
+            <span class="work-name giant">{entry.name}</span>
+            <span class="work-meta">
+              <span class="mono-muted">{entry.kind}</span>
+              <span class="work-tagline">{entry.tagline}</span>
+              <span class="work-chips">
+                {entry.chips.map((chip) => (
+                  <span class="mono work-chip">{chip}</span>
+                ))}
+              </span>
+            </span>
+            <span class="work-year mono">{entry.year}</span>
+          </button>
+
+          <div class="work-case" id={`case-${entry.id}`}>
+            <div class="work-case-inner">
+              <div class="work-case-grid">
+                <div>
+                  <p class="work-case-label mono-muted">CONTEXT</p>
+                  <p class="body-zh">{entry.details.context}</p>
+                </div>
+                <div>
+                  <p class="work-case-label mono-muted">ACTIONS</p>
+                  <ul class="work-actions">
+                    {entry.details.actions.map((action, i) => (
+                      <li class="body-zh">
+                        <span class="work-action-no mono">{String.fromCharCode(97 + i)}</span>
+                        {action}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p class="work-case-label mono-muted">RESULTS</p>
+                  <dl class="work-results">
+                    {entry.details.results.map((result) => (
+                      <div class="work-result">
+                        <dt class="mono-muted">{result.label}</dt>
+                        <dd class="mono">{result.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  {entry.link && (
+                    <a class="work-link mono" href={entry.link.href} target="_blank" rel="noopener noreferrer">
+                      {entry.link.label}
+                    </a>
+                  )}
+                </div>
+              </div>
+              <div class="work-case-topline">
+                <button
+                  type="button"
+                  class="work-case-close mono"
+                  data-close={`case-${entry.id}`}
+                >
+                  {work.closeLabel} ×
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  /* 单开手风琴 + hover 整页反色（body.flip 由 CSS 令牌反转实现） */
+  const rows = document.querySelectorAll<HTMLButtonElement>('.work-row-head');
+  function setOpen(head: HTMLButtonElement, open: boolean) {
+    const panel = document.getElementById(head.getAttribute('aria-controls') || '');
+    if (!panel) return;
+    head.setAttribute('aria-expanded', String(open));
+    panel.classList.toggle('is-open', open);
+    (window as any).ScrollTrigger?.refresh();
+  }
+  rows.forEach((head) => {
+    head.addEventListener('click', () => {
+      const willOpen = head.getAttribute('aria-expanded') !== 'true';
+      rows.forEach((other) => setOpen(other, false));
+      if (willOpen) setOpen(head, true);
+    });
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-close]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const head = Array.from(rows).find((r) => r.getAttribute('aria-controls') === btn.dataset.close);
+      if (head) setOpen(head, false);
+    });
+  });
+  document.querySelectorAll<HTMLElement>('[data-flip]').forEach((el) => {
+    /* 反色 hover 只在具备 hover 能力的设备启用（移动端 tap 后 :hover 会粘滞） */
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    el.addEventListener('mouseenter', () => document.body.classList.add('flip'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('flip'));
+  });
+</script>

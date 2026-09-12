@@ -1,0 +1,30 @@
+---
+/**
+ * 中文首页：从 site.ts 取 zh 文案渲染全部组件
+ * 结构：粒子首屏 → 宣言 → 交付 → 数据 → 方法 → 轨迹 → 终章
+ */
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import ParticleHero from '../components/ParticleHero.astro';
+import Manifesto from '../components/Manifesto.astro';
+import WorkIndex from '../components/WorkIndex.astro';
+import EvidenceMetrics from '../components/EvidenceMetrics.astro';
+import Method from '../components/Method.astro';
+import Timeline from '../components/Timeline.astro';
+import ContactFooter from '../components/ContactFooter.astro';
+import { site } from '../data/site';
+
+const meta = site.meta.zh;
+---
+<Base lang="zh" title={meta.title} description={meta.description}>
+  <Nav nav={site.nav.zh} />
+  <main>
+    <ParticleHero hero={site.hero.zh} />
+    <Manifesto manifesto={site.manifesto.zh} />
+    <WorkIndex work={site.work.zh} />
+    <EvidenceMetrics evidence={site.evidence.zh} />
+    <Method method={site.method.zh} />
+    <Timeline timeline={site.timeline.zh} />
+  </main>
+  <ContactFooter footer={site.footer.zh} locale="zh" />
+</Base>

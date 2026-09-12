@@ -1,0 +1,57 @@
+---
+/**
+ * Method — 方法论（section#method）
+ * 两条巨字原则（highlight 钴蓝）+ 流程条 + 工具链描边字跑马灯
+ */
+interface Props {
+  method: {
+    eyebrow: string;
+    principles: readonly { text: string; highlight: string }[];
+    flow: readonly string[];
+    stack: readonly { name: string; color?: string; gradient?: string }[];
+  };
+}
+const { method } = Astro.props;
+---
+<section class="section method" id="method">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="mono">{method.eyebrow}</span>
+    </header>
+
+    <div class="method-principles">
+      {method.principles.map((p) => (
+        <p class="giant method-line" data-reveal>
+          {p.text}<em class="hl">{p.highlight}</em>
+        </p>
+      ))}
+    </div>
+
+    <div class="method-flow" data-reveal>
+      {method.flow.map((step, i) => (
+        <span class="flow-seg">
+          {i > 0 && <span class="flow-arrow mono" aria-hidden="true">▸▸▸</span>}
+          <span class="flow-step mono">{step}</span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  {/* 工具链描边字跑马灯：描边空心字，hover 时填充钴蓝 */}
+  <div class="stack-marquee" aria-hidden="true">
+    <div class="stack-track">
+      {[0, 1].map((copy) => (
+        <div class="stack-group">
+          {method.stack.map((tool) => (
+            <span
+              class:list={['stack-item', { 'has-gradient': !!tool.gradient }]}
+              style={`--brand:${tool.color ?? 'transparent'};--brand-gradient:${tool.gradient ?? 'none'}`}
+            >
+              {tool.name}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

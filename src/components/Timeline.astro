@@ -1,0 +1,37 @@
+---
+/**
+ * Timeline — 紧凑时间线（section#timeline）
+ * 边框行式排版：日期 mono 钴蓝 | 标题 | 一句话；NOW 条目反白高亮
+ * 无卡片、无圆点——排版机的账目感
+ */
+interface ItemView {
+  date: string;
+  title: string;
+  body: string;
+  now?: boolean;
+}
+interface Props {
+  timeline: {
+    eyebrow: string;
+    items: readonly ItemView[];
+  };
+}
+const { timeline } = Astro.props;
+---
+<section class="section timeline" id="timeline">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="mono">{timeline.eyebrow}</span>
+    </header>
+
+    <ul class="timeline-list">
+      {timeline.items.map((item) => (
+        <li class:list={['timeline-item', { 'is-now': item.now }]} data-reveal>
+          <span class="timeline-date mono">{item.date}</span>
+          <span class="timeline-title">{item.title}</span>
+          <span class="timeline-body body-zh">{item.body}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

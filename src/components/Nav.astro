@@ -1,0 +1,46 @@
+---
+/**
+ * Nav — 固定顶栏（mix-blend-difference：正文反色时导航自动反转）
+ * 左：品牌；右：mono 锚点 + 语言切换。≤760px 锚点收进原生 details
+ */
+interface Props {
+  nav: {
+    brand: string;
+    links: readonly { label: string; href: string }[];
+    langSwitch: { label: string; href: string };
+  };
+}
+const { nav } = Astro.props;
+---
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="nav-brand" href="#top">{nav.brand}<sup>®</sup></a>
+
+    <nav class="nav-links" aria-label="Main">
+      {nav.links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <a class="nav-lang mono" href={nav.langSwitch.href} data-lang>{nav.langSwitch.label}</a>
+
+    <details class="nav-more">
+      <summary class="mono" aria-label="Menu">MENU</summary>
+      <div class="nav-more-panel">
+        {nav.links.map((link) => (
+          <a class="mono" href={link.href}>{link.label}</a>
+        ))}
+      </div>
+    </details>
+  </div>
+</header>
+
+<script>
+  /* 语言切换带上当前锚点：/ ↔ /en/ 时落在同一区块 */
+  const lang = document.querySelector<HTMLAnchorElement>('a[data-lang]');
+  lang?.addEventListener('click', () => {
+    const url = new URL(lang.href, location.origin);
+    url.hash = location.hash;
+    lang.href = url.pathname + url.hash;
+  });
+</script>

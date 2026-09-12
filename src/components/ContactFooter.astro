@@ -1,0 +1,51 @@
+---
+/**
+ * ContactFooter — 终章页脚（footer#contact）
+ * 大字 CTA 两行 + 邮箱巨链接 + 外链 + 尾行
+ * 页脚是"终章场景"而非版权条（评委手法 #3）
+ */
+interface Props {
+  footer: {
+    ctaA: string;
+    ctaB: string;
+    mailLabel: string;
+    mailHref: string;
+    links: readonly { label: string; href: string }[];
+    colophon: string;
+    backTop: string;
+  };
+  locale: 'zh' | 'en';
+}
+const { footer, locale } = Astro.props;
+
+/* ctaB 的动词高亮：zh「验证」/ en "verify" */
+const verb = locale === 'zh' ? '验证' : 'verify';
+const at = footer.ctaB.indexOf(verb);
+const bHead = at > -1 ? footer.ctaB.slice(0, at) : footer.ctaB;
+const bHl = at > -1 ? verb : '';
+const bTail = at > -1 ? footer.ctaB.slice(at + verb.length) : '';
+---
+<footer class="footer" id="contact">
+  <div class="container">
+    <h2 class="giant footer-cta">
+      <span class="line-mask"><span class="line" data-reveal>{footer.ctaA}</span></span>
+      <span class="line-mask"><span class="line" data-reveal>{bHead}<em class="hl">{bHl}</em>{bTail}</span></span>
+    </h2>
+
+    <div class="footer-mail-row" data-reveal>
+      <a class="footer-mail" href={footer.mailHref}>{footer.mailLabel}</a>
+      <div class="footer-links">
+        {footer.links.map((link) => (
+          <a class="mono footer-link" href={link.href} target="_blank" rel="noopener noreferrer">
+            {link.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mono-muted">{footer.colophon}</p>
+      <a class="mono footer-top" href="#top">{footer.backTop} ↑</a>
+    </div>
+  </div>
+</footer>

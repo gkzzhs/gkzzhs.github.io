@@ -1,0 +1,29 @@
+---
+/**
+ * English page: renders all components with en copy from site.ts
+ */
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import ParticleHero from '../../components/ParticleHero.astro';
+import Manifesto from '../../components/Manifesto.astro';
+import WorkIndex from '../../components/WorkIndex.astro';
+import EvidenceMetrics from '../../components/EvidenceMetrics.astro';
+import Method from '../../components/Method.astro';
+import Timeline from '../../components/Timeline.astro';
+import ContactFooter from '../../components/ContactFooter.astro';
+import { site } from '../../data/site';
+
+const meta = site.meta.en;
+---
+<Base lang="en" title={meta.title} description={meta.description}>
+  <Nav nav={site.nav.en} />
+  <main>
+    <ParticleHero hero={site.hero.en} />
+    <Manifesto manifesto={site.manifesto.en} />
+    <WorkIndex work={site.work.en} />
+    <EvidenceMetrics evidence={site.evidence.en} />
+    <Method method={site.method.en} />
+    <Timeline timeline={site.timeline.en} />
+  </main>
+  <ContactFooter footer={site.footer.en} locale="en" />
+</Base>

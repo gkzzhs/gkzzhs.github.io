@@ -1,0 +1,41 @@
+---
+/**
+ * Manifesto — 人声宣言：巨字两行 + CLAIM/PROOF 三对
+ * 人声是评委清单里的一条：文案有态度、有自嘲、有矛盾，不是 "Hi I'm XX"
+ * 巨字走掩膜逐行揭示（data-reveal-lines），配对行整块浮入
+ */
+interface Props {
+  manifesto: {
+    eyebrow: string;
+    lines: readonly string[];
+    pairs: readonly { claim: string; proof: string }[];
+  };
+}
+const { manifesto } = Astro.props;
+---
+<section class="section manifesto" id="manifesto">
+  <div class="container">
+    <p class="mono-muted" data-reveal>{manifesto.eyebrow}</p>
+
+    <h2 class="giant manifesto-title" data-reveal-lines aria-label={manifesto.lines.join(' ')}>
+      {manifesto.lines.map((line) => (
+        <span class="line-mask"><span class="line">{line}</span></span>
+      ))}
+    </h2>
+
+    <div class="manifesto-pairs">
+      {manifesto.pairs.map((pair) => (
+        <div class="manifesto-pair" data-reveal>
+          <p class="manifesto-claim">
+            <span class="mono tag tag-claim">CLAIM</span>
+            {pair.claim}
+          </p>
+          <p class="manifesto-proof">
+            <span class="mono tag tag-proof">PROOF</span>
+            {pair.proof}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

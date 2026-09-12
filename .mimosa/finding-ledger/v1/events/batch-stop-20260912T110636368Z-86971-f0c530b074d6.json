@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20260912T110636368Z-86971-f0c530b074d6",
+  "runId": "20260912T110636368Z-86971-f0c530b074d6",
+  "runStatus": "completed",
+  "coverage": {
+    "status": "complete",
+    "reasons": []
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": null,
+  "diffHash": "029feab7df1c9e88b5b7f7139bc275d3d9dbbb07432d7adca63bee53c1b57a65",
+  "rulesVersion": "unavailable",
+  "sessionHash": "75c73da5f927df9cb3d3bcd20c992f5625a468ff6c68ec7ed456af5d04605445",
+  "reportRef": ".mimosa/reports/task-review-sess_548447a2-22fe-4fb5-9453-815a8acbff12-20260912T110636368Z-86971-f0c530b074d6.json",
+  "events": [
+    {
+      "eventId": "hook-2ba3160df0a5e2afcea9c443699eb57d",
+      "findingId": "mimosa-c06142e383229bee92ce91d3",
+      "type": "finding_observed",
+      "at": "2026-09-12T11:06:36.368Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "91c97e4d30a10e53cd70aa072d69919cb837a5e86eaaf9b51a2175d0f7cf0447",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 129,
+      "endLine": 129,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "91c97e4d30a10e53cd70aa072d69919cb837a5e86eaaf9b51a2175d0f7cf0447"
+      },
+      "sequence": 0
+    }
+  ],
+  "observedFindingIds": [
+    "mimosa-a774ba6ef9125b1cff7cd2ed",
+    "mimosa-1163a2171d08378a9d8c384a",
+    "mimosa-3cfdd07531d6cdd9423e1c09",
+    "mimosa-656bb41a7d1a8f7d94e1fa37",
+    "mimosa-c06142e383229bee92ce91d3",
+    "mimosa-3c7604cce3309c0cbb6bfbf2",
+    "mimosa-09c33846e54aa98ab056a71e",
+    "mimosa-6023325d2e243aab72b7bfd3",
+    "mimosa-cc44f84e5485ff0ee8a3bac0"
+  ],
+  "verifiedFiles": [
+    {
+      "file": "src/motion/rings.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/motion/index.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/motion/press.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/data/site.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-09-12T11:06:36.825Z"
+}

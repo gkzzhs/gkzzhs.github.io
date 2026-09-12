@@ -1,0 +1,55 @@
+---
+/**
+ * EvidenceMetrics — 标尺行指标（section#evidence）
+ * 方案 A（组件库调研结论）：每指标一行 = hairline + mono 编号眉 +
+ * 巨字数字（tabular-nums，进视口 count-up，Magic UI NumberTicker 内核）
+ * + 右列一句话注释。零卡片，纯排版。
+ * 数字格式由 site.ts 的 value/suffix 驱动（86% / 10/10 / 17–25× / 3 P0）。
+ * 末尾保留 0/10 如实披露格（NOT A FAILURE）。
+ */
+interface MetricView {
+  value: number;
+  suffix: string;
+  label: string;
+  note: string;
+}
+interface Props {
+  evidence: {
+    eyebrow: string;
+    heading: string;
+    metrics: readonly MetricView[];
+    disclosure: string;
+  };
+}
+const { evidence } = Astro.props;
+---
+<section class="section evidence" id="evidence">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <span class="mono">{evidence.eyebrow} — {evidence.heading}</span>
+      <span class="mono-muted">VERIFIED / 数字即证据</span>
+    </header>
+
+    <ul class="metric-list">
+      {evidence.metrics.map((metric, i) => (
+        <li class="metric-row" data-reveal>
+          <span class="mono-muted metric-no">{String(i + 1).padStart(2, '0')}</span>
+          <span
+            class="metric-value"
+            data-count-to={String(metric.value)}
+            data-suffix={metric.suffix}
+          >0{metric.suffix}</span>
+          <span class="metric-text">
+            <span class="metric-label">{metric.label}</span>
+            <span class="mono-muted metric-note">{metric.note}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
+
+    <div class="disclosure" data-reveal>
+      <span class="mono disclosure-tag">NOT A FAILURE</span>
+      <p class="body-zh">{evidence.disclosure}</p>
+    </div>
+  </div>
+</section>
