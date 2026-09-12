@@ -16,6 +16,10 @@ const COBALT = '#0a84ff';
 /* Apple 活动圆环三色：Move 粉 / Exercise 绿 / Stand 青 —— 点缀粒子四色轮转 */
 const RING_COLORS = ['#0a84ff', '#fa114f', '#a6ff00', '#1ddbf2'];
 
+/* 换字补间时长：炸开→咬合压进确定的 0.65s。
+   不用纯弹簧做换字——弹簧收敛尾巴受 √damp 支配，调参压不进 1s 内 */
+const MORPH_DUR = 650;
+
 export class Press {
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
@@ -32,6 +36,11 @@ export class Press {
   private tx!: Float32Array;
   private ty!: Float32Array;
   private accent!: Uint8Array;
+
+  /* 换字补间：morph 时刻的位置快照（起点），tick 据此做时间驱动插值 */
+  private sx!: Float32Array;
+  private sy!: Float32Array;
+  private morphAt = -1e9; /* -1e9 = 从未换字，走纯弹簧 */
 
   private pointer = { x: -9999, y: -9999 };
   private raf = 0;
@@ -120,6 +129,10 @@ export class Press {
     this.tx = new Float32Array(n);
     this.ty = new Float32Array(n);
     this.accent = new Uint8Array(n);
+    this.sx = new Float32Array(n);
+    this.sy = new Float32Array(n);
+    /* 池重建即作废进行中的补间：旧快照坐标已失效，不能从它起飞 */
+    this.morphAt = -1e9;
     /* 出生：全屏随机散布 + 随机初速 —— 开场就是一场汇聚 */
     for (let i = 0; i < n; i++) {
       this.px[i] = Math.random() * this.w;
@@ -219,10 +232,20 @@ export class Press {
         this.tx[i] = Math.random() * this.w;
         this.ty[i] = Math.random() * this.h;
       }
+      /* 交接面清零：补间结束点速度≈0，弹簧从静止接管，不出缝 */
+      this.vx[i] = 0;
+      this.vy[i] = 0;
     }
-    /* 换字的瞬间给一记湍流爆发：粒子先炸开、再飞向新目标——
-       过渡本身成为一幕，而不是隐形的重排 */
-    this.boost = Math.max(this.boost, 4);
+    /* 起点快照 + 随机外踢：换字瞬间先炸开一拳，再被补间收拢咬合 */
+    this.sx.set(this.px);
+    this.sy.set(this.py);
+    for (let i = 0; i < m; i++) {
+      this.sx[i] += (Math.random() - 0.5) * 34;
+      this.sy[i] += (Math.random() - 0.5) * 34;
+    }
+    this.morphAt = performance.now();
+    /* 湍流爆发：补间前期目标点抖动、随咬合衰减（见 tick 的 turbScale） */
+    this.boost = Math.max(this.boost, 2.5);
   }
 
   /* ---------- 指针与可见性 ---------- */
@@ -269,12 +292,21 @@ export class Press {
     const { ctx, w, h } = this;
     ctx.clearRect(0, 0, w, h);
 
-    const spring = 0.016;
-    const damp = 0.86;
+    /* 弹簧只管「落定后」的闲时物理（指针搅墨、湍流跟随、浮尘漂移）；
+       换字移动由下方时间驱动补间接管——弹簧的收敛尾巴受 √damp 支配，
+       任何参数都压不进 1s，补间才能给出确定的咬合点 */
+    const spring = 0.05;
+    const damp = 0.84;
     const r = 110;
     const r2 = r * r;
     /* 滚动越快，目标点抖动越大：湍流 = 速度的可视化 */
     const turb = this.boost * 2.4;
+
+    /* 换字补间：expo.out 在 MORPH_DUR 内咬合，结束点速度≈0，与弹簧段无缝 */
+    const age = now2 - this.morphAt;
+    const inTween = age < MORPH_DUR;
+    const e = 1 - Math.pow(2, -10 * Math.min(1, age / MORPH_DUR));
+    const turbScale = inTween ? 1 - e : 1;
 
     const ax = this.px;
     const ay = this.py;
@@ -290,10 +322,30 @@ export class Press {
       let txi = atx[i];
       let tyi = aty[i];
       if (turb > 0) {
-        /* 湍流：目标点本身按每粒子相位漂移，滚动时整行字"活"起来 */
-        txi += Math.sin(t * 2.1 + i * 0.7) * turb;
-        tyi += Math.cos(t * 1.7 + i * 1.3) * turb;
+        /* 湍流：目标点本身按每粒子相位漂移；补间期幅度随咬合衰减 */
+        txi += Math.sin(t * 2.1 + i * 0.7) * turb * turbScale;
+        tyi += Math.cos(t * 1.7 + i * 1.3) * turb * turbScale;
       }
+
+      if (inTween && i < this.textCount) {
+        /* 补间段：起点→目标一次插值到位；指针斥力改为位置式直接顶开 */
+        const bx = this.sx[i] + (txi - this.sx[i]) * e;
+        const by = this.sy[i] + (tyi - this.sy[i]) * e;
+        const mdx = bx - mx;
+        const mdy = by - my;
+        const d2 = mdx * mdx + mdy * mdy;
+        if (d2 < r2 && d2 > 0.01) {
+          const d = Math.sqrt(d2);
+          const f = ((r2 - d2) / r2) * 13; /* 位置式每帧重算不累积，×6 补偿手感 */
+          ax[i] = bx + (mdx / d) * f;
+          ay[i] = by + (mdy / d) * f;
+        } else {
+          ax[i] = bx;
+          ay[i] = by;
+        }
+        continue;
+      }
+
       const dx = txi - ax[i];
       const dy = tyi - ay[i];
       avx[i] = (avx[i] + dx * spring) * damp;
@@ -336,8 +388,8 @@ export class Press {
     ctx.fillStyle = 'rgba(255,255,255,0.12)';
     ctx.fill(dust);
 
-    /* boost 自然衰减 */
-    this.boost *= 0.92;
+    /* boost 快速衰减（×0.86/帧 @40fps ≈ 0.4s 归零）：爆发要脆，拖尾要短 */
+    this.boost *= 0.86;
     this.raf = requestAnimationFrame(this.tick);
   };
 }
