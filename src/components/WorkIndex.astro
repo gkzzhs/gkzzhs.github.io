@@ -118,11 +118,14 @@ const { work } = Astro.props;
 <script>
   /* 单开手风琴 + hover 整页反色（body.flip 由 CSS 令牌反转实现） */
   const rows = document.querySelectorAll<HTMLButtonElement>('.work-row-head');
+  const list = document.querySelector<HTMLElement>('.work-list');
   function setOpen(head: HTMLButtonElement, open: boolean) {
     const panel = document.getElementById(head.getAttribute('aria-controls') || '');
     if (!panel) return;
     head.setAttribute('aria-expanded', String(open));
     panel.classList.toggle('is-open', open);
+    /* 行级 is-open 供「展开聚焦」样式用：开着的一行墨色、其余行压暗 */
+    head.closest('.work-row')?.classList.toggle('is-open', open);
     (window as any).ScrollTrigger?.refresh();
   }
   rows.forEach((head) => {
@@ -130,12 +133,14 @@ const { work } = Astro.props;
       const willOpen = head.getAttribute('aria-expanded') !== 'true';
       rows.forEach((other) => setOpen(other, false));
       if (willOpen) setOpen(head, true);
+      list?.classList.toggle('has-open', willOpen);
     });
   });
   document.querySelectorAll<HTMLButtonElement>('[data-close]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const head = Array.from(rows).find((r) => r.getAttribute('aria-controls') === btn.dataset.close);
       if (head) setOpen(head, false);
+      list?.classList.remove('has-open');
     });
   });
   document.querySelectorAll<HTMLElement>('[data-flip]').forEach((el) => {

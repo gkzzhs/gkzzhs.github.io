@@ -106,10 +106,13 @@ html.no-touch #cursor{display:block}
 .manifesto-proof{font-size:clamp(15px,1.15vw,17px);line-height:1.85}
 
 /* ---------- WorkIndex 满幅作品行 ---------- */
-/* hover 任一行 → body.flip：整页令牌反转（布局层回应，评委法则 #2） */
+/* hover 任一行 → body.flip：整页令牌反转（布局层回应，评委法则 #2）
+   accent 双色互换：--accent-bright 是为黑底调的亮蓝，白底上糊成浅色——
+   反色后换回深钴蓝（大标题 hover、chips、下划线在两种底色上都可读） */
 body.flip{
   --bg:#f2f2f7; --ink:#000000; --muted:#8a8a8e;
   --line:#d1d1d6; --line-strong:#c7c7cc;
+  --accent:#409cff; --accent-bright:#0a84ff;
 }
 .work-list{border-top:1px solid var(--line-strong)}
 .work-row{border-bottom:1px solid var(--line-strong)}
@@ -131,6 +134,9 @@ body.flip{
   transition:color .4s var(--ease);
   overflow-wrap:break-word;
 }
+/* 展开某个 case 时其余行巨字压暗：层级随状态收缩，聚焦正在展开的那件。
+   :where() 清零自身优先级——hover 变钴蓝的规则仍能盖过它 */
+.work-list.has-open :where(.work-row:not(.is-open)) :where(.work-name){color:var(--muted)}
 .work-meta{display:flex;flex-direction:column;gap:10px;min-width:0}
 .work-tagline{font-size:14px;line-height:1.65;color:var(--ink);opacity:.82}
 .work-chips{display:flex;flex-wrap:wrap;gap:6px}
