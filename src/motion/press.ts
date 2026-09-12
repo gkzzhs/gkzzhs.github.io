@@ -165,12 +165,14 @@ export class Press {
 
     /* Apple 官方字体栈：Mac 上即 SF Pro / 苹方，粒子铸字与系统排版同源 */
     const family = 'system-ui, -apple-system, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+    /* 字距与站内 .giant 一致：粒子字与兜底 h1 才能同宽互换（h1 为 -0.03em） */
+    octx.letterSpacing = '-0.03em';
     let fontPx = 100;
     octx.font = `800 ${fontPx}px ${family}`;
     const m100 = octx.measureText(text);
     const w100 = Math.max(1, m100.width);
     const h100 = fontPx; /* 大写/汉字近似高 */
-    const fit = Math.min((hw * 0.9) / w100, (hh * 0.52) / h100);
+    const fit = Math.min((hw * 0.94) / w100, (hh * 0.60) / h100);
     fontPx = Math.max(14, Math.floor(100 * fit));
 
     octx.font = `800 ${fontPx}px ${family}`;
@@ -183,8 +185,23 @@ export class Press {
 
     const img = octx.getImageData(0, 0, hw, hh).data;
 
-    /* gap 在半分辨率坐标系里取 2（≈全尺寸 4px） */
-    const gap = 2;
+    /* 点距自适应：长句字号被压小后，固定点距会让细笔画断成碎点、
+       池上限随机丢点又造成斑驳空洞。从最密档向上找「粒子池装得下」
+       的第一档——小字密采（笔画连通）、巨字疏采（密度均匀不吃池） */
+    const cap = Math.round(this.n * 0.92);
+    const countAt = (g: number): number => {
+      let c = 0;
+      for (let y = 0; y < hh; y += g) {
+        for (let x = 0; x < hw; x += g) {
+          if (img[(y * hw + x) * 4 + 3] > 128) c++;
+        }
+      }
+      return c;
+    };
+    let gap = 1;
+    for (; gap < 4; gap++) {
+      if (countAt(gap) <= cap) break;
+    }
     const pts: number[] = [];
     for (let y = 0; y < hh; y += gap) {
       for (let x = 0; x < hw; x += gap) {

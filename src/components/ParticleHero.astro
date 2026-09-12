@@ -11,9 +11,13 @@ interface Props {
     cornerTR: string;
     cornerBL: string;
     cornerBR: string;
+    fit: number;
   };
 }
 const { hero } = Astro.props;
+/* 兜底 h1 与粒子字同尺寸：fit = 开场词 em 系数（见 site.ts 注释），
+   min(60vh, 94vw/fit) 与 sample() 的 0.60H / 0.94W 适配公式逐项对应 */
+const fallbackFit = `min(60vh, calc(94vw / ${hero.fit}))`;
 ---
 <section class="press" id="top">
   <div class="press-stage">
@@ -22,7 +26,7 @@ const { hero } = Astro.props;
       data-morphs={JSON.stringify(hero.morphs)}
       aria-hidden="true"
     ></canvas>
-    <h1 class="press-fallback giant">{hero.morphs[0]}</h1>
+    <h1 class="press-fallback giant" style={`--fallback-fit:${fallbackFit}`}>{hero.morphs[0]}</h1>
     <div class="press-hud" aria-hidden="true">
       <span class="mono-muted">{hero.cornerTL}</span>
       <span class="mono-muted">{hero.cornerTR}</span>

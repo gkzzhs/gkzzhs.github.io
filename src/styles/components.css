@@ -16,19 +16,22 @@
 .tag-claim{color:var(--muted)}
 .tag-proof{color:var(--accent-bright);border-color:var(--accent)}
 
-/* ---------- 自定义光标（fine pointer） ---------- */
+/* ---------- 自定义光标（fine pointer）：macOS 白手套指向手 ---------- */
 #cursor{
   position:fixed;left:0;top:0;z-index:100;
-  width:10px;height:10px;margin:-5px 0 0 -5px;
-  background:var(--accent-bright);border-radius:50%;
+  width:32px;height:32px;
+  /* 热点对位：指尖对准指针位置（SVG 257 画布内热点 ≈ 92,53 → 0.358 / 0.206） */
+  margin:-7px 0 0 -11px;
+  background:url('/cursor-hand.svg') no-repeat 0 0/contain;
+  transform:translate(-100px,-100px);
   pointer-events:none;
-  transition:width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),border .25s var(--ease);
+  transition:width .2s var(--ease),height .2s var(--ease),margin .2s var(--ease);
   display:none;
 }
 html.no-touch #cursor{display:block}
 #cursor.is-hot{
-  width:44px;height:44px;margin:-22px 0 0 -22px;
-  background:transparent;border:1px solid var(--accent-bright);
+  width:40px;height:40px;
+  margin:-8px 0 0 -14px;
 }
 
 /* ---------- Nav：mix-blend-difference，正文反色时自动反转 ---------- */
@@ -67,6 +70,11 @@ html.no-touch #cursor{display:block}
 .press-fallback{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   text-align:center;padding-inline:var(--pad);
+  /* 尺寸与粒子字精确匹配（--fallback-fit 由 ParticleHero 按开场词系数下发，
+     引擎采样上限见 sample() 的 0.60H / 0.94W；字距归零对齐 canvas）：
+     首绘 = 实心巨字，boot 时同一位置同一尺寸炸成粒子——无缝换版，无跳变 */
+  letter-spacing:0;
+  font-size:var(--fallback-fit, clamp(40px, 11vw, 190px));
 }
 /* 引擎接管后 h1 转 sr-only；CSS 兜底 hidden 规则防闪烁 */
 .press-fallback[hidden]{display:none}
