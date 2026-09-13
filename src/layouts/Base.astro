@@ -37,6 +37,17 @@ const enHref = new URL('/en/', siteOrigin).href;
       if (matchMedia('(pointer: fine)').matches && !('ontouchstart' in window)) {
         root.classList.add('no-touch');
       }
+      /* 主题：localStorage theme = dark|light|auto（缺省 auto=跟随系统）。
+         必须在首绘前定 light 类，否则浅色用户会先闪一帧黑底 */
+      let theme = 'auto';
+      try { theme = localStorage.getItem('theme') || 'auto'; } catch {}
+      const light =
+        theme === 'light' ||
+        (theme === 'auto' && matchMedia('(prefers-color-scheme: light)').matches);
+      root.classList.toggle('light', light);
+      document
+        .querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', light ? '#ffffff' : '#000000');
     })();
   </script>
 </head>

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "mimosa-finding-ledger-batch/v1",
+  "batchId": "stop-20260912T153448274Z-30855-98d0a4bdf7d4",
+  "runId": "20260912T153448274Z-30855-98d0a4bdf7d4",
+  "runStatus": "inconclusive",
+  "coverage": {
+    "status": "partial",
+    "reasons": [
+      {
+        "code": "baseline_snapshot_unreadable",
+        "stage": "baseline-read",
+        "target": "scripts/deploy.sh",
+        "detail": "file is missing from task baseline",
+        "affectsCompletion": true
+      },
+      {
+        "code": "project_check_failed",
+        "stage": "baseline-read",
+        "target": "scripts/deploy.sh",
+        "detail": "baseline_snapshot_unreadable: file is missing from task baseline",
+        "affectsCompletion": true
+      }
+    ]
+  },
+  "source": {
+    "component": "zcode-hook",
+    "operationId": "Stop"
+  },
+  "revision": "61807a5f324cd854b26b1615f4dec2378989a0e4",
+  "diffHash": "9607ee86add4b487be2390972269e35857185fdc52beaa282ef88e286619c80b",
+  "rulesVersion": "unavailable",
+  "sessionHash": "75c73da5f927df9cb3d3bcd20c992f5625a468ff6c68ec7ed456af5d04605445",
+  "reportRef": ".mimosa/reports/task-review-sess_548447a2-22fe-4fb5-9453-815a8acbff12-20260912T153448274Z-30855-98d0a4bdf7d4.json",
+  "events": [
+    {
+      "eventId": "hook-8811a433841260cec0eb864c801e731a",
+      "findingId": "mimosa-89d83fec34b8e81eb41bad63",
+      "type": "finding_observed",
+      "at": "2026-09-12T15:34:48.274Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "ee40aa73d1a4f0a9f4db10824c2b92d63075a6e98241a9212d4dde5d3aa478d2",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 260,
+      "endLine": 260,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "ee40aa73d1a4f0a9f4db10824c2b92d63075a6e98241a9212d4dde5d3aa478d2"
+      },
+      "sequence": 0
+    },
+    {
+      "eventId": "hook-490ecda29aa59c00ad0d5d28071136f0",
+      "findingId": "mimosa-f784eecc718c416f749b65fc",
+      "type": "finding_observed",
+      "at": "2026-09-12T15:34:48.274Z",
+      "identity": {
+        "projectRelativeFile": "src/motion/press.ts",
+        "ruleId": "security",
+        "codeEvidenceHash": "d4e1424da3c09ce05c22cee77d33ece4ec61e9d1c8b42ae228a97abf27cda92d",
+        "confidence": "stable"
+      },
+      "scope": "direct",
+      "line": 261,
+      "endLine": 261,
+      "reasonCode": "observe",
+      "reportedToAgent": false,
+      "evidence": {
+        "kind": "source",
+        "boundary": "candidate",
+        "producer": "deterministic",
+        "evidenceHash": "d4e1424da3c09ce05c22cee77d33ece4ec61e9d1c8b42ae228a97abf27cda92d"
+      },
+      "sequence": 1
+    }
+  ],
+  "observedFindingIds": [
+    "mimosa-a774ba6ef9125b1cff7cd2ed",
+    "mimosa-1163a2171d08378a9d8c384a",
+    "mimosa-3cfdd07531d6cdd9423e1c09",
+    "mimosa-656bb41a7d1a8f7d94e1fa37",
+    "mimosa-c06142e383229bee92ce91d3",
+    "mimosa-3c7604cce3309c0cbb6bfbf2",
+    "mimosa-09c33846e54aa98ab056a71e",
+    "mimosa-6023325d2e243aab72b7bfd3",
+    "mimosa-cc44f84e5485ff0ee8a3bac0",
+    "mimosa-89d83fec34b8e81eb41bad63",
+    "mimosa-f784eecc718c416f749b65fc"
+  ],
+  "verifiedFiles": [
+    {
+      "file": "src/motion/index.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/motion/press.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "src/data/site.ts",
+      "direct": "complete",
+      "projectContext": "partial"
+    },
+    {
+      "file": "scripts/deploy.sh",
+      "direct": "complete",
+      "projectContext": "partial"
+    }
+  ],
+  "recordedAt": "2026-09-12T15:34:48.783Z"
+}

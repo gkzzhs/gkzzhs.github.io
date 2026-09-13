@@ -55,6 +55,17 @@ export function initMotion(): void {
   if (canvas) {
     try {
       const press = new Press(canvas);
+      /* 主题换装：粒子配色跟随 html.light（Nav.astro 的主题切换/跟随系统派发 themechange） */
+      const PALETTES = {
+        dark: { bone: '#ffffff', accents: ['#0a84ff', '#fa114f', '#a6ff00', '#1ddbf2'], dust: 'rgba(255,255,255,0.12)' },
+        light: { bone: '#000000', accents: ['#0066cc', '#ff3b30', '#248a3d', '#0088aa'], dust: 'rgba(0,0,0,0.10)' },
+      } as const;
+      const paintPress = () => {
+        const p = document.documentElement.classList.contains('light') ? PALETTES.light : PALETTES.dark;
+        press.setPalette(p.bone, p.accents, p.dust);
+      };
+      paintPress();
+      window.addEventListener('themechange', paintPress);
       const morphs = JSON.parse(canvas.dataset.morphs || '[]') as string[];
       const bar = document.querySelector<HTMLElement>('#press-bar');
       const fallback = document.querySelector<HTMLElement>('.press-fallback');

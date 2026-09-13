@@ -34,6 +34,21 @@
   --pad: clamp(20px, 3.4vw, 56px);
 }
 
+/* 浅色主题（html.light 由主题切换/跟随系统在首绘前打上）：
+   Apple 浅色系统色板。彩虹巨字与三环勾用白底可读的加深变体（色相不变） */
+html.light {
+  --bg: #ffffff;
+  --ink: #000000;
+  --muted: #6e6e73;
+  --line: #e5e5ea;
+  --line-strong: #c7c7cc;
+  --accent: #0a84ff;
+  --accent-bright: #0066cc;
+  --ring-move: #ff3b30;
+  --ring-exercise: #248a3d;
+  --ring-stand: #0088aa;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { background: var(--bg); }
 /* body 不能锁 height:100%——内容超出 body 盒子的区域会露出 html 黑底，

@@ -1,14 +1,14 @@
 {
   "schemaVersion": "mimosa-hook-status/v1",
-  "recordedAt": "2026-09-12T12:58:27.835Z",
+  "recordedAt": "2026-09-13T14:05:51.140Z",
   "sessionId": "sess_548447a2-22fe-4fb5-9453-815a8acbff12",
   "event": "PostToolUse",
   "toolName": "Edit",
-  "file": "src/motion/press.ts",
+  "file": "qa/theme-matrix.cjs",
   "outcome": "clear",
   "coverage": "complete",
   "findingCount": 0,
-  "durationMs": 11,
+  "durationMs": 3,
   "hostState": "hook_complete",
   "reportHint": ".mimosa/reports/"
 }

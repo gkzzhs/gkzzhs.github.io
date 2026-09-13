@@ -8,6 +8,7 @@ interface Props {
     brand: string;
     links: readonly { label: string; href: string }[];
     langSwitch: { label: string; href: string };
+    theme: { dark: string; light: string; auto: string };
   };
 }
 const { nav } = Astro.props;
@@ -21,6 +22,8 @@ const { nav } = Astro.props;
         <a href={link.href}>{link.label}</a>
       ))}
     </nav>
+
+    <button class="nav-theme mono" type="button" data-theme-toggle aria-label="Theme" data-labels={JSON.stringify(nav.theme)}>跟随</button>
 
     <a class="nav-lang mono" href={nav.langSwitch.href} data-lang>{nav.langSwitch.label}</a>
 
@@ -43,4 +46,48 @@ const { nav } = Astro.props;
     url.hash = location.hash;
     lang.href = url.pathname + url.hash;
   });
+</script>
+
+<script>
+  /* ---------- 主题三态：深色 / 浅色 / 跟随系统 ----------
+     生效类 html.light 由 Base.astro head 内联脚本在首绘前打上（防闪）；
+     这里只负责切换按钮与后续变更。独立于动效包：reduced-motion 用户也能切。 */
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  if (btn) {
+    const LABELS = JSON.parse(btn.dataset.labels || '{}') as Record<string, string>;
+    const ORDER = ['dark', 'light', 'auto'] as const;
+    type Mode = (typeof ORDER)[number];
+    const media = matchMedia('(prefers-color-scheme: light)');
+
+    const read = (): Mode => {
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'dark' || t === 'light' || t === 'auto') return t;
+      } catch { /* 隐私模式等：退回 auto */ }
+      return 'auto';
+    };
+
+    const effective = (t: Mode): 'light' | 'dark' =>
+      t === 'auto' ? (media.matches ? 'light' : 'dark') : t;
+
+    const apply = (t: Mode, persist: boolean) => {
+      if (persist) { try { localStorage.setItem('theme', t); } catch {} }
+      const e = effective(t);
+      document.documentElement.classList.toggle('light', e === 'light');
+      document.querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', e === 'light' ? '#ffffff' : '#000000');
+      btn!.textContent = LABELS[t] ?? t;
+      btn!.setAttribute('aria-label', `Theme: ${t}`);
+      /* 粒子引擎等监听此事件换配色 */
+      window.dispatchEvent(new CustomEvent('themechange', { detail: { effective: e } }));
+    };
+
+    apply(read(), false);
+    /* 跟随系统：系统切换时实时换装 */
+    media.addEventListener('change', () => { if (read() === 'auto') apply('auto', false); });
+    btn.addEventListener('click', () => {
+      const next = ORDER[(ORDER.indexOf(read()) + 1) % ORDER.length];
+      apply(next, true);
+    });
+  }
 </script>

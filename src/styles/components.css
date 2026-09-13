@@ -46,12 +46,13 @@ html.no-touch #cursor{display:block}
 .nav-links a{position:relative;display:inline-flex;align-items:center;height:44px;padding-inline:2px}
 .nav-links a::after{
   content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;
-  background:#f1eee7;transform:scaleX(0);transform-origin:left;
+  background:currentColor;transform:scaleX(0);transform-origin:left;
   transition:transform .45s var(--ease);
 }
 @media(hover:hover){.nav-links a:hover::after{transform:scaleX(1)}}
 .nav-lang{border:1px solid rgba(255,255,255,.4);padding:8px 12px}
-@media(hover:hover){.nav-lang:hover{background:#ffffff;color:#000000}}
+.nav-theme{border:1px solid rgba(255,255,255,.4);padding:8px 10px;min-width:60px;text-align:center}
+@media(hover:hover){.nav-lang:hover,.nav-theme:hover{background:#ffffff;color:#000000}}
 .nav-more{display:none;position:relative}
 .nav-more summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;height:44px;padding-inline:12px;border:1px solid rgba(255,255,255,.4)}
 .nav-more summary::-webkit-details-marker{display:none}
@@ -113,6 +114,12 @@ body.flip{
   --bg:#f2f2f7; --ink:#000000; --muted:#8a8a8e;
   --line:#d1d1d6; --line-strong:#c7c7cc;
   --accent:#409cff; --accent-bright:#0a84ff;
+}
+/* 浅色主题下 hover 反色 → 反转到深色：flip 永远展示对面主题 */
+html.light body.flip{
+  --bg:#000000; --ink:#ffffff; --muted:#8e8e93;
+  --line:#2c2c2e; --line-strong:#48484a;
+  --accent:#0a84ff; --accent-bright:#409cff;
 }
 .work-list{border-top:1px solid var(--line-strong)}
 .work-row{border-bottom:1px solid var(--line-strong)}
@@ -197,6 +204,13 @@ body.flip{
 .metric-row:nth-child(4) .metric-no{color:#30d158}
 .metric-row:nth-child(5) .metric-no{color:#64d2ff}
 .metric-row:nth-child(6) .metric-no{color:#bf5af2}
+/* 浅色彩虹：白底可读的加深变体（色相不变、降亮度） */
+html.light .metric-row:nth-child(1) .metric-value,html.light .metric-row:nth-child(1) .metric-no{color:#ff3b30}
+html.light .metric-row:nth-child(2) .metric-value,html.light .metric-row:nth-child(2) .metric-no{color:#d96400}
+html.light .metric-row:nth-child(3) .metric-value,html.light .metric-row:nth-child(3) .metric-no{color:#b08b00}
+html.light .metric-row:nth-child(4) .metric-value,html.light .metric-row:nth-child(4) .metric-no{color:#248a3d}
+html.light .metric-row:nth-child(5) .metric-value,html.light .metric-row:nth-child(5) .metric-no{color:#0088aa}
+html.light .metric-row:nth-child(6) .metric-value,html.light .metric-row:nth-child(6) .metric-no{color:#a244d9}
 .metric-value{
   font-family:var(--font-display);font-weight:800;
   font-size:clamp(52px,9vw,150px);line-height:.95;letter-spacing:-.03em;
@@ -208,6 +222,7 @@ body.flip{
 @media(hover:hover){
   .metric-row:hover .metric-value{color:var(--accent-bright)}
   .metric-row:hover{background:rgba(255,255,255,.02)}
+  html.light .metric-row:hover{background:rgba(0,0,0,.03)}
 }
 @media(max-width:760px){
   .metric-row{grid-template-columns:40px 1fr;grid-template-rows:auto auto;gap:8px 12px}
@@ -275,6 +290,8 @@ body.flip{
 .timeline-item.is-now .timeline-date,
 .timeline-item.is-now .timeline-body{color:rgba(255,255,255,.75)}
 .timeline-item.is-now .timeline-title{color:#fff}
+html.light .timeline-item.is-now .timeline-body{color:rgba(0,0,0,.75)}
+html.light .timeline-item.is-now .timeline-title{color:#000}
 
 /* ---------- Footer 终章 ---------- */
 .footer{padding-block:clamp(110px,18vh,220px) 40px}
@@ -322,6 +339,11 @@ body.flip{
   .nav-lang{margin-left:auto}
   /* 移动端导航弃用 difference 混合（内容会从字下穿过打架），改实底毛玻璃 */
   .nav{mix-blend-mode:normal;background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  /* 浅色：实底换白、文字换墨（difference 已关，硬编码白字必须跟着换） */
+  html.light .nav{background:rgba(255,255,255,.72);color:#000000}
+  html.light .nav-lang,html.light .nav-theme,html.light .nav-more summary{border-color:rgba(0,0,0,.4)}
+  html.light .nav-more-panel{background:#ffffff}
+  html.light .nav-lang:hover,html.light .nav-theme:hover{background:#000000;color:#ffffff}
   .nav-lang{margin-left:0}
   .press{height:340vh}
   .press-hud{bottom:60px;flex-direction:column;align-items:flex-start;gap:4px}

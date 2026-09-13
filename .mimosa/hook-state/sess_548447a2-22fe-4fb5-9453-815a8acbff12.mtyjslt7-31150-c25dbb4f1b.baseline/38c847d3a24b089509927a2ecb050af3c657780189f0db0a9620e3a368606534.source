@@ -59,13 +59,29 @@ export function initMotion(): void {
       const bar = document.querySelector<HTMLElement>('#press-bar');
       const fallback = document.querySelector<HTMLElement>('.press-fallback');
       let current = -1;
+      let lastMorphAt = 0;
+      let pendingSeg = -1;
+      let pendingTimer: ReturnType<typeof setTimeout> | undefined;
+      /* 惯性滚动一划连跳数段：280ms 防抖窗口内只认最新段、一次到位——
+         连续重启补间会让文字永远在半路（移动端大惯性尤甚） */
+      const MIN_MORPH_GAP = 280;
+      const flushPending = () => {
+        if (pendingSeg >= 0 && pendingSeg !== current) {
+          current = pendingSeg;
+          lastMorphAt = performance.now();
+          press.morph(morphs[current]);
+        }
+        pendingSeg = -1;
+      };
 
       const boot = () => {
         press.start();
-        /* canvas 接管后，静态 h1 转为 sr-only（保住无障碍树里的 h1） */
+        /* canvas 接管后，静态 h1 转 sr-only（保住无障碍树里的 h1；
+           首绘期由 html.anim CSS 预藏，见 components.css） */
         fallback?.classList.add('sr-only');
         if (morphs.length) press.morph(morphs[0]);
         current = 0;
+        lastMorphAt = performance.now();
       };
       /* 系统字体无需等待加载；给一帧时间让布局稳定后开演 */
       Promise.race([
@@ -86,8 +102,18 @@ export function initMotion(): void {
         onUpdate: (self) => {
           const seg = Math.min(morphs.length - 1, Math.floor(self.progress * morphs.length));
           if (seg !== current) {
-            current = seg;
-            press.morph(morphs[seg]);
+            const now = performance.now();
+            if (now - lastMorphAt >= MIN_MORPH_GAP) {
+              current = seg;
+              lastMorphAt = now;
+              press.morph(morphs[seg]);
+              pendingSeg = -1;
+            } else {
+              /* 窗口内不重启 tween，先记下目标段，窗口过了直接跳最新 */
+              pendingSeg = seg;
+              clearTimeout(pendingTimer);
+              pendingTimer = setTimeout(flushPending, MIN_MORPH_GAP - (now - lastMorphAt) + 30);
+            }
           }
           if (bar) bar.style.transform = `scaleX(${self.progress})`;
         },
@@ -103,20 +129,13 @@ export function initMotion(): void {
   /* ---------- 自定义光标（fine pointer only） ---------- */
   const cursor = document.getElementById('cursor');
   if (cursor && root.classList.contains('no-touch')) {
-    const dot = cursor;
-    let x = innerWidth / 2, y = innerHeight / 2, tx = x, ty = y;
+    /* 光标替代品必须 1:1 跟手：真实指针没有缓动，滞后会让点击落空 */
     window.addEventListener('pointermove', (e) => {
-      tx = e.clientX;
-      ty = e.clientY;
-      /* 悬停可交互元素：光标放大（布局层回应的微观版） */
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      /* 悬停可交互元素：手套放大一档（保持指尖热点锚定） */
       const hot = (e.target as HTMLElement).closest('a, button, [role="button"]');
       cursor.classList.toggle('is-hot', !!hot);
     }, { passive: true });
-    gsap.ticker.add(() => {
-      x += (tx - x) * 0.18;
-      y += (ty - y) * 0.18;
-      dot.style.transform = `translate(${x}px, ${y}px)`;
-    });
   }
 
   /* ---------- 滚动 reveal ---------- */

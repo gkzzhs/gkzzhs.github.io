@@ -59,6 +59,8 @@ export const site = {
         { label: '联系', href: '#contact' },
       ],
       langSwitch: { label: 'EN', href: '/en/' },
+      /* 主题三态切换按钮：显示当前模式，点击循环 */
+      theme: { dark: '深色', light: '浅色', auto: '跟随' },
     },
     en: {
       brand: 'RYAN.WANG',
@@ -70,6 +72,7 @@ export const site = {
         { label: 'Contact', href: '#contact' },
       ],
       langSwitch: { label: '中文', href: '/' },
+      theme: { dark: 'DARK', light: 'LIGHT', auto: 'AUTO' },
     },
   },
 

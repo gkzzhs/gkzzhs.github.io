@@ -102,6 +102,19 @@ export class Press {
     this.boost = Math.min(1, Math.abs(v) / 60);
   }
 
+  /* ---------- 主题配色 ---------- */
+  private bone = BONE;
+  private accents: readonly string[] = RING_COLORS;
+  private dustColor = 'rgba(255,255,255,0.12)';
+
+  /* 浅色/深色主题换装：墨点、四色点缀、浮尘的画布配色
+     （index.ts 监听 themechange 时调用，见 Nav.astro 的主题切换） */
+  setPalette(bone: string, accents: readonly string[], dust: string): void {
+    this.bone = bone;
+    this.accents = [...accents];
+    this.dustColor = dust;
+  }
+
   /* ---------- 尺寸与粒子池 ---------- */
 
   private resize(): void {
@@ -385,24 +398,24 @@ export class Press {
 
     /* Path2D 批量绘制：上万粒子合并成每色一次 fill 调用（比逐个 fillRect 快数倍） */
     const bone = new Path2D();
-    const accents: Path2D[] = RING_COLORS.map(() => new Path2D());
+    const accents: Path2D[] = this.accents.map(() => new Path2D());
     for (let i = 0; i < this.textCount; i++) {
       const c = this.accent[i];
       const x = ax[i], y = ay[i];
       if (c) accents[c - 1].rect(x, y, 1.9, 1.9);
       else bone.rect(x, y, 1.7, 1.7);
     }
-    ctx.fillStyle = BONE;
+    ctx.fillStyle = this.bone;
     ctx.fill(bone);
-    for (let c = 0; c < RING_COLORS.length; c++) {
-      ctx.fillStyle = RING_COLORS[c];
+    for (let c = 0; c < this.accents.length; c++) {
+      ctx.fillStyle = this.accents[c];
       ctx.fill(accents[c]);
     }
     const dust = new Path2D();
     for (let i = this.textCount; i < this.n; i++) {
       dust.rect(ax[i], ay[i], 1.4, 1.4);
     }
-    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.fillStyle = this.dustColor;
     ctx.fill(dust);
 
     /* boost 快速衰减（×0.86/帧 @40fps ≈ 0.4s 归零）：爆发要脆，拖尾要短 */
