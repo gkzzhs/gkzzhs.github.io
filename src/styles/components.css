@@ -204,13 +204,14 @@ html.light body.flip{
 .metric-row:nth-child(4) .metric-no{color:#30d158}
 .metric-row:nth-child(5) .metric-no{color:#64d2ff}
 .metric-row:nth-child(6) .metric-no{color:#bf5af2}
-/* 浅色彩虹：白底可读的加深变体（色相不变、降亮度） */
+/* 浅色彩虹：Apple 官方浅色系统色板（鲜亮版）；
+   仅黄色例外——systemYellow #FFCC00 在白底上涣散，调成金 #E6A800 */
 html.light .metric-row:nth-child(1) .metric-value,html.light .metric-row:nth-child(1) .metric-no{color:#ff3b30}
-html.light .metric-row:nth-child(2) .metric-value,html.light .metric-row:nth-child(2) .metric-no{color:#d96400}
-html.light .metric-row:nth-child(3) .metric-value,html.light .metric-row:nth-child(3) .metric-no{color:#b08b00}
-html.light .metric-row:nth-child(4) .metric-value,html.light .metric-row:nth-child(4) .metric-no{color:#248a3d}
-html.light .metric-row:nth-child(5) .metric-value,html.light .metric-row:nth-child(5) .metric-no{color:#0088aa}
-html.light .metric-row:nth-child(6) .metric-value,html.light .metric-row:nth-child(6) .metric-no{color:#a244d9}
+html.light .metric-row:nth-child(2) .metric-value,html.light .metric-row:nth-child(2) .metric-no{color:#ff9500}
+html.light .metric-row:nth-child(3) .metric-value,html.light .metric-row:nth-child(3) .metric-no{color:#e6a800}
+html.light .metric-row:nth-child(4) .metric-value,html.light .metric-row:nth-child(4) .metric-no{color:#34c759}
+html.light .metric-row:nth-child(5) .metric-value,html.light .metric-row:nth-child(5) .metric-no{color:#30b0c7}
+html.light .metric-row:nth-child(6) .metric-value,html.light .metric-row:nth-child(6) .metric-no{color:#af52de}
 .metric-value{
   font-family:var(--font-display);font-weight:800;
   font-size:clamp(52px,9vw,150px);line-height:.95;letter-spacing:-.03em;
