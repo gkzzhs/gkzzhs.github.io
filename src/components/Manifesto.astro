@@ -4,6 +4,8 @@
  * 人声是评委清单里的一条：文案有态度、有自嘲、有矛盾，不是 "Hi I'm XX"
  * 巨字走掩膜逐行揭示（data-reveal-lines），配对行整块浮入
  */
+import { keepTail } from '../utils/typography';
+
 interface Props {
   manifesto: {
     eyebrow: string;
@@ -32,7 +34,10 @@ const { manifesto } = Astro.props;
           </p>
           <p class="manifesto-proof">
             <span class="mono tag tag-proof">PROOF</span>
-            {pair.proof}
+            {(() => {
+              const k = keepTail(pair.proof);
+              return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+            })()}
           </p>
         </div>
       ))}

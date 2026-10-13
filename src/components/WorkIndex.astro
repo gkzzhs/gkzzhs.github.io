@@ -6,6 +6,7 @@
  * 而非链接变色——评委清单 #2），行名变钴蓝
  * 点击行 = 单开手风琴展开检验详情（0fr→1fr 过渡）
  */
+import { keepTail } from '../utils/typography';
 interface EntryView {
   id: string;
   index: string;
@@ -53,7 +54,12 @@ const { work } = Astro.props;
             <span class="work-name giant">{entry.name}</span>
             <span class="work-meta">
               <span class="mono-muted">{entry.kind}</span>
-              <span class="work-tagline">{entry.tagline}</span>
+              <span class="work-tagline">
+                {(() => {
+                  const k = keepTail(entry.tagline);
+                  return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+                })()}
+              </span>
               <span class="work-chips">
                 {entry.chips.map((chip) => (
                   <span class="mono work-chip">{chip}</span>
@@ -68,7 +74,12 @@ const { work } = Astro.props;
               <div class="work-case-grid">
                 <div>
                   <p class="work-case-label mono-muted">CONTEXT</p>
-                  <p class="body-zh">{entry.details.context}</p>
+                  <p class="body-zh">
+                    {(() => {
+                      const k = keepTail(entry.details.context);
+                      return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+                    })()}
+                  </p>
                 </div>
                 <div>
                   <p class="work-case-label mono-muted">ACTIONS</p>
@@ -76,7 +87,10 @@ const { work } = Astro.props;
                     {entry.details.actions.map((action, i) => (
                       <li class="body-zh">
                         <span class="work-action-no mono">{String.fromCharCode(97 + i)}</span>
-                        {action}
+                        {(() => {
+                          const k = keepTail(action);
+                          return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+                        })()}
                       </li>
                     ))}
                   </ul>

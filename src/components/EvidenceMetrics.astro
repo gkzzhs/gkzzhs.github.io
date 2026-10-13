@@ -7,6 +7,8 @@
  * 数字格式由 site.ts 的 value/suffix 驱动（86% / 10/10 / 17–25× / 3 P0）。
  * 末尾保留 0/10 如实披露格（NOT A FAILURE）。
  */
+import { keepTail } from '../utils/typography';
+
 interface MetricView {
   value: number;
   suffix: string;
@@ -49,7 +51,12 @@ const { evidence } = Astro.props;
 
     <div class="disclosure" data-reveal>
       <span class="mono disclosure-tag">NOT A FAILURE</span>
-      <p class="body-zh">{evidence.disclosure}</p>
+      <p class="body-zh">
+        {(() => {
+          const k = keepTail(evidence.disclosure);
+          return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+        })()}
+      </p>
     </div>
   </div>
 </section>

@@ -4,6 +4,8 @@
  * 边框行式排版：日期 mono 钴蓝 | 标题 | 一句话；NOW 条目反白高亮
  * 无卡片、无圆点——排版机的账目感
  */
+import { keepTail } from '../utils/typography';
+
 interface ItemView {
   date: string;
   title: string;
@@ -29,7 +31,12 @@ const { timeline } = Astro.props;
         <li class:list={['timeline-item', { 'is-now': item.now }]} data-reveal>
           <span class="timeline-date mono">{item.date}</span>
           <span class="timeline-title">{item.title}</span>
-          <span class="timeline-body body-zh">{item.body}</span>
+          <span class="timeline-body body-zh">
+            {(() => {
+              const k = keepTail(item.body);
+              return k.tail ? <>{k.head}<span class="t-keep">{k.tail}</span></> : k.head;
+            })()}
+          </span>
         </li>
       ))}
     </ul>
