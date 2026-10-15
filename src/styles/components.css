@@ -359,3 +359,14 @@ html.light .timeline-item.is-now .timeline-title{color:#000}
   .work-meta{grid-column:1 / -1;grid-row:3}
   .work-chips{display:none}
 }
+
+/* ---------- 视网膜发丝细边（hairline） ----------
+   @2x 屏上 1px 边框渲染为 2 物理像素，视觉偏粗；降为 0.5px（1 物理像素）。
+   仅装饰性结构线：分割线/行线/微标签。1x 屏不触发本查询，保持 1px。
+   只改边框宽度，不改任何颜色令牌、字重、缓动。 */
+@media (min-resolution: 2dppx) {
+  .work-list, .work-row, .section-head, .timeline-item, .metric-row,
+  .work-chip, .tag, .nav {
+    border-width: 0.5px;
+  }
+}
