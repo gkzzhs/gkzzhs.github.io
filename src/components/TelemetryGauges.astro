@@ -1,0 +1,45 @@
+---
+/**
+ * TelemetryGauges — 遥测仪表盘（evidence 区顶部）
+ * 语言来自特斯拉座舱仪表：270° 弧线（亮段=当前值 / 暗段=满量程）、
+ * 无圆点端点、无刻度、无发光，数据当排版主体。
+ * 数据与下方标尺行同源（site.ts evidence.gauges），不新增任何口径。
+ * 动效：进视口时弧线描边 + 数字计数（motion/gauges.ts），
+ * reduced-motion 直接落终态。
+ */
+interface GaugeView {
+  value: number;
+  max: number;
+  suffix: string;
+  label: string;
+}
+interface Props {
+  gauges: readonly GaugeView[];
+}
+const { gauges } = Astro.props;
+---
+<div class="tlm-block" data-reveal>
+  {gauges.map((g) => (
+    <figure
+      class="tlm-gauge"
+      data-gauge
+      data-value={String(g.value)}
+      data-max={String(g.max)}
+      data-suffix={g.suffix}
+    >
+      <figcaption class="tlm-label mono-muted">{g.label}</figcaption>
+      <div class="tlm-dial">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          {/* r=48 周长 301.6；270° = 75% 满量程 */}
+          <circle class="tlm-track" cx="60" cy="60" r="48" transform="rotate(135 60 60)" />
+          <circle class="tlm-arc" cx="60" cy="60" r="48" transform="rotate(135 60 60)" />
+        </svg>
+        <div class="tlm-read">
+          <span class="tlm-val" data-gauge-value>0{g.suffix}</span>
+        </div>
+      </div>
+      {/* 屏幕阅读器读完整口径，视觉读数保持极简 */}
+      <span class="sr-only">{g.value}{g.suffix} — {g.label}</span>
+    </figure>
+  ))}
+</div>

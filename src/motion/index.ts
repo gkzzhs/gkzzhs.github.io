@@ -17,6 +17,7 @@ import Lenis from 'lenis';
 import { Press } from './press';
 import { initReveal } from './reveal';
 import { initMetrics } from './metrics';
+import { initGauges } from './gauges';
 
 export function initMotion(): void {
   if (window.__ryanMotion) return;
@@ -33,6 +34,7 @@ export function initMotion(): void {
     });
     try {
       initMetrics();
+      initGauges();
     } catch (err) {
       console.warn('[motion] 指标计数终态失败：', err);
     }
@@ -155,6 +157,7 @@ export function initMotion(): void {
   /* ---------- 标尺行数字滚动 ---------- */
   try {
     initMetrics();
+    initGauges();
   } catch (err) {
     console.warn('[motion] 指标计数初始化失败：', err);
   }

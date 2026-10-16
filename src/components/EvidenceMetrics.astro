@@ -5,9 +5,11 @@
  * 巨字数字（tabular-nums，进视口 count-up，Magic UI NumberTicker 内核）
  * + 右列一句话注释。零卡片，纯排版。
  * 数字格式由 site.ts 的 value/suffix 驱动（86% / 10/10 / 17–25× / 3 P0）。
+ * 顶部遥测仪表（TelemetryGauges）为 hero 收尾数字的仪表化回声。
  * 末尾保留 0/10 如实披露格（NOT A FAILURE）。
  */
 import { keepTail } from '../utils/typography';
+import TelemetryGauges from './TelemetryGauges.astro';
 
 interface MetricView {
   value: number;
@@ -15,10 +17,17 @@ interface MetricView {
   label: string;
   note: string;
 }
+interface GaugeView {
+  value: number;
+  max: number;
+  suffix: string;
+  label: string;
+}
 interface Props {
   evidence: {
     eyebrow: string;
     heading: string;
+    gauges: readonly GaugeView[];
     metrics: readonly MetricView[];
     disclosure: string;
   };
@@ -31,6 +40,8 @@ const { evidence } = Astro.props;
       <span class="mono">{evidence.eyebrow} — {evidence.heading}</span>
       <span class="mono-muted">VERIFIED / 数字即证据</span>
     </header>
+
+    <TelemetryGauges gauges={evidence.gauges} />
 
     <ul class="metric-list">
       {evidence.metrics.map((metric, i) => (

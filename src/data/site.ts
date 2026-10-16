@@ -384,6 +384,13 @@ export const site = {
     zh: {
       eyebrow: 'EVIDENCE / 数据',
       heading: '盖过章的数字',
+      /* 遥测仪表：hero 收尾「86·94·10/10」的仪表化回声（270° 弧线）。
+         max = 满量程，弧长占比 = value / max；数据口径与下方标尺行同源 */
+      gauges: [
+        { value: 86, max: 100, suffix: '%', label: '分类准确' },
+        { value: 94, max: 100, suffix: '%', label: '噪音拦截' },
+        { value: 10, max: 10, suffix: '/10', label: '稳定运行' },
+      ],
       metrics: [
         { value: 86, suffix: '%', label: '分类准确', note: '14 条入库样本人工逐条核对 12/14' },
         { value: 94, suffix: '%', label: '噪音拦截', note: '单次 18 条候选 → 1 条入库' },
@@ -397,6 +404,11 @@ export const site = {
     en: {
       eyebrow: 'EVIDENCE',
       heading: 'Stamped numbers',
+      gauges: [
+        { value: 86, max: 100, suffix: '%', label: 'Classification' },
+        { value: 94, max: 100, suffix: '%', label: 'Noise filtered' },
+        { value: 10, max: 10, suffix: '/10', label: 'Reliability' },
+      ],
       metrics: [
         { value: 86, suffix: '%', label: 'Classification', note: '12/14 stored samples verified by hand' },
         { value: 94, suffix: '%', label: 'Noise filtered', note: '18 candidates → 1 per run' },
