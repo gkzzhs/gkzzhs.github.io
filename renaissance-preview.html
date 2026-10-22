@@ -866,8 +866,10 @@ window.createProjectFlight=async function(canvas,elements){
   items.forEach((it,i)=>{const p=planes[i],screen=it.top-actualY;if(screen>height+200||screen+p.height< -200)return;visible++;
    const centerY=screen+p.height*.5,mobile=width<760;
    const focused=it.el.matches(':focus-visible'),motion=focused?0:1;
-   const rx=motion*lag*(mobile?29:19),ry=0,rz=0;
-   const bend=motion*lag*(mobile?.30:.24)*p.height,scale=1;
+   // Same restrained mobile factor as the earlier neoclassical portfolio.
+   const factor=mobile?.65:1;
+   const rx=motion*lag*19*factor,ry=0,rz=0;
+   const bend=motion*lag*.24*p.height*factor,scale=1;
    // Clip each moving plane to its own cover window. The reserved caption
    // strip is outside this rectangle, including while scrolling backwards.
    const sx=canvas.width/width,sy=canvas.height/height,pad=6;
@@ -1005,7 +1007,9 @@ window.createMiddleFlow=({isReduced})=>{
  items.forEach(it=>{for(const [r,t] of [['x','tx'],['y','ty']]){it[r]+=(it[t]-it[r])*(1-Math.exp(-dt/95));if(Math.abs(it[t]-it[r])>.001)moving=true;}it.activity+=((it.hot?1:0)-it.activity)*a;const screen=it.top-y,r=off?1:smooth(innerHeight*.99,innerHeight*.10,screen),through=clamp((innerHeight-screen)/(innerHeight+it.height));it.el.style.setProperty('--reveal',r);it.el.style.setProperty('--entry-y',(off?0:(1-r)*(it.i%2?88:54))+'px');it.el.style.setProperty('--media-y',(off?0:(through-.5)*66)+'px');it.el.style.setProperty('--pointer-x',off?0:it.x);it.el.style.setProperty('--pointer-y',off?0:it.y);it.el.style.setProperty('--activity',off?0:it.activity);});
  // One velocity follower for the entire row. At rest every plane returns to its
  // measured rectangle; viewport position never leaves a permanent skew.
- const impulse=off?0:clamp(window.RyanMotion.velocity/(innerWidth<760?Math.max(12,innerHeight*.022):45),-1,1);
+ // Restore the earlier portfolio's sensitivity: short phone viewports must not
+ // amplify the same scroll displacement into a much larger card deformation.
+ const impulse=off?0:clamp(window.RyanMotion.velocity/45,-1,1);
  flightMotion=off?0:flightMotion+(impulse-flightMotion)*(1-Math.exp(-dt/65));
  if(Math.abs(flightMotion-impulse)<.001)flightMotion=impulse;else moving=true;
  flight?.draw(items,scrollY,flightMotion,off);
