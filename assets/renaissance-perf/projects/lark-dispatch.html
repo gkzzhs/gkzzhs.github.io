@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="王冠行 / Ryan Wang — Lark-Dispatch 项目背景、个人动作、真实输出与结果记录。" name="description"/><title>Lark-Dispatch — Ryan Wang</title><style>
+[hidden]{display:none!important}
+.opening{overflow-anchor:none}
+@media(max-width:760px){.painting{transform-origin:50% 50%}}
+:root{--paper:#E9E4DA;--cream:#F5F0E6;--ink:#252622;--muted:#77786E;--line:#C9C4B9;--wine:#642B36;--blue:#8C9FAA;--serif:Baskerville,"Iowan Old Style","Times New Roman",serif;--sans:Arial,"PingFang SC","Microsoft YaHei",sans-serif;--pad:clamp(24px,5.4vw,100px)}
+*{box-sizing:border-box}html{scroll-behavior:auto;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}body{margin:0}::selection{background:var(--wine);color:var(--cream)}h1,h2,h3,p,figure{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;cursor:pointer}img{display:block;max-width:100%;height:auto}button{border:0}a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid currentColor;outline-offset:6px}.label,.mono{font:10px/1.6 var(--sans);letter-spacing:.1em}.roman{font:italic 13px/1 var(--serif);letter-spacing:0}.skip{position:fixed;top:-100px;left:20px;z-index:10000;padding:12px 18px;background:var(--cream);color:var(--ink)}.skip:focus{top:15px}.section{padding-left:var(--pad);padding-right:var(--pad);scroll-margin-top:100px}
+#site-header{position:fixed;z-index:30;inset:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:27px var(--pad);color:var(--cream);background:linear-gradient(#160d0b28,transparent);transition:color .25s,background .25s}.brand{font:27px/1 var(--serif);letter-spacing:-.045em;white-space:nowrap}.brand-dot{font-style:italic}#site-header nav{display:flex;align-items:center;gap:34px;font-size:11px;letter-spacing:.05em}#site-header nav .roman{margin-left:5px;font-size:10px}.contact-link{border-bottom:1px solid currentColor;padding:7px 0;display:flex;gap:25px}#site-header.dark{color:var(--ink);background:linear-gradient(#e9e4daf0,#e9e4da00)}#site-header.on-wine{color:var(--cream);background:linear-gradient(#642b36e0,#642b3600)}
+.opening{height:190svh;position:relative;background:var(--paper)}.opening-stage{position:relative;height:100%;min-height:0;overflow:clip}.painting{position:absolute;inset:0;transform-origin:100% 50%;will-change:transform;overflow:hidden;background:#4d2921}.painting-poster,#atelier{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}#atelier{opacity:0}#atelier.ready{opacity:1}.hero-shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#15070c25,transparent 65%),linear-gradient(0deg,#15070c55,transparent 45%)}.hero-content{position:absolute;left:var(--pad);top:21svh;color:var(--cream);max-width:40%;will-change:opacity}.hero-eyebrow{font-size:10px;margin-bottom:30px;letter-spacing:.18em}.hero-content h1{font:400 clamp(100px,12.1vw,205px)/.78 var(--serif);letter-spacing:-.065em}.hero-content h1 span{display:block;margin-top:19px;font-style:italic;letter-spacing:-.08em}.hero-chinese{font-size:clamp(17px,1.65vw,26px);line-height:1.5;font-weight:400;margin-top:37px;letter-spacing:.025em}.hero-identity{font-size:11px;line-height:1.9;margin-top:23px;color:#e9e4dabf}.hero-baseline{position:absolute;bottom:35px;left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;gap:20px;color:var(--cream)}.hero-baseline a{display:flex;gap:25px}.hero-baseline .label{font-size:9px}.thesis{position:absolute;left:var(--pad);top:27%;width:34%;opacity:0;pointer-events:none}.thesis.active{pointer-events:auto}.thesis>.label{color:var(--muted);font-size:9px;letter-spacing:.08em}.thesis h2{font-size:clamp(32px,3.45vw,58px);line-height:1.45;letter-spacing:-.055em;font-weight:400;margin-top:30px}.thesis h2 em{font-style:normal;color:var(--wine)}.thesis-copy{font-size:12px;line-height:1.9;margin-top:23px;color:var(--muted)}.text-link{display:inline-flex;align-items:center;gap:35px;border-bottom:1px solid var(--line);padding:0 0 9px;font-size:11px;margin-top:28px}.plate-note{position:absolute;right:var(--pad);bottom:16%;opacity:0;color:var(--muted);font-size:9px}
+.work-index{padding-top:80px;padding-bottom:125px}.section-top{display:flex;justify-content:space-between;color:var(--muted);border-top:1px solid var(--line);padding-top:20px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:38px 0 65px}.section-heading h2{font:400 clamp(92px,12vw,210px)/.9 var(--serif);letter-spacing:-.065em}.sup{font:12px/1 var(--sans);vertical-align:top;display:inline-block;margin:12px 0 0 22px;letter-spacing:0}.section-heading>p{font-size:13px;line-height:1.9;padding-bottom:7px;color:var(--muted)}.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:55px 30px}.work-item{min-width:0}.work-cover{position:relative;aspect-ratio:1.18;overflow:hidden;isolation:isolate}.cover-caption{position:absolute;top:25px;left:27px;right:20px;z-index:3;font-size:8px;letter-spacing:.09em}.cover-foot{position:absolute;bottom:25px;left:27px;font-size:9px}.cover-metric{position:absolute;left:27px;bottom:37px;font:400 clamp(60px,7.4vw,132px)/1 "Portfolio Sans",var(--sans);letter-spacing:-.035em;white-space:nowrap}.cover-metric small{font:12px/1 var(--sans);letter-spacing:.05em}.fraction-slash{font-size:.55em;letter-spacing:-.02em}.work-caption{display:flex;align-items:baseline;gap:18px;padding-top:20px}.work-caption>.roman{width:22px;flex-shrink:0;color:var(--muted)}.work-caption h3{font:400 27px/1.2 var(--serif);letter-spacing:-.035em}.work-caption p{font-size:11px;line-height:1.8;color:var(--muted);margin-top:8px}.work-arrow{margin-left:auto;font-size:24px;line-height:1;transition:transform .3s cubic-bezier(.2,0,0,1)}.work-item:hover .work-arrow{transform:translate(3px,-3px)}.retro-cover{background:#909E9E;color:var(--cream)}.report-sheet{position:absolute;left:24%;right:-5%;top:18%;bottom:-8%;overflow:hidden;box-shadow:0 15px 35px #16232130;transform:rotate(-4deg)}.report-sheet img{width:100%;max-width:none}.retro-cover .cover-metric{z-index:4;bottom:24px;left:22px;text-shadow:0 1px 8px #12232538}.xmind-cover{background:#B1C0C3;color:#25363B}.sample-matrix{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;position:absolute;left:27px;right:27px;top:25%;}.sample-matrix i{aspect-ratio:1;border-radius:50%;border:1px solid #25363b66;background:#334951cc}.sample-matrix i.miss{background:none}.xmind-cover .cover-metric{bottom:68px}.dispatch-cover{background:var(--wine);color:var(--cream)}.cover-ledger{position:absolute;left:27px;right:27px;top:23%;display:flex;gap:20px;border-bottom:1px solid #e9e4da66;padding-bottom:24px;font-size:8px}.cover-ledger span{flex:1}.cover-ledger b{display:block;font:400 24px/1.3 "Portfolio Sans",var(--sans);margin-top:12px}.dispatch-cover .cover-metric{bottom:68px}.life-cover{background:#D6D0BF;color:#5F393B}.cover-mechanism{position:absolute;left:5%;top:22%;width:90%;height:auto;fill:none;stroke:currentColor;stroke-width:1.1}.cover-mechanism text{stroke:none;fill:currentColor;font:12px var(--sans)}.award-cover{position:absolute;bottom:17%;left:27px;font-size:clamp(26px,3.8vw,64px);font-weight:400;letter-spacing:-.04em}
+.records{padding-bottom:40px}.records-intro{display:flex;justify-content:space-between;align-items:start;border-top:1px solid var(--line);padding:35px 0 65px}.records-intro>.label{color:var(--muted)}.records-intro>p:last-child{font-size:24px;line-height:1.5;letter-spacing:-.03em}.project{padding:30px 0 95px;border-top:1px solid var(--line);scroll-margin-top:100px}.project-bar{display:flex;justify-content:space-between;gap:25px;font-size:9px;color:var(--muted)}.project h3{font:400 clamp(62px,9vw,150px)/1.06 var(--serif);letter-spacing:-.05em;margin:55px 0 60px;overflow-wrap:anywhere}.project h3 span{color:var(--muted)}.retro-layout{display:grid;grid-template-columns:30% 64%;gap:6%;align-items:start}.case-copy{font-size:13px;line-height:1.95;color:var(--muted);max-width:290px}.case-lead{font-size:23px;line-height:1.6;letter-spacing:-.035em;margin-bottom:23px;color:var(--ink)}.line-link{display:inline-flex;gap:35px;align-items:baseline;padding-bottom:8px;border-bottom:1px solid var(--line);margin-top:30px;font-size:11px;color:var(--ink)}.report-figure figcaption{display:flex;justify-content:space-between;gap:20px;font-size:9px;color:var(--muted);margin-bottom:16px}.report-window{position:relative;display:block;width:100%;height:54svh;min-height:320px;max-height:650px;overflow:hidden;padding:0;background:#080A0C;text-align:left}.report-window img{width:100%;height:auto;max-width:none}.report-open-label{position:absolute;right:17px;bottom:17px;padding:9px 14px;border-radius:0;background:var(--paper);color:var(--ink);font-size:8px;letter-spacing:.06em}.metrics{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:25px;padding:70px 0 50px}.metric-label{display:block;font-size:9px;color:var(--muted);margin-bottom:16px}.metrics strong{font:400 clamp(70px,8.6vw,145px)/1 "Portfolio Sans",var(--sans);letter-spacing:-.035em;white-space:nowrap}.metrics small{font-size:.23em;margin-left:8px}.project details{border-top:1px solid var(--line);padding:18px 0;font-size:11px;line-height:2;color:var(--muted)}.project summary{display:flex;justify-content:space-between;list-style:none;cursor:pointer}.project summary::-webkit-details-marker{display:none}.project summary span{font-size:17px}.project details[open] summary span{transform:rotate(45deg)}.project details>p{max-width:900px;margin-top:20px;line-height:2.05}.split-title{display:flex;align-items:center;justify-content:space-between;gap:30px}.split-title>p{font-size:13px;line-height:1.9;color:var(--muted)}.feedback-proof{display:grid;grid-template-columns:1fr 1fr;gap:8%;margin:25px 0 60px}.fraction>strong,.review-proof>strong{display:block;font:400 clamp(120px,15vw,245px)/.95 "Portfolio Sans",var(--sans);letter-spacing:-.05em;white-space:nowrap}.fraction small,.review-proof strong small{font-size:.45em;letter-spacing:-.025em}.fraction>p,.review-proof>p{font-size:11px;color:var(--muted);line-height:1.9;margin-top:25px}.source-gates>div{display:inline-block;width:48%;vertical-align:top}.source-gates span{font-size:8px;color:var(--muted)}.source-gates b{display:block;font-weight:400;font-size:15px;margin-top:11px}.source-gates svg{display:block;width:100%;height:80px;fill:none;stroke:var(--muted);stroke-width:1}.source-gates>p{text-align:center;font-size:9px;color:var(--muted)}.small-proof{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:35px;border-top:1px solid var(--line);padding-top:22px}.small-proof span{font-size:8px;color:var(--muted)}.small-proof strong{display:block;font:400 55px/1.2 "Portfolio Sans",var(--sans);letter-spacing:-.025em;margin-top:12px}.small-proof small{font-size:.36em}.proof-note{font-size:10px;color:var(--muted);margin-top:15px}.dispatch-layout{display:grid;grid-template-columns:34% 58%;gap:8%;align-items:start;margin-top:20px;margin-bottom:60px}.review-ledger{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:20px;margin-top:35px;font-size:8px;color:var(--muted)}.confirmation-flow{display:flex;align-items:center;gap:22px;border-top:1px solid var(--line);padding:30px 0 40px;font-size:9px}.confirmation-flow i{height:1px;background:var(--line);flex:1}.life-top{display:flex;align-items:center;justify-content:space-between;gap:30px}.life-top>p{font-size:12px;color:var(--muted);line-height:1.9}.life-mechanism{display:flex;align-items:center;justify-content:space-between;position:relative;gap:15px;padding:40px 0 85px;border-top:1px solid var(--line);margin-top:10px}.mechanism-step>span{display:block;font-size:8px;color:var(--muted);margin-bottom:15px}.mechanism-step>strong{font-size:28px;letter-spacing:-.03em;font-weight:400}.life-mechanism>i{font-style:normal;color:var(--muted)}.life-mechanism figcaption{position:absolute;bottom:30px;left:0;font-size:10px;color:var(--muted)}.award{border-top:1px solid var(--line);padding:35px 0 45px;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:25px}.award>p{width:100%;font-size:9px;color:var(--muted)}.award>strong{font-size:clamp(48px,9vw,150px);line-height:1.1;letter-spacing:-.06em;font-weight:400;color:var(--wine)}.award>strong>span{font-size:.36em;letter-spacing:-.02em;margin-right:15px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:7%;padding-top:100px;padding-bottom:120px;background:#D9D6CB}.about>.label,.about>div>.label{color:var(--muted)}.about h2{font:400 clamp(85px,10.5vw,175px)/.93 var(--serif);letter-spacing:-.055em;margin-top:50px}.about h2 em{font-weight:400;color:var(--wine)}.about-right{display:grid;grid-template-columns:31% 1fr;gap:9%;padding-top:48px}.about-right figure img{width:100%;aspect-ratio:1;object-fit:cover;filter:grayscale(1)}.about-right figcaption{font-size:8px;line-height:1.9;margin-top:15px}.about-copy{font-size:12px;line-height:1.9;color:var(--muted)}.about-copy>.degree{white-space:nowrap;color:var(--ink);font-size:12px;margin-bottom:25px}.about-copy dl{margin-top:35px}.about-copy dl>div{padding:15px 0;border-top:1px solid #bdbdb2}.about-copy dt{font-size:8px;color:var(--ink)}.about-copy dd{margin:8px 0 0;font-size:10px}
+footer.section{padding-top:70px;padding-bottom:30px;background:var(--wine);color:var(--cream)}footer>.label{font-size:9px;opacity:.65}footer h2{font:400 clamp(85px,13.6vw,230px)/.9 var(--serif);letter-spacing:-.06em;margin:65px 0 80px}footer h2 em{font-weight:400}.contact-row{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:70px}.contact-row>p{font-size:12px;line-height:1.9;opacity:.7}.email{font:400 clamp(22px,3.4vw,58px)/1.4 var(--serif);letter-spacing:-.025em;border-bottom:1px solid #e9e4da66;display:flex;gap:25px}.email>span{font:20px/1.8 var(--sans)}.footer-bottom{border-top:1px solid #e9e4da44;padding-top:25px;display:flex;justify-content:space-between;gap:20px;font-size:8px;opacity:.7}
+#report-dialog{max-width:none;width:min(1120px,94vw);max-height:92svh;padding:0;border:1px solid var(--line);background:#080A0C;color:var(--cream)}#report-dialog::backdrop{background:#252622d9}.report-bar{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:#080A0C;font-size:9px}.report-bar button{background:none;color:inherit;font-size:12px}.full-report{padding:0 20px 25px}.full-report img{width:100%;height:auto}
+#glove{position:fixed;left:0;top:0;width:32px;height:32px;margin:-7px 0 0 -11px;z-index:2000;background:url('../../../assets/renaissance-perf/image.1059f09b64ebe729.svg') no-repeat center/contain;pointer-events:none;transform:translate(-100px,-100px);display:none}html.fine-pointer,html.fine-pointer a,html.fine-pointer button,html.fine-pointer summary{cursor:none}html.fine-pointer #glove{display:block}#glove.is-hot{width:40px;height:40px;margin:-8px 0 0 -14px}html.fine-pointer dialog,html.fine-pointer dialog button{cursor:url('../../../assets/renaissance-perf/image.1059f09b64ebe729.svg') 11 7,pointer}
+@media(min-width:1750px){.section{padding-left:max(var(--pad),calc((100vw - 1530px)/2));padding-right:max(var(--pad),calc((100vw - 1530px)/2))}}
+@media(max-width:1100px){.opening-stage{min-height:550px}.hero-content{top:24svh}.hero-content h1{font-size:13vw}.hero-chinese{font-size:18px}.hero-identity{margin-top:18px}.thesis{top:29%;width:35%}.thesis h2{font-size:3.5vw}.thesis-copy{font-size:11px}.cover-metric{font-size:8vw}.cover-caption{font-size:7px;left:20px;top:20px}.cover-foot{left:20px;bottom:20px;font-size:8px}.cover-metric{left:20px}.sample-matrix{left:20px;right:20px;gap:7px}.cover-ledger{left:20px;right:20px;font-size:7px;gap:10px}.about{gap:4%}.about-right{grid-template-columns:29% 1fr;gap:7%}.review-ledger{font-size:7px;gap:8px}.mechanism-step>strong{font-size:24px}.project h3{font-size:9vw}.life-top>p{font-size:11px;max-width:230px}}
+@media(max-width:760px){:root{--pad:23px}#site-header{padding-top:23px;padding-bottom:23px}.brand{font-size:24px}#site-header nav{gap:20px;font-size:10px}#site-header nav .roman{display:none}.contact-link{gap:12px}.opening{height:210svh}.opening-stage{min-height:0}.painting-poster{object-position:64% 50%}.hero-shade{background:linear-gradient(90deg,#16080e77,transparent 90%),linear-gradient(0deg,#15080b88,transparent 70%)}.hero-content{max-width:none;top:21svh;left:var(--pad)}.hero-eyebrow{font-size:9px;margin-bottom:28px}.hero-content h1{font-size:23vw;line-height:.8;letter-spacing:-.07em}.hero-content h1 span{margin-top:14px}.hero-chinese{font-size:18px;margin-top:29px}.hero-identity{font-size:10px;line-height:1.8;margin-top:16px}.hero-baseline{bottom:26px}.hero-baseline>span{display:none}.hero-baseline>a{margin-left:auto;font-size:8px}.thesis{top:auto;bottom:9svh;width:calc(100% - 46px)}.thesis h2{font-size:31px;line-height:1.35;margin-top:20px}.thesis h2 br{display:none}.thesis h2 em{display:block}.thesis-copy{margin-top:16px;font-size:11px}.thesis-copy br{display:none}.thesis .text-link{margin-top:18px}.plate-note{display:none}.work-index{padding-top:55px;padding-bottom:65px}.section-top{font-size:8px}.section-heading{margin:35px 0 38px;gap:20px}.section-heading h2{font-size:91px}.sup{font-size:10px;margin:7px 0 0 10px}.section-heading>p{font-size:10px;line-height:1.8}.work-grid{grid-template-columns:1fr;gap:35px}.work-cover{aspect-ratio:1.12}.cover-caption{font-size:8px;left:23px;top:23px}.cover-metric{font-size:100px;left:23px;bottom:22px}.xmind-cover .cover-metric,.dispatch-cover .cover-metric{bottom:60px}.cover-foot{font-size:8px;left:23px}.cover-ledger{left:23px;right:23px;font-size:8px}.cover-ledger b{font-size:25px}.sample-matrix{gap:7px;left:23px;right:23px}.award-cover{font-size:44px;left:23px;bottom:18%}.cover-mechanism text{font-size:13px}.work-caption{padding-top:16px;gap:12px}.work-caption h3{font-size:25px}.work-caption p{font-size:10px;margin-top:6px}.records-intro{padding:25px 0 45px}.records-intro>.label{font-size:8px}.records-intro>p:last-child{font-size:19px}.project{padding-top:23px;padding-bottom:55px;scroll-margin-top:85px}.project-bar{font-size:7px;letter-spacing:.04em;gap:15px}.project h3{font-size:14.2vw;line-height:1.02;margin:38px 0 36px}.retro-layout{display:flex;flex-direction:column;gap:32px}.case-copy{max-width:100%;font-size:12px}.case-lead{font-size:23px;line-height:1.5;margin-bottom:15px}.line-link{font-size:10px;margin-top:20px}.report-figure{width:100%}.report-figure figcaption{font-size:7px;margin-bottom:11px}.report-window{height:360px;min-height:0}.metrics{grid-template-columns:1fr 1fr;gap:35px 25px;padding:38px 0 30px}.metrics>div:last-child{grid-column:1/-1}.metrics strong{font-size:94px}.metric-label{font-size:8px;margin-bottom:11px}.metrics>div:last-child strong{font-size:112px}.project details{font-size:10px;line-height:2}.split-title{display:block}.split-title>p{font-size:12px}.feedback-proof{grid-template-columns:1fr;gap:35px;margin:40px 0 35px}.fraction>strong,.review-proof>strong{font-size:37vw;line-height:1}.fraction>p{font-size:10px;margin-top:15px}.source-gates{border-top:1px solid var(--line);padding-top:25px}.source-gates svg{height:70px}.small-proof strong{font-size:65px}.proof-note{font-size:9px}.dispatch-layout{grid-template-columns:1fr;gap:35px;margin-top:15px;margin-bottom:35px}.review-ledger{font-size:7px;gap:9px;margin-top:25px;padding-top:18px}.confirmation-flow{gap:10px;font-size:7px;letter-spacing:0;line-height:1.8;padding:23px 0 28px}.life-top{display:block}.life-top>p{max-width:100%;font-size:12px;margin-bottom:30px}.life-mechanism{display:grid;grid-template-columns:1fr 25px 1fr;gap:28px 10px;padding:28px 0 70px}.life-mechanism>i:nth-of-type(2){display:none}.mechanism-step>span{font-size:7px;margin-bottom:10px}.mechanism-step>strong{font-size:25px}.award{padding-top:25px;padding-bottom:30px;gap:20px}.award>p{font-size:8px;letter-spacing:.03em}.award>strong{font-size:18vw}.award>strong>span{margin-right:8px}.award .line-link{margin-top:0}.about{grid-template-columns:1fr;gap:40px;padding-top:60px;padding-bottom:65px}.about h2{font-size:100px;margin-top:35px}.about-right{grid-template-columns:30% 1fr;gap:9%;padding-top:0}.about-right figcaption{font-size:7px;letter-spacing:.02em}.about-copy{font-size:11px}.about-copy>.degree{font-size:10px;margin-bottom:20px}.about-copy dl{margin-top:25px}.about-copy dd{font-size:9px}.about-copy dt{font-size:7px}footer.section{padding-top:45px;padding-bottom:25px}footer>.label{font-size:8px}footer h2{font-size:23vw;line-height:.95;margin:50px 0}.contact-row{display:block;margin-bottom:45px}.contact-row>p{font-size:10px;margin-bottom:25px}.email{font-size:27px;gap:15px;justify-content:space-between}.email>span{font-size:18px}.footer-bottom{font-size:7px;gap:12px;letter-spacing:.03em}.full-report{padding:0 10px 15px}.report-bar{padding:14px 12px;font-size:7px}.report-bar button{font-size:11px}}
+@supports (view-transition-name:project-panel){
+ ::view-transition{pointer-events:none}
+ ::view-transition-group(root){animation:none}
+ ::view-transition-old(root),::view-transition-new(root){animation-duration:.25s}
+ ::view-transition-group(project-panel){animation-duration:.65s;animation-timing-function:cubic-bezier(.2,0,0,1)}
+ ::view-transition-old(project-panel),::view-transition-new(project-panel){height:100%;object-fit:cover;animation-duration:.55s}
+}
+/* Native-flow opening: adjacent sections may share the viewport. */
+html,body{scroll-snap-type:none!important;overflow-anchor:none}
+.opening{height:190svh}
+.opening-stage{position:relative;top:auto;height:100%;min-height:0;overflow:clip}
+.painting{height:100svh;bottom:auto}
+.hero-shade{height:100svh;bottom:auto}
+.hero-baseline{top:calc(100svh - 55px);bottom:auto}
+.thesis{top:calc(100svh + 90px);bottom:auto}
+.plate-note{top:calc(150svh + 60px);bottom:auto}
+/* Projects: position-driven aperture, internal parallax and pointer response. */
+.work-grid{position:relative;gap:75px 34px}
+.work-item{position:relative;--reveal:1;--entry-y:0px;--media-y:0px;--pointer-x:0;--pointer-y:0;--activity:0;transform:translate3d(0,var(--entry-y),0)}
+.work-cover{border-radius:15px;clip-path:inset(calc((1 - var(--reveal))*16%) calc((1 - var(--reveal))*8%) round 15px);transform:scale(calc(.96 + .04*var(--reveal)));will-change:clip-path,transform}
+.work-cover::after{content:'';position:absolute;inset:0;z-index:8;border:1px solid #ffffff18;border-radius:inherit;pointer-events:none}
+.cover-caption,.cover-foot{z-index:5}
+.work-heading-arrow{display:inline-block;font:400 .6em/1 var(--sans);margin-left:.2em;vertical-align:top}
+#work-title{transform:translateY(var(--heading-y,0px))}
+.report-sheet{transform:translate3d(calc(var(--pointer-x)*-18px),calc(var(--media-y) + var(--pointer-y)*-14px),0) rotate(calc(-4deg + var(--activity)*4deg)) scale(calc(1 + var(--activity)*.04));transform-origin:center 40%;will-change:transform}
+.sample-matrix{transform:translate3d(calc(var(--pointer-x)*10px),calc(var(--media-y)*.45 + var(--pointer-y)*8px),0)}
+.sample-matrix i{transform:scale(calc(.78 + var(--reveal)*.22));background:color-mix(in srgb,#334951 calc(65% + var(--activity)*30%),transparent)}
+.sample-matrix i.miss{background:transparent}
+.sample-matrix i:nth-child(3n){transform:translateY(calc(var(--activity)*-8px)) scale(calc(.78 + var(--reveal)*.22))}
+.cover-ledger{transform:translate3d(calc(var(--pointer-x)*10px),calc(var(--media-y)*.4 + var(--pointer-y)*7px),0)}
+.cover-ledger span{position:relative}
+.cover-ledger span::after{content:'';position:absolute;left:0;right:0;bottom:-12px;height:2px;background:currentColor;transform-origin:left;transform:scaleX(calc(.2 + var(--reveal)*.6 + var(--activity)*.2))}
+.cover-ledger span:nth-child(2)::after{opacity:.5;transform:scaleX(calc(.15 + var(--reveal)*.7 + var(--activity)*.15))}
+.cover-mechanism{transform:translate3d(calc(var(--pointer-x)*9px),calc(var(--media-y)*.4 + var(--pointer-y)*8px),0);stroke-dasharray:1100;stroke-dashoffset:calc((1 - var(--reveal))*750)}
+.cover-metric,.award-cover{transform:translate3d(calc(var(--pointer-x)*-5px),calc(var(--media-y)*-.15),0)}
+.title-window{display:block;height:1.25em;overflow:hidden}
+.title-line{display:block;height:1.25em;line-height:1.25;transform:translateY(0);transition:transform .55s cubic-bezier(.2,0,0,1)}
+.work-item:is(:hover,:focus-visible) .title-line{transform:translateY(-100%)}
+.work-caption{opacity:calc(.45 + .55*var(--reveal));transform:translateY(calc((1 - var(--reveal))*18px))}
+.project h3{transform:translateY(calc((1 - var(--record-reveal,1))*35px));opacity:calc(.4 + .6*var(--record-reveal,1))}
+@media(max-width:760px){
+ .opening{height:210svh}.thesis{top:calc(100svh + 500px);bottom:auto}.work-grid{gap:45px}.work-cover{border-radius:10px;aspect-ratio:1.12}.work-heading-arrow{display:none}.painting{transform-origin:50% 50%}
+ .sample-matrix{transform:translateY(calc(var(--media-y)*.3))}.cover-metric,.award-cover{transform:none}.work-item{will-change:auto}
+}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.opening{height:auto!important}.opening-stage{height:auto;min-height:100svh}.painting{height:100svh;bottom:auto;transform:none!important;will-change:auto}.hero-shade{height:100svh;bottom:auto;opacity:1!important}.hero-content{opacity:1!important}.hero-baseline{top:calc(100svh - 55px);bottom:auto;opacity:1!important}.thesis{position:relative;left:auto;top:auto;bottom:auto;width:auto;margin-top:100svh;padding:65px var(--pad);opacity:1!important;pointer-events:auto}.thesis h2{font-size:38px}.plate-note{display:none}.work-index{padding-top:20px}.work-arrow{transform:none!important}.work-item,.work-cover,.work-caption,.project h3,.report-sheet,.sample-matrix,.cover-ledger,.cover-mechanism,.cover-metric,.award-cover,#work-title{transform:none!important;clip-path:none!important;opacity:1!important}.sample-matrix i{transform:none!important}.title-line{transform:none!important}.opening-stage{overflow:hidden}}
+@media(print){#site-header,#glove,.opening,.work-index,#report-dialog{display:none}.section{padding:20px}.project,.about,footer.section{break-inside:avoid;background:white;color:black}.project h3,.about h2,footer h2{font-size:40px}.records-intro{padding:10px 0}.report-window{height:auto;max-height:none}.metrics strong{font-size:50px}.project details{display:block}.project details>p{display:block}}
+/* Real project documents; index no longer mounts the four case bodies. */
+@view-transition{navigation:auto}
+#site-header{view-transition-name:site-header}
+.menu-toggle{background:none;color:inherit;padding:7px 0;font-size:11px;display:flex;align-items:center;gap:12px}
+.manifesto,.evidence-section,.timeline-section{padding-top:50px;padding-bottom:100px}
+.manifesto h2{font-size:clamp(32px,4.2vw,68px);line-height:1.4;font-weight:400;letter-spacing:-.05em;margin:70px 0}
+.manifesto h2 em{color:var(--wine);font-style:normal}
+.claim-pairs{margin-left:34%;border-bottom:1px solid var(--line)}
+.claim-pair{display:grid;grid-template-columns:1fr 1.6fr;gap:35px;border-top:1px solid var(--line);padding:28px 0}
+.claim-pair>p{font-size:16px;line-height:1.7}
+.claim-pair>div>.label{font-size:8px;color:var(--muted)}
+.claim-pair>div>p{font-size:12px;line-height:1.9;margin-top:9px;color:var(--muted)}
+.restored-heading{display:flex;align-items:end;justify-content:space-between;gap:30px;margin:65px 0}
+.restored-heading h2,.timeline-layout>h2{font:400 clamp(65px,8.8vw,150px)/.98 var(--serif);letter-spacing:-.055em}
+.restored-heading h2 em,.timeline-layout>h2 em{font-weight:400;color:var(--wine)}
+.restored-heading>p{font-size:11px;line-height:1.8;color:var(--muted)}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px 50px}
+.evidence-item{position:relative;border-top:1px solid var(--line);padding-top:23px;padding-bottom:20px;min-width:0}
+.evidence-item>.label{font-size:9px;color:var(--muted)}
+.evidence-item>strong{display:block;font:400 clamp(54px,6vw,104px)/1 "Portfolio Sans",var(--sans);letter-spacing:-.04em;margin:32px 0 25px;white-space:nowrap}
+.evidence-item>strong small{font-size:.26em;letter-spacing:0;margin-left:4px}
+.evidence-item>p{font-size:11px;line-height:1.8;color:var(--muted);max-width:90%}
+.evidence-arrow{position:absolute;right:0;top:22px;font-size:17px;transition:transform .3s}.evidence-item:hover .evidence-arrow{transform:translate(3px,-3px)}
+.evidence-disclosure{display:grid;grid-template-columns:1fr 2.2fr;gap:40px;border-top:1px solid var(--line);padding-top:30px;margin-top:35px}
+.evidence-disclosure>.label{color:var(--wine);font-size:9px}.evidence-disclosure>p{font-size:12px;line-height:1.9;color:var(--muted)}
+.method-section{padding-top:90px;padding-bottom:90px;background:var(--method-bg,#D9D6CB)}
+.method-section>.label{color:var(--muted)}.method-section h2{font-size:clamp(32px,4.5vw,75px);line-height:1.5;letter-spacing:-.05em;font-weight:400;margin:55px 0 65px}.method-section h2 em{font-style:normal;color:var(--wine)}
+.method-bottom{display:flex;justify-content:space-between;gap:25px;font-size:13px;line-height:1.9}.method-bottom p:last-child{color:var(--muted);font-size:11px}.method-bottom span{padding:0 17px}
+.tool-list{display:flex;flex-wrap:wrap;gap:14px 32px;border-top:1px solid var(--line);padding-top:25px;margin-top:35px;font-size:13px;color:var(--muted)}
+.timeline-layout{display:grid;grid-template-columns:.9fr 1.3fr;gap:9%;margin-top:70px}.timeline-layout>h2{font-size:clamp(65px,7.4vw,125px)}
+.timeline-layout>ol{list-style:none;margin:0;padding:0}.timeline-layout li{display:grid;grid-template-columns:125px 1fr;gap:28px;padding:24px 0;border-bottom:1px solid var(--line)}.timeline-layout li:first-child{padding-top:0}
+.timeline-layout li>.label{font-size:9px;color:var(--muted)}.timeline-layout h3{font-size:17px;line-height:1.6;font-weight:400;letter-spacing:-.02em}.timeline-layout li p{font-size:11px;line-height:1.9;color:var(--muted);margin-top:8px}
+#menu-dialog{width:min(900px,calc(100vw - 40px));max-height:90svh;border:1px solid var(--line);padding:35px 45px;background:var(--paper);color:var(--ink);overscroll-behavior:contain}
+#menu-dialog::backdrop{background:#171918b8}.menu-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:25px}.menu-top>.label{color:var(--muted)}.menu-top button{background:none;font-size:12px}
+#menu-dialog nav{margin:15px 0 35px}#menu-dialog nav>a{display:flex;align-items:center;gap:25px;padding:15px 0;font-size:clamp(23px,3vw,38px);letter-spacing:-.04em}#menu-dialog nav>a>.label{width:40px;flex-shrink:0;color:var(--muted)}#menu-dialog nav>a>span:last-child{margin-left:auto;font-size:23px}
+.menu-settings{display:flex;align-items:end;justify-content:space-between;gap:30px;border-top:1px solid var(--line);padding-top:25px}.menu-settings>.label,.menu-settings .label{font-size:8px;color:var(--muted)}.menu-settings>a{font-size:10px}.theme-options{display:flex;gap:16px;margin-top:14px}.theme-options button{border-bottom:1px solid transparent;padding:0 0 5px;background:none;font-size:11px;color:var(--muted)}.theme-options button[aria-pressed=true]{border-color:var(--ink);color:var(--ink)}.menu-contact{display:flex;justify-content:space-between;gap:20px;margin-top:28px;font-size:11px}
+.case-main{padding-top:135px}.case-breadcrumb{display:flex;justify-content:space-between;align-items:center;margin:0 0 35px;color:var(--muted);font-size:9px}.case-breadcrumb a{border-bottom:1px solid var(--line);padding-bottom:5px}
+.case-page .project{padding-bottom:40px}.case-page .project h1{font:400 clamp(62px,9vw,150px)/1.06 var(--serif);letter-spacing:-.05em;margin:55px 0 60px;overflow-wrap:anywhere}.case-page .project h1 span{color:var(--muted)}
+.case-narrative{margin-top:70px;border-top:1px solid var(--line);padding-top:35px;display:grid;grid-template-columns:1fr 1.5fr;gap:50px 9%}.case-narrative .label{font-size:9px;color:var(--muted)}.case-context>p:last-child{font-size:16px;line-height:1.9;margin-top:25px}.case-actions ol{list-style:none;margin:25px 0 0;padding:0}.case-actions li{display:flex;gap:25px;padding:18px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.9}.case-actions li>.label{flex-shrink:0;padding-top:3px}
+.case-results{grid-column:1/-1;display:grid;grid-template-columns:1fr 1.5fr;gap:9%}.case-results dl{margin:0}.case-results dl>div{display:grid;grid-template-columns:125px 1fr;gap:25px;border-top:1px solid var(--line);padding:20px 0}.case-results dt{font-size:11px;color:var(--muted);line-height:1.8}.case-results dd{margin:0;font-size:14px;line-height:1.8}
+.workflow-demo{margin-top:60px;border-top:1px solid var(--line);padding-top:30px}.workflow-demo>div{display:flex;justify-content:space-between;gap:25px;margin-bottom:25px}.workflow-demo .label{font-size:9px;color:var(--muted)}.workflow-demo button{background:none;font-size:11px;border-bottom:1px solid var(--line);padding:0 0 8px}.workflow-demo img{width:min(100%,900px);max-height:600px;object-fit:contain;object-position:top;background:#080a0c;margin:auto}
+.case-pagination{display:flex;justify-content:space-between;gap:35px;border-top:1px solid var(--line);padding:45px 0 85px;font-size:20px;line-height:1.5}.case-pagination>a{max-width:47%}.case-footer.section{display:flex;justify-content:space-between;gap:25px;padding:40px var(--pad);font-size:13px}
+html[data-theme=dark]{--paper:#191C1B;--cream:#F5F0E6;--ink:#E8E3D8;--muted:#A1A69B;--line:#3C423D;--wine:#C299A0;--method-bg:#242A26}
+html[data-theme=dark] #site-header.dark{background:linear-gradient(#191c1bf0,#191c1b00)}html[data-theme=dark] .about{background:var(--method-bg)}html[data-theme=dark] footer.section{background:#40252D;color:#F5F0E6}html[data-theme=dark] .dispatch-cover{background:#642B36;color:#F5F0E6}html[data-theme=dark] .thesis h2 em{color:var(--wine)}
+html.fine-pointer dialog a,html.fine-pointer dialog button{cursor:url('../../../assets/renaissance-perf/image.1059f09b64ebe729.svg') 11 7,pointer}
+@media(max-width:1100px){.evidence-grid{gap:25px}.claim-pairs{margin-left:20%}.timeline-layout{gap:7%;grid-template-columns:.85fr 1.4fr}.timeline-layout li{grid-template-columns:105px 1fr;gap:20px}.case-narrative{gap:40px 6%}.case-results{gap:6%}}
+@media(max-width:760px){
+ #site-header nav{gap:15px}#site-header nav>a:not(.contact-link):not(.back-to-work){display:none}.menu-toggle{font-size:10px;gap:8px}.case-page #site-header nav>.contact-link{display:none}
+ .manifesto,.evidence-section,.timeline-section{padding-top:30px;padding-bottom:60px}.manifesto h2{font-size:31px;line-height:1.5;margin:45px 0}.claim-pairs{margin-left:0}.claim-pair{grid-template-columns:1fr;gap:15px;padding:25px 0}.claim-pair>p{font-size:17px}.claim-pair>div>p{font-size:11px}.claim-pair>div>.label{font-size:7px}
+ .restored-heading{display:block;margin:40px 0}.restored-heading h2{font-size:70px}.restored-heading>p{font-size:10px;margin-top:25px}.evidence-grid{grid-template-columns:1fr 1fr;gap:22px}.evidence-item{padding:20px 0}.evidence-item>.label{font-size:8px}.evidence-item>strong{font-size:50px;margin:25px 0 20px}.evidence-item>p{font-size:10px;line-height:1.85;max-width:100%}.evidence-arrow{font-size:13px;top:21px}.evidence-disclosure{grid-template-columns:1fr;gap:18px;margin-top:25px;padding-top:25px}.evidence-disclosure>p{font-size:11px}.evidence-disclosure br{display:none}
+ .method-section{padding-top:55px;padding-bottom:55px}.method-section h2{font-size:31px;margin:35px 0}.method-bottom{display:block;font-size:12px}.method-bottom>p:last-child{margin-top:20px;font-size:10px}.method-bottom span{padding:0 8px}.tool-list{gap:18px 25px;font-size:12px;margin-top:25px}
+ .timeline-layout{grid-template-columns:1fr;gap:40px;margin-top:45px}.timeline-layout>h2{font-size:80px}.timeline-layout li{grid-template-columns:100px 1fr;gap:18px;padding:23px 0}.timeline-layout h3{font-size:15px}.timeline-layout li p{font-size:10px}.timeline-layout li>.label{font-size:8px}
+ .footer-bottom{flex-wrap:wrap;row-gap:20px}.footer-bottom>span{width:100%}
+ #menu-dialog{width:calc(100vw - 28px);padding:25px 22px;max-height:92svh}.menu-top>.label{font-size:8px}.menu-top button{font-size:11px}#menu-dialog nav{margin:15px 0 25px}#menu-dialog nav>a{font-size:25px;gap:12px;padding:13px 0}#menu-dialog nav>a>.label{width:25px}#menu-dialog nav>a>span:last-child{font-size:20px}.menu-settings{align-items:start;gap:20px}.menu-settings>a{font-size:9px;line-height:1.7}.theme-options{gap:12px}.theme-options button{font-size:10px}.menu-contact{display:block;font-size:11px;line-height:2.6}
+ .case-main{padding-top:110px}.case-breadcrumb{font-size:8px;margin-bottom:25px}.case-page .project h1{font-size:14.2vw;margin:38px 0 36px}.case-narrative{grid-template-columns:1fr;gap:35px;margin-top:35px;padding-top:25px}.case-context>p:last-child{font-size:14px;margin-top:18px}.case-actions ol{margin-top:18px}.case-actions li{font-size:12px;gap:18px;padding:17px 0}.case-results{grid-column:auto;grid-template-columns:1fr;gap:18px}.case-results dl>div{grid-template-columns:85px 1fr;gap:18px;padding:17px 0}.case-results dt{font-size:10px}.case-results dd{font-size:12px}.workflow-demo{margin-top:35px;padding-top:25px}.workflow-demo button{font-size:10px}.workflow-demo .label{font-size:8px}.workflow-demo img{max-height:420px}.case-pagination{font-size:15px;padding:30px 0 50px;gap:25px}.case-footer.section{font-size:11px;flex-direction:column;padding-top:30px;padding-bottom:30px}
+}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+/* A curved mesh replaces each flat cover only after its textures are ready. */
+#project-flight{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:3}
+.flight-ready .work-item{transform:none!important}
+.flight-ready .work-cover{opacity:0;clip-path:none!important;transform:none!important}
+.flight-ready .work-caption{position:relative;z-index:4;opacity:1;transform:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.tool-wall{position:relative;z-index:6;padding:80px 0 85px;overflow:hidden;background:#121513;color:#EEEAE2;--logo-slot:310px}
+.tool-wall-heading{display:flex;align-items:end;justify-content:space-between;gap:30px}.tool-wall-heading .label{font-size:9px;color:#9A9F96;letter-spacing:.12em}.tool-wall-heading h2{font-size:clamp(32px,4.3vw,70px);font-weight:400;letter-spacing:-.045em;line-height:1.25;margin-top:25px}.tool-wall-heading>button{background:none;color:#ABB1A6;border-bottom:1px solid #4B5249;padding:0 0 7px;font-size:10px;white-space:nowrap}.tool-wall-heading>button span{margin-left:18px;font-size:12px}
+.brand-viewport{margin-top:70px;display:flex;flex-direction:column;gap:65px}
+.brand-row{overflow:hidden;padding:8px 0}.brand-track,.brand-group{display:flex;flex-shrink:0;width:max-content}.brand-track{will-change:transform}.tool-brand{width:var(--logo-slot);height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:15px;padding:0 15px}.tool-mark{height:43px;width:43px;object-fit:contain;filter:brightness(0) invert(1)}.tool-wordmark{height:34px;max-width:180px;width:auto;object-fit:contain;filter:brightness(0) invert(1)}.tool-brand-gemini .tool-wordmark{height:43px}.tool-brand-claude .tool-wordmark{height:38px}.tool-brand-doubao .tool-wordmark{height:37px}.tool-word{font-size:29px;font-weight:600;letter-spacing:-.03em;white-space:nowrap}.tool-word-postgresql{font:400 29px/1 Georgia,serif;letter-spacing:-.04em}.tool-word-prometheus{font-size:24px;letter-spacing:-.025em}.tool-brand-feishu .tool-mark{width:50px;height:50px}
+#site-header.on-tools{color:#EEEAE2;background:linear-gradient(#121513ed,#12151300)}
+@media(max-width:1100px){.tool-wall{--logo-slot:280px}.tool-mark{width:39px;height:39px}.tool-wordmark{height:30px}.tool-word{font-size:26px}}
+@media(max-width:760px){.tool-wall{padding:55px 0 60px;--logo-slot:235px}.tool-wall-heading{align-items:start;gap:20px}.tool-wall-heading h2{font-size:31px;margin-top:18px}.tool-wall-heading .label{font-size:8px}.tool-wall-heading>button{font-size:8px;margin-top:5px}.tool-wall-heading>button span{margin-left:8px;font-size:10px}.brand-viewport{margin-top:45px;gap:30px}.tool-brand{height:65px;gap:12px}.tool-mark{width:34px;height:34px}.tool-brand-feishu .tool-mark{width:40px;height:40px}.tool-wordmark{height:28px;max-width:145px}.tool-brand-gemini .tool-wordmark{height:35px}.tool-brand-claude .tool-wordmark{height:32px}.tool-brand-doubao .tool-wordmark{height:31px}.tool-word{font-size:24px}.tool-word-postgresql{font-size:25px}.tool-word-prometheus{font-size:21px}}
+/* Static, complete logo set for accessibility preference or QA mode. */
+.reduced-motion #project-flight{display:none!important}.reduced-motion .work-cover{opacity:1!important}.reduced-motion .brand-viewport{padding:0 var(--pad);gap:30px}.reduced-motion .brand-track{transform:none!important;will-change:auto;width:100%}.reduced-motion .brand-group{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%}.reduced-motion .brand-group+.brand-group{display:none}.reduced-motion .tool-brand{width:100%;padding:0 10px}
+@media(max-width:760px){.reduced-motion .brand-group{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.reduced-motion .tool-brand{justify-content:start;gap:8px;padding:0;height:60px}.reduced-motion .tool-mark{width:26px;height:26px}.reduced-motion .tool-wordmark{max-width:105px;height:23px}.reduced-motion .tool-word{font-size:18px}.reduced-motion .tool-word-prometheus{font-size:16px}}
+.reduced-motion #brands-toggle{display:none}
+.tool-wall{scroll-margin-top:100px}
+@media(max-width:760px){.tool-wall{scroll-margin-top:90px}}
+/* Closing act. The panels share a physical frame; document flow stays native. */
+.about>div{transform:translate3d(0,calc(var(--about-exit,0)*-24px),0) scale(calc(1 - var(--about-exit,0)*.025));opacity:calc(1 - var(--about-exit,0)*.14);transform-origin:50% 70%}
+.ending-sequence{position:relative;z-index:7;margin-top:-75px;background:#642B36;--ending-entry:1;--ending-handoff:0;isolation:isolate}
+.invitation.section{position:relative;min-height:103svh;display:flex;align-items:center;justify-content:center;padding-top:135px;padding-bottom:140px;overflow:clip;scroll-margin-top:70px}
+.invitation-surface{position:absolute;inset:0;z-index:-1;background:var(--paper);clip-path:inset(calc((1 - var(--ending-entry))*10%) calc((1 - var(--ending-entry))*5%) 0 round calc((1 - var(--ending-entry))*48px) calc((1 - var(--ending-entry))*48px) 0 0)}
+.invitation-copy{width:100%;text-align:center;transform:translate3d(0,calc(var(--ending-handoff)*-48px),0) scale(calc(1 - var(--ending-handoff)*.035));opacity:calc(1 - var(--ending-handoff)*.48);transform-origin:50% 85%}
+.invitation-kicker{font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:43px}
+.invitation-link{display:inline-block;max-width:100%}.invitation-link:focus-visible{outline-offset:12px}
+#invitation-title{font:400 clamp(84px,11.2vw,180px)/1.05 var(--serif);letter-spacing:-.055em;margin:0}
+.invitation-line{display:block;white-space:nowrap}.invitation-line em{font-weight:400}.invitation-word{display:inline-flex;vertical-align:top}.invitation-word-gap{display:inline-block;width:.25em}.letter-window{display:inline-block;height:1.2em;overflow:visible;clip-path:inset(0 -.22em);vertical-align:top}.letter-track{display:block;transform:translateY(0);transition:transform 900ms cubic-bezier(.2,0,0,1)}.letter-glyph{display:block;height:1.2em;line-height:1.2}
+.invitation-brief{font-size:16px;line-height:1.8;letter-spacing:.015em;margin-top:32px;color:var(--muted)}.invitation-next{display:inline-flex;align-items:center;gap:35px;margin-top:54px;border-bottom:1px solid var(--line);padding-bottom:10px;font-size:9px;letter-spacing:.08em}.invitation-next>span{font-size:16px}
+.ending-enhanced .invitation-copy:not(.is-visible) .letter-track{transform:translateY(55%)}.ending-enhanced .invitation-copy.is-visible .letter-track{transform:translateY(0);transition-delay:var(--letter-delay,0ms)}
+.ending-enhanced .invitation-kicker,.ending-enhanced .invitation-brief,.ending-enhanced .invitation-next{transition:opacity .7s cubic-bezier(.2,0,0,1),translate .8s cubic-bezier(.2,0,0,1)}
+.ending-enhanced .invitation-copy:not(.is-visible) :is(.invitation-kicker,.invitation-brief,.invitation-next){opacity:0;translate:0 28px}.ending-enhanced .invitation-copy.is-visible .invitation-brief{transition-delay:.25s}.ending-enhanced .invitation-copy.is-visible .invitation-next{transition-delay:.4s}
+footer.contact-finale.section{display:flex;flex-direction:column;justify-content:space-between;min-height:100svh;padding-top:110px;padding-bottom:32px;background:var(--finale-bg,#F5F0E6);color:var(--ink);clip-path:inset(0 calc((1 - var(--ending-handoff))*4%) 0 round calc((1 - var(--ending-handoff))*38px) calc((1 - var(--ending-handoff))*38px) 0 0);scroll-margin-top:90px}
+.finale-grid{display:grid;grid-template-columns:1fr 1fr 2.15fr;gap:6%;padding-bottom:115px}
+.finale-label{font-size:9px;letter-spacing:.12em;color:var(--muted);margin-bottom:25px;overflow:hidden}.finale-label>span{display:block}.finale-name{font:400 23px/1.5 var(--serif);letter-spacing:-.025em;overflow:hidden}.finale-name-cn{font-size:13px;line-height:1.8;margin-top:6px;overflow:hidden}.finale-degree{font-size:11px;line-height:1.8;color:var(--muted);margin-top:27px;overflow:hidden}.finale-name>span,.finale-name-cn>span,.finale-degree>span{display:block}
+.finale-social>a{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:13px;line-height:1.8;padding:0 0 12px;overflow:hidden}.finale-social>a>span{display:block}.finale-social>a>span:last-child{font-size:17px}
+.finale-conversation h2{font:400 clamp(30px,3.2vw,52px)/1.4 var(--sans);letter-spacing:-.045em;margin:0 0 33px}.finale-line{display:block;overflow:hidden}.finale-line>span{display:block}
+.finale-email{display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid var(--line);padding:0 0 15px;font:400 clamp(23px,2.6vw,44px)/1.3 var(--serif);letter-spacing:-.025em;overflow:hidden}.finale-email>span:last-child{font:22px/1.5 var(--sans);flex-shrink:0}.finale-intent{font-size:11px;color:var(--muted);line-height:1.9;margin-top:20px;overflow:hidden}.finale-intent>span{display:block}
+.finale-bottom{border-top:1px solid var(--line);padding-top:25px;display:flex;align-items:center;justify-content:space-between;gap:35px;font-size:8px;color:var(--muted)}.finale-bottom>a{display:flex;align-items:center;gap:25px;color:var(--ink)}.finale-top-arrow{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;font:18px/1 var(--sans)}
+/* Per-line masks and component staggering. Leaving fully resets each group. */
+.ending-enhanced .contact-finale [data-replay-group]{--group-delay:0ms;transition:opacity .8s cubic-bezier(.2,0,0,1),translate 1s cubic-bezier(.2,0,0,1);transition-delay:var(--group-delay)}
+.finale-social{--group-delay:90ms!important}.finale-conversation{--group-delay:170ms!important}.finale-bottom{--group-delay:260ms!important}
+.ending-enhanced .contact-finale [data-replay-group]:not(.is-visible){opacity:0;translate:0 38px}
+.ending-enhanced .contact-finale [data-replay-group] :is(.finale-label>span,.finale-name>span,.finale-name-cn>span,.finale-degree>span,.finale-line>span,.finale-intent>span){transition:transform .95s cubic-bezier(.2,0,0,1);transition-delay:var(--group-delay)}
+.ending-enhanced .contact-finale [data-replay-group]:not(.is-visible) :is(.finale-label>span,.finale-name>span,.finale-name-cn>span,.finale-degree>span,.finale-line>span,.finale-intent>span){transform:translateY(115%)}
+.ending-enhanced .contact-finale .is-visible .finale-line:nth-child(2)>span{transition-delay:calc(var(--group-delay) + 95ms)}
+.ending-enhanced .focus-reveal,.ending-enhanced .focus-reveal *{transition:none!important}
+html[data-theme=dark]{--finale-bg:#222824}html[data-theme=dark] footer.contact-finale.section{background:var(--finale-bg);color:var(--ink)}
+@media(max-width:1100px){.finale-grid{grid-template-columns:.9fr .95fr 2.2fr;gap:4%}.finale-name{font-size:21px}.finale-social>a{font-size:11px}.finale-degree{font-size:10px}.finale-email{font-size:2.6vw}}
+@media(max-width:760px){
+ .ending-sequence{margin-top:-40px}.invitation.section{min-height:91svh;padding-top:115px;padding-bottom:110px}.invitation-kicker{font-size:8px;letter-spacing:.08em;margin-bottom:35px}#invitation-title{font-size:20vw;letter-spacing:-.065em}.invitation-brief{font-size:13px;margin-top:25px}.invitation-next{font-size:8px;margin-top:40px;gap:25px}
+ footer.contact-finale.section{min-height:100svh;padding-top:65px;padding-bottom:25px;scroll-margin-top:80px}.finale-grid{grid-template-columns:1fr 1fr;gap:40px 25px;padding-bottom:55px}.finale-conversation{grid-column:1/-1}.finale-label{font-size:8px;margin-bottom:20px}.finale-name{font-size:23px}.finale-name-cn{font-size:12px}.finale-degree{font-size:9px;margin-top:20px}.finale-social>a{font-size:11px;gap:15px}.finale-conversation h2{font-size:34px;line-height:1.4;margin-bottom:25px}.finale-email{font-size:27px;gap:15px;padding-bottom:13px}.finale-email>span:last-child{font-size:20px}.finale-intent{font-size:10px;margin-top:17px}.finale-bottom{flex-wrap:wrap;gap:22px;font-size:7px;padding-top:22px}.finale-bottom>span:first-child{width:100%}.finale-bottom>a{margin-left:auto;gap:15px}.finale-top-arrow{width:32px;height:32px;font-size:16px}
+}
+.reduced-motion .about>div{transform:none!important;opacity:1!important}.reduced-motion .invitation-surface,.reduced-motion .contact-finale{clip-path:none!important}.reduced-motion .invitation-copy{transform:none!important;opacity:1!important}.reduced-motion .ending-sequence *{animation:none!important;transition:none!important}.reduced-motion .ending-sequence .letter-track,.reduced-motion .ending-sequence [data-replay-group],.reduced-motion .ending-sequence [data-replay-group] span{transform:none!important;translate:none!important;opacity:1!important}
+/* One continuous scene: billboard name becomes the introduction while the
+   camera traverses the same original painting. No separate title leaf. */
+.hero-content{inset:0;top:0;left:0;width:100%;height:100svh;max-width:none;transform-origin:0 0}
+.hero-content>*{position:absolute;margin:0}
+.hero-content .hero-eyebrow{left:var(--pad);top:16svh}
+.hero-content .hero-chinese{left:var(--pad);top:20svh;font-size:22px}
+.hero-content .hero-identity{right:var(--pad);top:16svh;line-height:1.9;text-align:left}
+.hero-content h1{left:var(--pad);bottom:92px;font-size:18vw;line-height:.92;letter-spacing:-.065em;display:inline-flex;gap:.17em;white-space:nowrap;transform-origin:0 0;width:max-content}
+.hero-content h1>span{display:inline-block;margin:0;letter-spacing:inherit}
+.hero-content h1>.hero-name-first{font-style:normal}.hero-content h1>.hero-name-last{font-style:italic}
+@media(max-width:760px){
+ .hero-content .hero-eyebrow{top:12svh}.hero-content .hero-chinese{top:16svh;font-size:18px}.hero-content .hero-identity{top:21svh;left:var(--pad);right:auto}
+ .hero-content h1{font-size:27vw;bottom:86px;display:flex;flex-direction:column;gap:.04em;line-height:.84}
+}
+.reduced-motion .hero-content h1,.reduced-motion .hero-content>*{transform:none!important}
+@media(prefers-reduced-motion:reduce){.hero-content h1,.hero-content>*{transform:none!important}}
+
+/* Shared reduced-motion QA branch. */
+.reduced-motion *,.reduced-motion *::before,.reduced-motion *::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.reduced-motion .opening{height:auto!important}.reduced-motion .opening-stage{height:auto;min-height:100svh}.reduced-motion .painting{height:100svh;bottom:auto;transform:none!important;will-change:auto}.reduced-motion .hero-shade{height:100svh;bottom:auto;opacity:1!important}.reduced-motion .hero-content{opacity:1!important}.reduced-motion .hero-baseline{top:calc(100svh - 55px);bottom:auto;opacity:1!important}.reduced-motion .thesis{position:relative;left:auto;top:auto;bottom:auto;width:auto;margin-top:100svh;padding:65px var(--pad);opacity:1!important;pointer-events:auto}.reduced-motion .thesis h2{font-size:38px}.reduced-motion .plate-note{display:none}.reduced-motion .work-index{padding-top:20px}.reduced-motion .work-arrow{transform:none!important}.reduced-motion .work-item,.reduced-motion .work-cover,.reduced-motion .work-caption,.reduced-motion .project h3,.reduced-motion .report-sheet,.reduced-motion .sample-matrix,.reduced-motion .cover-ledger,.reduced-motion .cover-mechanism,.reduced-motion .cover-metric,.reduced-motion .award-cover,.reduced-motion #work-title{transform:none!important;clip-path:none!important;opacity:1!important}.reduced-motion .sample-matrix i{transform:none!important}.reduced-motion .title-line{transform:none!important}.reduced-motion .opening-stage{overflow:hidden}</style><style>@font-face{font-family:'Portfolio Sans';src:url('../../../assets/renaissance-perf/font.6219bc4bfdfc5d9b.woff2') format('woff2');font-style:normal;font-weight:400 600;font-display:swap}
+@font-face{font-family:'Portfolio Display';src:url('../../../assets/renaissance-perf/font.60c06664b5a95c7d.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Portfolio CJK';src:url('../../../assets/renaissance-perf/font.cfe7aaf847c544ed.woff2') format('woff2');font-style:normal;font-weight:400 600;font-display:swap}
+/* Two typographic roles, three bundled families. Latin display only; a shared
+   sans system for UI, Chinese text and tabular data. No system serif roulette. */
+:root{--sans:'Portfolio Sans','Portfolio CJK',sans-serif;--serif:'Portfolio Display','Portfolio CJK',serif;--font-data:var(--sans)}
+html,body,button,input,select,textarea{font-family:var(--sans);font-synthesis:none}
+body{line-height:1.65;text-rendering:optimizeLegibility}
+h1,h2,h3{font-family:var(--sans);font-weight:400;font-style:normal}
+em{font-family:inherit;font-style:normal}
+.label,.mono,.roman,.metric-label,.cover-caption,.cover-foot,.project-bar,.project-top,.case-breadcrumb,.scene-foot,.scene-note>span,.takeover-heading>span,.sample-label,.gate-caption,.gate-skip,#site-header,#site-header .brand,#site-header nav,.menu-toggle,.project .scope{font-family:var(--sans);font-style:normal;font-weight:400}
+.label,.mono{font-size:11px;letter-spacing:.025em;line-height:1.65}
+#site-header .brand{font:500 14px/1.3 var(--sans);letter-spacing:.025em}
+#site-header nav{font-size:12px;letter-spacing:.015em;gap:23px}
+.language-link{font-size:11px;letter-spacing:.06em;border-bottom:1px solid currentColor;padding-bottom:2px}
+.hero-copy h1,.hero-copy h1 em{font-family:var(--serif);font-size:clamp(75px,11.5vw,175px);font-style:normal;line-height:.9;letter-spacing:-.035em}
+.hero-copy .identity{font-size:12px;letter-spacing:.025em;line-height:1.8;max-width:480px}
+.portfolio-body h2,.portfolio-body #work-title{font-family:var(--sans);font-size:clamp(46px,5.5vw,82px);line-height:1.18;letter-spacing:-.045em;font-weight:400}
+.portfolio-body .section-heading h2{font-size:clamp(72px,8.4vw,124px);line-height:1.08}
+.portfolio-body .section-heading{margin-top:38px;margin-bottom:58px}
+.portfolio-body .section-heading>p{font-size:13px;line-height:1.9}
+.portfolio-body .work-caption h3{font:400 clamp(23px,2.1vw,30px)/1.3 var(--sans);letter-spacing:-.035em}
+.portfolio-body .work-caption p{font-size:12px;line-height:1.75;margin-top:8px}
+.portfolio-body .roman{font:400 11px/1.4 var(--sans);font-variant-numeric:tabular-nums}
+.portfolio-body .work-caption{min-height:94px}
+.cover-metric,.award-cover,.cover-ledger b,.metrics strong,.fraction>strong,.review-proof>strong,.small-proof strong,.evidence-item>strong,.metric,.metric small{font-family:var(--sans);font-variant-numeric:tabular-nums lining-nums;font-weight:400}
+.portfolio-body .claim-pair>p{font-family:var(--sans);font-size:clamp(20px,2vw,29px);line-height:1.5}
+.portfolio-body .claim-pair>div>p,.portfolio-body .evidence-item>p,.portfolio-body .evidence-disclosure>p,.portfolio-body .timeline-layout li>p,.portfolio-body .about-copy{font-size:13px;line-height:1.9}
+.portfolio-body .timeline-layout li h3{font-family:var(--sans);font-size:19px;line-height:1.55}
+.portfolio-body .about-right{padding-top:0}
+.portfolio-body .about-copy .degree{font-size:13px;letter-spacing:0}
+.takeover-heading h2,.scene-note p{font-family:var(--sans);letter-spacing:-.025em}
+.takeover-heading h2{font-size:clamp(23px,2.5vw,36px)}
+.scene-note p{font-size:20px;line-height:1.55}
+.portfolio-body #invitation-title{font-family:var(--sans);font-size:clamp(58px,8vw,125px);line-height:1.17;letter-spacing:-.045em}
+.invitation-word{white-space:nowrap}.letter-window,.letter-glyph{font-family:inherit}
+.portfolio-body #contact-title{font-family:var(--sans);font-size:clamp(37px,4.1vw,65px);line-height:1.25;letter-spacing:-.035em}
+.portfolio-body .finale-email{font-family:var(--sans);letter-spacing:-.025em}
+.portfolio-body .invitation-brief,.portfolio-body .finale-degree,.portfolio-body .finale-social{font-size:13px;line-height:1.8}
+#menu-dialog nav a{font-family:var(--sans);font-size:clamp(22px,2.8vw,40px);letter-spacing:-.025em}
+#menu-dialog .theme-options button{font-family:var(--sans);font-size:12px}
+html[lang=en] .label,html[lang=en] .mono{text-transform:uppercase;letter-spacing:.075em}
+html[lang=en] .portfolio-body h2,html[lang=en] .portfolio-body #work-title,html[lang=en] .portfolio-body #invitation-title,html[lang=en] .portfolio-body #contact-title{font-family:var(--serif);letter-spacing:-.025em}
+html[lang=en] .portfolio-body #work-title{font-size:clamp(92px,12vw,180px)}
+html[lang=en] .portfolio-body #invitation-title{font-size:clamp(64px,10vw,156px)}
+html[lang=en] .portfolio-body .timeline-layout>h2{font-size:clamp(50px,6vw,88px)}
+html[lang=en] .portfolio-body .about>h2{font-size:clamp(55px,6.5vw,98px)}
+.case-main .project>h1{font-family:var(--sans);font-weight:400;letter-spacing:-.045em;line-height:1.06}
+.case-main .project h2,.case-main .project h3,.case-main .case-section>h2{font-family:var(--sans)}
+.case-main p,.case-main li,.case-main dd{font-family:var(--sans);font-size:14px;line-height:1.85}
+.case-main .case-lead{font-size:clamp(22px,2.5vw,35px);line-height:1.5}
+.case-main details{font-size:13px;line-height:1.85}
+.case-main .metric-label{font-size:11px}
+.case-main .award>strong{font-family:var(--sans)}
+@media(max-width:760px){
+ #site-header .brand{font-size:13px}#site-header nav{gap:18px;font-size:11px}#site-header .language-link{display:inline-block!important}
+ .hero-copy h1,.hero-copy h1 em{font-size:clamp(70px,20vw,115px)}.hero-copy .identity{font-size:11px;max-width:270px;line-height:1.85}
+ .portfolio-body h2,.portfolio-body #work-title{font-size:43px;line-height:1.22;letter-spacing:-.035em}
+ .portfolio-body .section-heading h2{font-size:68px;line-height:1.1}.portfolio-body .section-heading>p{font-size:11px;line-height:1.8}
+ .portfolio-body .section-heading{gap:18px;margin-bottom:40px}
+ .portfolio-body .work-caption h3{font-size:24px}.portfolio-body .work-caption p{font-size:12px}.portfolio-body .work-caption{min-height:92px}
+ .portfolio-body .claim-pair>p{font-size:21px}.portfolio-body .claim-pair>div>p{font-size:12px}
+ .portfolio-body .timeline-layout li h3{font-size:18px}.portfolio-body .about-right{grid-template-columns:28% 1fr;gap:7%}
+ .portfolio-body #invitation-title{font-size:clamp(48px,12.6vw,68px);line-height:1.2}
+ .portfolio-body #contact-title{font-size:39px;line-height:1.25}
+ html[lang=en] .portfolio-body #work-title{font-size:85px}
+ html[lang=en] .portfolio-body h2,html[lang=en] .portfolio-body .timeline-layout>h2,html[lang=en] .portfolio-body .about>h2{font-size:49px;line-height:1.08}
+ html[lang=en] .portfolio-body #invitation-title{font-size:clamp(53px,15vw,76px)}
+ .case-main .project>h1{font-size:clamp(38px,12vw,62px);overflow-wrap:normal}
+ html[lang=en] .case-main #life-title{font-size:42px}
+ .case-main p,.case-main li,.case-main dd{font-size:13px}
+}
+
+/* Project titles use the same sans family in both languages. */
+.case-main #retro-title,.case-main #xmind-title,.case-main #dispatch-title,.case-main #life-title{font-family:var(--sans);font-weight:400;font-style:normal}
+html[data-theme=dark]{--paper:#11171e;--ink:#ece6d9;--muted:#aab2bc;--line:#35404c;--wine:#d2ac91}
+html[lang=en] .finale-name-cn{display:none}
+</style></head><body class="case-page" data-project="lark-dispatch"><a class="skip" href="#case-main">跳到项目正文</a><div aria-hidden="true" id="glove"></div><header class="dark" id="site-header"><a class="brand" href="../../../renaissance-preview.html#top">Ryan Wang<span class="brand-dot">.</span></a><nav aria-label="项目导航"><a aria-label="Switch to English" class="language-link" data-language-switch="" href="?lang=en">EN</a><a class="back-to-work" href="../../../renaissance-preview.html#work">← 作品目录</a><a class="contact-link" href="../../../renaissance-preview.html#contact">联系 ↗</a><button aria-controls="menu-dialog" aria-haspopup="dialog" class="menu-toggle" id="menu-open">目录 ☰</button></nav></header><main class="section case-main" id="case-main" tabindex="-1"><div class="case-breadcrumb label"><a href="../../../renaissance-preview.html#work">精选作品</a><span>03 / 04</span></div><article aria-labelledby="dispatch-title" class="project dispatch" id="lark-dispatch"><div class="project-bar mono"><span>003 / LARK-DISPATCH</span><span>人工确认 · 开源项目</span></div><h1 id="dispatch-title">Lark-<br/><span>Dispatch</span></h1><div class="dispatch-layout"><div class="case-copy"><p class="case-lead">AI 先起草。<br/>人来确认。</p><p>把会后信息送到任务、通知与知识文档。确认是主流程。</p><a class="line-link" href="https://github.com/gkzzhs/lark-dispatch" rel="noopener noreferrer" target="_blank">查看项目源码 <span aria-hidden="true">↗</span></a></div><div class="review-proof" style="view-transition-name:work-lark-dispatch"><span class="metric-label mono">人工核验</span><strong>25<small>/25</small></strong><div class="review-ledger"><span class="mono">会议一 / 10</span><span class="mono">会议二 / 12</span><span class="mono">会议三 / 03</span></div><p>三场会议，逐条人工核对。</p></div></div><div class="confirmation-flow mono"><span>草稿</span><i></i><span>人工确认</span><i></i><span>分发</span></div><details><summary>确认门控与实测范围 <span>＋</span></summary><p>三场会议分别提取 10、12、3 条信息，共 25 条，分发前逐条人工核对。25/25 不是“100% 自动提取准确率”。用户可以修改、删除和补充草稿，未经确认不执行分发。历史 14 条跨租户目标正确降级，2 项追踪任务完成、平均 6.8 天；这些属于有限样本，不外推为持续生产保证。</p></details><section aria-label="项目背景、个人动作与结果" class="case-narrative"><div class="case-context"><p class="label">背景</p><p>OpenClaw 赛道作品。会后需人工整理录音，并确认接收人、任务和分发目标。</p></div><div class="case-actions"><p class="label">我的工作</p><ol><li><span class="label">01</span><p>三场真实会议实测：提取 25 条（10+12+3），逐条人工核验</p></li><li><span class="label">02</span><p>确认门控——草稿先给人看，无人值守自动分发被明确禁用</p></li><li><span class="label">03</span><p>跨租户 14 条（6+8）全部正确降级，不越权、不中断</p></li></ol></div><div class="case-results"><p class="label">结果</p><dl><div><dt>整理耗时</dt><dd>50–75 分钟 → 3 分钟（≈17–25×）</dd></div><div><dt>人工核验</dt><dd>三场会议 25/25 逐条人工核对</dd></div><div><dt>任务闭环</dt><dd>2/2 完成 · 平均 6.8 天</dd></div><div><dt>实现</dt><dd>591 行纯 SKILL.md · 0 中断</dd></div></dl></div></section></article><nav aria-label="上一与下一项目" class="case-pagination"><a href="xmind.html">← Xmind 反馈自动化</a><a href="life.html">人生新起点 →</a></nav></main><footer class="case-footer section"><a href="mailto:gkzzhs@outlook.com">gkzzhs@outlook.com ↗</a><a href="../../../renaissance-preview.html#work">返回四个作品 ↑</a></footer><dialog aria-labelledby="menu-title" id="menu-dialog"><div class="menu-top"><p class="label" id="menu-title">网站目录</p><form method="dialog"><button aria-label="关闭目录">关闭 ×</button></form></div><nav aria-label="完整目录"><a href="../../../renaissance-preview.html#work"><span class="label">01</span>作品<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#manifesto"><span class="label">02</span>做事方式<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#evidence"><span class="label">03</span>结果记录<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#method"><span class="label">04</span>工作方法<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#tools"><span class="label">05</span>工具栈<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#timeline"><span class="label">06</span>经历<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#about"><span class="label">07</span>关于<span aria-hidden="true">↗</span></a><a href="../../../renaissance-preview.html#contact"><span class="label">08</span>联系<span aria-hidden="true">↗</span></a></nav><div class="menu-settings"><div><p class="label">外观</p><div aria-label="页面配色" class="theme-options" role="group"><button aria-pressed="false" data-theme-choice="light">浅色</button><button aria-pressed="false" data-theme-choice="dark">深色</button><button aria-pressed="false" data-theme-choice="auto">跟随系统</button></div></div><a aria-label="Switch to English" data-language-switch="" href="?lang=en">English</a></div><div class="menu-contact"><a href="mailto:gkzzhs@outlook.com">gkzzhs@outlook.com ↗</a><a href="https://x.com/Ryanwanggh" rel="noopener noreferrer" target="_blank">X / @RYANWANGGH ↗</a></div></dialog><script>(()=>{
+ const dict={
+  "作品": "Work",
+  "精选作品": "Selected work",
+  "做事方式": "Approach",
+  "结果记录": "Project records",
+  "工作方法": "How I work",
+  "常用工具": "Tools I use",
+  "工具与环境": "Tools & environment",
+  "工具栈": "Tools",
+  "经历": "Experience",
+  "关于": "About",
+  "关于我": "About me",
+  "联系": "Contact",
+  "联系 ↗": "Contact ↗",
+  "联系我": "Get in touch",
+  "联系方式": "Contact details",
+  "网站目录": "Site index",
+  "完整目录": "Site navigation",
+  "主导航": "Main navigation",
+  "目录 ☰": "Menu ☰",
+  "关闭 ×": "Close ×",
+  "关闭目录": "Close menu",
+  "跳到项目正文": "Skip to work",
+  "外观": "Appearance",
+  "浅色": "Light",
+  "深色": "Dark",
+  "跟随系统": "System",
+  "页面配色": "Color scheme",
+  "页面滚动": "Page scroll",
+  "社交主页": "Elsewhere",
+  "AI 产品与自动化": "AI products & automation",
+  "AI 产品与自动化 · 2027 届 · 寻找 AI 产品实习": "AI products & automation · Class of 2027 · Open to internships",
+  "Ryan Wang — AI 产品与自动化": "Ryan Wang — AI products & automation",
+  "2027 届软件工程本科": "BEng Software Engineering · Class of 2027",
+  "2027 届软件工程本科，寻找 AI 产品方向实习。": "Software engineering undergraduate, graduating in 2027. Open to AI product internships.",
+  "2027 年 6 月毕业。": "Graduating in June 2027.",
+  "寻找 AI 产品方向实习": "Open to AI product internships",
+  "寻找 AI 产品方向实习。": "Open to AI product internships.",
+  "实习意向": "Open to internships",
+  "个人信息": "Ryan Wang",
+  "王冠行": "Ryan Wang",
+  "RYAN WANG / 王冠行": "RYAN WANG",
+  "© 2026 王冠行 / RYAN WANG": "© 2026 RYAN WANG",
+  "王冠行 / Ryan Wang 的个人头像": "Portrait of Ryan Wang",
+  "从具体问题，": "From a real problem",
+  "走到可用的结果。": "to something useful.",
+  "从具体问题出发，": "I start with a concrete problem",
+  "把判断落实为可用的产品。": "and build something people can use.",
+  "把模糊需求，": "Clarify the need.",
+  "落成可验证的产品。": "Build. Then verify.",
+  "每个结果，": "Every result.",
+  "都有记录。": "A record behind it.",
+  "学习、实践，": "Learning.",
+  "持续迭代。": "Building. Refining.",
+  "理解问题。": "Understand.",
+  "动手构建。": "Build.",
+  "持续改进。": "Refine.",
+  "一起做点": "Let’s build",
+  "有用的事。": "something useful.",
+  "一起做点有用的事。": "Let’s build something useful.",
+  "欢迎交流 AI 产品实习与项目机会。": "Let’s talk about AI product internships and projects.",
+  "从一次交流，": "It starts with",
+  "开始。": "a conversation.",
+  "发邮件给 Ryan Wang，讨论 AI 产品实习或项目": "Email Ryan Wang about an AI product internship or project",
+  "回到顶部": "Back to top",
+  "回到页面顶部": "Back to top",
+  "先看作品": "Explore work",
+  "看我做了什么 ↓": "Explore my work ↓",
+  "向下滚动 ↓": "Scroll to explore ↓",
+  "01 / 工作室": "01 / STUDIO",
+  "02 / 工作室": "02 / STUDIO",
+  "03 / 工作台": "03 / WORKSPACE",
+  "04 / 我的桌面": "04 / MY DESK",
+  "让信息进入工作流。": "Turn information into a workflow.",
+  "从灵感，走向工作台。": "From an idea to the workbench.",
+  "我在这里，把想法做出来。": "Where ideas become working tools.",
+  "我的桌面": "My desk",
+  "从这里，进入我的作品。": "Explore the work behind the desk.",
+  "正在打开工作室": "Opening the studio",
+  "正在准备材质": "Preparing materials",
+  "正在点亮工作室": "Lighting the studio",
+  "正在载入工作室…": "Loading the studio…",
+  "工作室已就绪": "Studio ready",
+  "三维画面暂不可用，可以继续查看作品。": "The 3D scene is unavailable. You can still explore the work below.",
+  "三维场景需要 JavaScript。下方作品与联系方式仍可阅读。": "The 3D scene needs JavaScript. Projects and contact details are available below.",
+  "当代创作室三维场景，向下滚动进入项目": "A contemporary studio. Scroll through the scene to explore the projects.",
+  "完整雕塑戴蓝色耳机，坐在现代工作台前；古典壁画位于身后。滚动时，摄影机沿桌侧绕至肩后，再进入 Ryan 的个人桌面。": "A sculpture wearing blue headphones sits at a modern desk, with a classical fresco behind it. Scrolling moves the camera around the desk and into Ryan’s desktop.",
+  "示例报告": "Sample report",
+  "示例数据": "Sample data",
+  "示例报告 · 示例数据": "Sample report · Sample data",
+  "分钟": "MIN",
+  "分类核对": "Classification check",
+  "分类核对命中": "Classification matches",
+  "人工确认": "Human approval",
+  "人工核验": "Manual review",
+  "独立开发": "Solo build",
+  "独立开发 · 2025": "Solo build · 2025",
+  "会议一": "Meeting I",
+  "会议二": "Meeting II",
+  "会议三": "Meeting III",
+  "会议一 / 10": "Meeting I / 10",
+  "会议二 / 12": "Meeting II / 12",
+  "会议三 / 03": "Meeting III / 03",
+  "14 条入库样本 · 人工核对": "14 stored samples · Manually checked",
+  "三场会议 · 逐条核验": "Three meetings · Item-by-item review",
+  "机制示意": "Interaction schematic",
+  "情境": "Context",
+  "选择": "Choice",
+  "属性变化": "State change",
+  "后续叙事": "Narrative",
+  "全国三等奖": "National third prize",
+  "全国": "National",
+  "三等奖": "Third prize",
+  "人生新起点": "Life, Rewritten",
+  "人生新起点 — Ryan Wang": "Life, Rewritten — Ryan Wang",
+  "人生新起点 →": "Life, Rewritten →",
+  "004 / 人生新起点": "004 / LIFE, REWRITTEN",
+  "回顾前，把材料找齐。": "Gather the context before the review.",
+  "两类反馈，两套门控。": "Two sources. Separate classification gates.",
+  "AI 先起草，人来确认。": "AI drafts. People approve.",
+  "让选择产生后果。": "Choices that change what happens next.",
+  "查看 Lark-Retro 项目与真实报告": "View Lark-Retro and its sample report",
+  "查看 Xmind 反馈自动化，12/14 条样本分类核对": "View Xmind feedback automation: 12 of 14 samples matched",
+  "查看 Lark-Dispatch，三场会议 25 条信息人工核验": "View Lark-Dispatch: 25 items manually reviewed across three meetings",
+  "查看人生新起点，独立开发与全国三等奖记录": "View Life, Rewritten: a solo project awarded a national third prize",
+  "机制示意：情境、选择、属性变化、后续叙事": "Interaction schematic: context, choice, state change, narrative",
+  "定时运行": "Scheduled runs",
+  "采集边界": "Collection limits",
+  "记录": "Record",
+  "10 次定时运行 10/10 成功（45s–8m33s），11 周产出 10 期周报。": "10 of 10 scheduled runs completed in 45s–8m33s. Ten reports produced over 11 weeks.",
+  "14 条入库样本中命中 12 条。支付、流程类缺陷曾被误归为功能请求。": "12 of 14 stored samples matched. Payment and workflow defects were sometimes classified as feature requests.",
+  "Reddit 链路受 API 商业授权限制，采集记录为 0/10。": "Reddit collection: 0/10, limited by commercial API authorization.",
+  "01 / 分类核对": "01 / Classification",
+  "02 / 单次过滤": "02 / Single-run filter",
+  "03 / 定时运行": "03 / Scheduled runs",
+  "04 / 整理提速": "04 / Preparation time",
+  "05 / 人工核验": "05 / Manual review",
+  "06 / 修复闭环": "06 / Defects resolved",
+  "14 条入库样本，12/14 人工命中。": "12 of 14 stored samples matched in manual review.",
+  "单次 18 条候选 → 1 条入库。": "One run: 18 candidates → 1 stored item.",
+  "45s–8m33s；11 周产出 10 期周报。": "45s–8m33s per run; ten reports over 11 weeks.",
+  "记录耗时：50–75 分钟 → 3 分钟。": "Recorded preparation time: 50–75 min → 3 min.",
+  "三场会议，10 + 12 + 3 条逐条核对。": "Three meetings: 10 + 12 + 3 items manually checked.",
+  "经反馈流程定位并修复。": "Identified and resolved through the feedback workflow.",
+  "Reddit 采集：0/10": "Reddit collection: 0/10",
+  "Reddit 链路因平台 API 商业授权未能完成采集。": "Reddit collection could not be completed due to commercial API authorization limits.",
+  "10/10 指定时运行完成，不代表全平台采集成功。": "10/10 refers to scheduled runs, not successful collection from every platform.",
+  "AI 辅助执行，": "AI helps execute.",
+  "人工把关决策点。": "People own the decisions.",
+  "能力验证优先于功能宣称。": "Verify what works before expanding the scope.",
+  "AI 执行": "AI execution",
+  "人工把关": "Human review",
+  "验证交付": "Verified delivery",
+  "暂停流动": "Pause motion",
+  "继续流动": "Resume motion",
+  "暂停工具标识流动": "Pause tool marquee",
+  "继续工具标识流动": "Resume tool marquee",
+  "飞书 CLI": "Lark CLI",
+  "豆包": "Doubao",
+  "2023 — 至今": "2023 — PRESENT",
+  "现在": "NOW",
+  "飞书 CLI 官方直播嘉宾": "Guest on the official Lark CLI livestream",
+  "5 位核心创作者之一，lark-retro 作者。": "One of five featured creators; author of lark-retro.",
+  "AIGC 歌曲 MV《灵感全开》": "AI-assisted music video, “Inspiration Unlocked”",
+  "与威海人社局共创。": "Co-created with Weihai’s Human Resources and Social Security Bureau.",
+  "百度秒哒金牌讲师": "Baidu Miaoda Gold Instructor",
+  "AI 应用开发教学，持续中。": "Teaching AI application development. Ongoing.",
+  "Xmind 用户反馈自动化": "Xmind feedback automation",
+  "7 个月兼职，图形化流水线做到代码化 + 监控。": "Seven-month part-time project: from visual workflows to code and monitoring.",
+  "WaytoAGI 威海核心共建者": "WaytoAGI Weihai core contributor",
+  "社区活动组织与内容共建，持续中。": "Community events and collaborative content. Ongoing.",
+  "Datawhale AI 春训营助教": "Teaching assistant, Datawhale AI Spring Camp",
+  "带营员跑通 AI 应用项目。": "Helped participants build working AI applications.",
+  "软件工程本科入学": "Started software engineering degree",
+  "产品": "Product",
+  "自动化": "Automation",
+  "实现": "Build",
+  "需求拆解 · 工作流设计 · 证据核对": "Requirements · Workflow design · Evidence review",
+  "采集 · 分类门控 · 人工确认": "Collection · Classification gates · Human approval",
+  "提示词迭代 · 代码实现 · 开发调优": "Prompt iteration · Implementation · Refinement",
+  "背景": "Context",
+  "我的工作": "My contribution",
+  "结果": "Results",
+  "项目导航": "Project navigation",
+  "项目背景、个人动作与结果": "Project context, contribution and results",
+  "上一与下一项目": "Previous and next project",
+  "← 作品目录": "← All work",
+  "返回四个作品 ↑": "Back to all four projects ↑",
+  "聊聊下一件作品 ↗": "Let’s discuss what’s next ↗",
+  "查看项目源码": "View source",
+  "AI 工作流 · 开源项目": "AI workflow · Open source",
+  "人工确认 · 开源项目": "Human approval · Open source",
+  "回顾开始前，": "Before the review,",
+  "先把材料找齐。": "gather the context.",
+  "六类输入，四层能力。按已有权限运行，在报告中说明缺口。": "Six input types. Four capability layers. Works within granted permissions and reports missing context.",
+  "准备耗时": "Preparation time",
+  "输入类型": "Input types",
+  "能力分层": "Capability layers",
+  "记录口径": "Scope & source",
+  "查看完整报告 ↗": "View full report ↗",
+  "打开 Lark-Retro 完整报告，示例数据": "Open the full Lark-Retro sample report",
+  "Lark-Retro 完整报告，示例数据": "Lark-Retro full report with sample data",
+  "关闭报告": "Close report",
+  "Lark-Retro 回顾报告真实样例，表内为示例业务数据。": "A Lark-Retro report output containing sample business data.",
+  "Lark-Retro 回顾报告真实样例。表内为示例业务数据，非个人业绩。": "A Lark-Retro report output. Business figures are sample data, not personal performance metrics.",
+  "Lark-Retro 完整回顾报告样例。表内为示例业务数据，非个人业绩。": "Full Lark-Retro sample report. Business figures are sample data, not personal performance metrics.",
+  "Lark-Retro 真实报告样例，表中数据用于演示，不代表个人业绩。": "A Lark-Retro report output with demonstration data, not personal performance metrics.",
+  "六类输入：日历、会议记录、任务、消息、文档、画板。第 03 层可选读取 OKR，第 04 层支持会议室，均受对应权限限制。准备耗时 <3 分钟、原流程 1–2 小时来自项目 README 的效率记录，实际耗时随输入与权限变化。报告为示例数据。": "Inputs: calendars, meeting records, tasks, messages, documents and whiteboards. Layer 03 optionally reads OKRs; layer 04 supports meeting rooms, subject to permissions. Under 3 minutes versus the previous 1–2 hours is the README’s recorded comparison; actual time depends on inputs and access. The report contains sample data.",
+  "飞书 CLI 创作者大赛 2026 参赛作品。原流程需人工查找群聊、会议与任务记录，整理耗时 1–2 小时。": "An entry for the 2026 Lark CLI Creator Competition. The previous workflow required manually gathering chats, meeting records and tasks, taking 1–2 hours.",
+  "把回顾做成飞书 Skill。一句话汇集日历、会议记录、任务、消息、文档、画板六类输入。": "Built a Lark Skill that gathers six input types from one request: calendars, meeting records, tasks, messages, documents and whiteboards.",
+  "按已有权限逐层增强：第 03 层加入消息与 OKR，第 04 层加入 Bot 与会议室；缺失项降级，并在报告中说明。": "Progressive enhancement within existing permissions: messages and OKRs in layer 03, bots and meeting rooms in layer 04. Missing access degrades gracefully and is disclosed in the report.",
+  "v2.0 行动项闭环：回顾产出的 action 有跟踪、有回访": "v2.0 adds follow-up and tracking for action items generated by the review.",
+  "1–2 小时 → 3 分钟内": "1–2 hours → under 3 minutes",
+  "渐进增强 4 层 · 非阻塞降级": "Four progressive layers · Non-blocking fallback",
+  "形态": "Format",
+  "纯 Skill 零代码 · v2.6.7": "No-code Skill · v2.6.7",
+  "工作流演示": "Workflow demo",
+  "播放工作流演示 ↗": "Play workflow demo ↗",
+  "停止演示 ×": "Stop demo ×",
+  "Lark-Retro 仓库中的工作流演示；点击播放后展示操作过程，业务数据为样例。": "Workflow demo from the Lark-Retro repository. Business data shown is illustrative.",
+  "Xmind 反馈自动化 — Ryan Wang": "Xmind Feedback Automation — Ryan Wang",
+  "Xmind 反馈自动化 →": "Xmind Feedback Automation →",
+  "← Xmind 反馈自动化": "← Xmind Feedback Automation",
+  "反馈自动化": "Feedback automation",
+  "反馈自动化 · 2025.11–2026.05": "Feedback automation · Nov 2025–May 2026",
+  "统一入库，分别验证。": "One database. Separate validation.",
+  "14 条入库样本，人工核对。": "14 stored samples, manually checked.",
+  "内部分类 / 06": "Internal / 06",
+  "外部分类 / 08": "External / 08",
+  "内部工单": "Internal tickets",
+  "外部反馈": "External feedback",
+  "PostgreSQL 统一入库": "Stored in PostgreSQL",
+  "单次过滤": "Single-run filter",
+  "单次 18 条候选 → 1 条入库": "One run: 18 candidates → 1 stored item",
+  "样本与运行边界": "Samples & limits",
+  "14 条入库样本中命中 12 条，偏差包括支付、流程缺陷被误归为功能请求。10 次定时运行完成，单次耗时 45 秒至 8 分 33 秒；11 周产出 10 期周报。Reddit 采集为 0/10，受 API 商业授权限制。约 94% 仅指一次 18 条候选到 1 条入库的过滤记录。图为结构示意。": "12 of 14 stored samples matched; errors included payment and workflow defects classified as feature requests. Ten scheduled runs completed in 45 seconds to 8 minutes 33 seconds; ten reports over 11 weeks. Reddit collection was 0/10 due to commercial API authorization limits. Approximately 94% refers only to one run filtering 18 candidates to one stored item. The diagram is a schematic.",
+  "反馈散落在 LinkedIn / Reddit / Facebook / X / Discord 和内部工单两套体系，产品团队没有统一视角。": "Feedback was split between social platforms—LinkedIn, Reddit, Facebook, X and Discord—and internal tickets, without a unified product view.",
+  "两条链路统一汇入 PostgreSQL：外部舆情采集 + 内部工单": "Unified external feedback collection and internal tickets in PostgreSQL.",
+  "内部走 Gemini 6 类，外部单独设 8 类意图门控——两套体系分开设计、分开验证": "Designed and validated separate systems: six Gemini-based categories for internal tickets and eight intent categories for external feedback.",
+  "11 周周报后把图形化流程重写为代码化采集器，补 Dashboard 与 Prometheus，5 月合并 8 个 PR": "After 11 weeks of reports, rewrote the visual workflow as code-based collectors, added a dashboard and Prometheus monitoring, and merged eight PRs in May.",
+  "86%（12/14 人工核对）": "86% (12/14, manually checked)",
+  "噪音拦截": "Single-run filtering",
+  "单次 18 条候选 → 1 条（≈94%）": "One run: 18 candidates → 1 item (≈94%)",
+  "10 次定时运行 10/10": "10/10 scheduled runs",
+  "修复闭环": "Defects resolved",
+  "3 个 P0 缺陷经此定位并修复": "Three P0 defects identified and resolved through this workflow",
+  "内部反馈分六类，外部反馈设八类意图门控，分别通过后统一入 PostgreSQL。结构示意。": "Internal feedback uses six categories; external feedback uses eight intent gates. Approved items enter PostgreSQL. Schematic.",
+  "AI 先起草。": "AI drafts.",
+  "人来确认。": "People approve.",
+  "把会后信息送到任务、通知与知识文档。确认是主流程。": "Turn meeting information into tasks, notifications and documentation. Human approval is part of the main workflow.",
+  "三场会议，逐条人工核对。": "Three meetings. Every item manually reviewed.",
+  "草稿": "Draft",
+  "分发": "Dispatch",
+  "确认门控与实测范围": "Approval gate & test scope",
+  "三场会议分别提取 10、12、3 条信息，共 25 条，分发前逐条人工核对。25/25 不是“100% 自动提取准确率”。用户可以修改、删除和补充草稿，未经确认不执行分发。历史 14 条跨租户目标正确降级，2 项追踪任务完成、平均 6.8 天；这些属于有限样本，不外推为持续生产保证。": "Three meetings produced 10, 12 and 3 items: 25 total, manually checked before dispatch. 25/25 is not an automated extraction accuracy score. Users can edit, remove or add draft items; dispatch requires approval. Fourteen cross-tenant targets fell back correctly. Two tracked tasks completed in an average of 6.8 days. These are limited samples, not ongoing production guarantees.",
+  "OpenClaw 赛道作品。会后需人工整理录音，并确认接收人、任务和分发目标。": "An OpenClaw track project. Meeting recordings needed manual preparation, with recipients, tasks and destinations checked separately.",
+  "三场真实会议实测：提取 25 条（10+12+3），逐条人工核验": "Tested across three real meetings: 25 items (10+12+3), each manually reviewed.",
+  "确认门控——草稿先给人看，无人值守自动分发被明确禁用": "Added an approval gate: drafts are reviewed first. Unattended dispatch is disabled.",
+  "跨租户 14 条（6+8）全部正确降级，不越权、不中断": "All 14 cross-tenant targets (6+8) fell back correctly without exceeding permissions or interrupting the workflow.",
+  "整理耗时": "Preparation time",
+  "50–75 分钟 → 3 分钟（≈17–25×）": "50–75 minutes → 3 minutes (≈17–25×)",
+  "三场会议 25/25 逐条人工核对": "25/25 items manually reviewed across three meetings",
+  "任务闭环": "Task follow-up",
+  "2/2 完成 · 平均 6.8 天": "2/2 completed · Average 6.8 days",
+  "591 行纯 SKILL.md · 0 中断": "591 lines of SKILL.md · No interruptions recorded",
+  "独立完成产品设计、Prompt 迭代、": "Independently designed the product, iterated prompts,",
+  "代码实现与开发调优。": "implemented and refined the application.",
+  "兴智杯全国人工智能创新应用大赛 · 2025": "Xingzhi Cup National AI Innovation & Application Competition · 2025",
+  "个人职责与作品边界": "Contribution & scope",
+  "个人参赛，独立完成产品设计、提示词体系、代码实现与开发调优。全国三等奖为奖项等级。机制图用于说明交互逻辑，项目源码见上方链接。": "A solo entry covering product design, prompt systems, implementation and refinement. National third prize is an award tier, not a third-place ranking. The mechanism diagram illustrates interaction logic; source code is linked above.",
+  "全国性 AI 应用赛事，同赛道 6000+ 支团队。个人独立参赛。": "A national AI application competition with 6,000+ teams in the same track. Entered independently.",
+  "独立完成产品设计、Prompt 体系、开发与调优": "Independently handled product design, prompt systems, development and refinement.",
+  "围绕人生决策模拟，设计情境、选择、属性变化与后续叙事。": "Designed context, choices, state changes and subsequent narrative around a life-decision simulation.",
+  "奖项": "Award",
+  "赛道": "Track",
+  "20 强": "Top 20",
+  "分工": "Contribution",
+  "个人主导全流程": "Solo, end to end",
+  "赛事规模记录": "Competition record",
+  "赛事记录：6000+ 支团队；赛道 20 强": "Recorded competition scale: 6,000+ teams; track top 20",
+  "点击数据，查看项目与口径。": "Open a record for the project and its scope.",
+  "经历与实践": "Experience & practice",
+  "个人简介": "Profile"
+},english=new URLSearchParams(location.search).get('lang')==='en',root=document.documentElement;
+ root.lang=english?'en':'zh-CN';root.dataset.language=english?'en':'zh';
+ const t=value=>english?(dict[value]??value):value;
+ window.RyanI18n={english,t};
+ if(english){
+  const walk=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement?.closest('script,style')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[];while(walk.nextNode())nodes.push(walk.currentNode);
+  nodes.forEach(n=>{const key=n.textContent.trim();if(dict[key])n.textContent=n.textContent.replace(key,dict[key]);});
+  document.querySelectorAll('*').forEach(el=>{for(const name of ['aria-label','alt','title','data-letter-line'])if(el.hasAttribute(name))el.setAttribute(name,t(el.getAttribute(name)));});
+  const meta=document.querySelector('meta[name=description]');if(meta)meta.content='Ryan Wang. Software engineering undergraduate, class of 2027. AI products, automation and selected project records.';
+ }
+ for(const link of document.querySelectorAll('a[href]')){
+  if(link.hasAttribute('data-language-switch')){
+   link.textContent=english?'中文':link.classList.contains('language-link')?'EN':'English';link.setAttribute('aria-label',english?'切换到中文':'Switch to English');
+   const target=new URL(location.href);if(english)target.searchParams.delete('lang');else target.searchParams.set('lang','en');link.href=target.href;
+   link.addEventListener('click',()=>{
+    const candidates=[...document.querySelectorAll('.track,.portfolio-body>section,#collaborate,#contact,.case-main')];const current=candidates.filter(el=>el.getBoundingClientRect().top<innerHeight*.5).at(-1);
+    if(current?.id)target.hash=current.id;link.href=target.href;
+   });continue;
+  }
+  const href=link.getAttribute('href');if(href.startsWith('#')||/^(mailto:|https?:)/.test(href))continue;
+  if(english&&href.includes('.html')){const url=new URL(href,location.href);url.searchParams.set('lang','en');link.href=url.href;}
+ }
+})();
+
+(() => {
+ const t=value=>window.RyanI18n?.t(value)??value;
+ const root=document.documentElement,menu=document.querySelector('#menu-dialog'),opener=document.querySelector('#menu-open');
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)'),systemDark=matchMedia('(prefers-color-scheme: dark)');
+ const forcedReduced=new URLSearchParams(location.search).get('motion')==='reduce';
+ const motionStyle=document.createElement('style');motionStyle.dataset.motionOverride='true';document.head.append(motionStyle);
+ const syncMotion=()=>{const off=reduced.matches||forcedReduced;root.classList.toggle('reduced-motion',off);motionStyle.textContent=off?'@view-transition{navigation:none}::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}':'';};syncMotion();reduced.addEventListener('change',syncMotion);
+ let theme='auto';try{theme=localStorage.getItem('ryan-atelier-theme')||'auto';}catch{}
+ if(!['auto','light','dark'].includes(theme))theme='auto';
+ function syncTheme(){root.dataset.theme=theme==='auto'?(systemDark.matches?'dark':'light'):theme;root.dataset.themeChoice=theme;document.querySelectorAll('[data-theme-choice]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeChoice===theme)));}
+ document.querySelectorAll('[data-theme-choice]').forEach(b=>b.addEventListener('click',()=>{theme=b.dataset.themeChoice;try{localStorage.setItem('ryan-atelier-theme',theme);}catch{}syncTheme();}));systemDark.addEventListener('change',syncTheme);syncTheme();
+ opener?.addEventListener('click',()=>menu.showModal());
+ menu?.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',()=>menu.close()));
+ const glove=document.querySelector('#glove'),fine=matchMedia('(pointer:fine)');
+ const cursorMode=()=>root.classList.toggle('fine-pointer',fine.matches);cursorMode();fine.addEventListener('change',cursorMode);
+ addEventListener('pointermove',e=>{if(!fine.matches)return;glove.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;glove.classList.toggle('is-hot',Boolean(e.target.closest('a,button,summary')));},{passive:true});
+ addEventListener('pointerout',e=>{if(!e.relatedTarget)glove.style.transform='translate(-100px,-100px)';},{passive:true});
+ // Cross-document navigation stays native. Back/forward, modifier clicks,
+ // keyboard activation, copying URLs, and file opening all keep normal behavior.
+ document.querySelector('#report-open')?.addEventListener('click',()=>document.querySelector('#report-dialog').showModal());
+ const demo=document.querySelector('#demo-toggle'),demoImage=document.querySelector('#demo-image');
+ if(demo)demo.addEventListener('click',()=>{const playing=demo.getAttribute('aria-pressed')==='true';demo.setAttribute('aria-pressed',String(!playing));demoImage.src=playing?demoImage.dataset.poster:demoImage.dataset.animation;demo.textContent=t(playing?'播放工作流演示 ↗':'停止演示 ×');});
+ const closeDemo=()=>{if(demo&&demo.getAttribute('aria-pressed')==='true')demo.click();};
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)closeDemo();});reduced.addEventListener('change',()=>{if(reduced.matches)closeDemo();});
+})();
+</script></body></html>
