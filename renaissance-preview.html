@@ -402,6 +402,8 @@ html[data-theme=dark]{--paper:#11171e;--ink:#ece6d9;--muted:#aab2bc;--line:#3540
 html[lang=en] .finale-name-cn{display:none}
 
 
+.portfolio-body .work-grid{isolation:isolate}
+#project-flight{position:absolute;inset:0;width:100%;height:100%;z-index:0}
 .scene-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
 html[data-theme=dark] .scene-poster{filter:brightness(.45)}
 .studio-poster:not(.studio-reserved) .track{height:100svh}
@@ -416,10 +418,10 @@ html[data-scene-state=loading] #site-header.on-scene{color:var(--ink)}
 .scene-failed .hero-copy{opacity:1!important}.scene-failed .scene-note,.scene-failed #report-stage,.scene-failed .takeover-heading,.scene-failed .takeover-foot{display:none}
 .scene-failed .stage{background:var(--paper)}
 </style><link rel="preload" as="image" href="assets/renaissance-perf/poster.c81e5a1f016d7a78.webp"/><link rel="preload" as="script" href="assets/renaissance-perf/scene.18c00b5cabf504e2.js"/><script>window.RYAN_STUDIO_MANIFEST={"models":{"mobile":{"version":"1ff01b68f95ed54c","bytes":3871140,"model":"assets/renaissance-perf/studio-mobile.1ff01b68f95ed54c.glb","nightMaps":{"Ivory / Penelope scan":"assets/renaissance-perf/night-ivory-mobile.02d92b7e0c35bc35.webp","Lime plaster":"assets/renaissance-perf/night-lime-plaster-mobile.226ca68bdbea1f66.webp","Honed travertine":"assets/renaissance-perf/night-honed-travertine-mobile.01613f086852417c.webp","Original fresco / generated concept":"assets/renaissance-perf/night-original-fresco-mobile.d47a83ce4647251c.webp"},"cdnModel":"https://cdn.jsdelivr.net/gh/gkzzhs/gkzzhs.github.io@e355fe0481a5afca715541b32fb62f70e108102e/assets/renaissance-perf/studio-mobile.1ff01b68f95ed54c.glb"},"desktop":{"version":"3ed6e2c659a92479","bytes":5949676,"model":"assets/renaissance-perf/studio-desktop.3ed6e2c659a92479.glb","nightMaps":{"Ivory / Penelope scan":"assets/renaissance-perf/night-ivory-desktop.48eb22d851696285.webp","Lime plaster":"assets/renaissance-perf/night-lime-plaster-desktop.39244fdbf60c1f3b.webp","Honed travertine":"assets/renaissance-perf/night-honed-travertine-desktop.48fb794c2f02163e.webp","Original fresco / generated concept":"assets/renaissance-perf/night-original-fresco-desktop.339dece6fe7451b3.webp"},"cdnModel":"https://cdn.jsdelivr.net/gh/gkzzhs/gkzzhs.github.io@e355fe0481a5afca715541b32fb62f70e108102e/assets/renaissance-perf/studio-desktop.3ed6e2c659a92479.glb"}},"runtime":"assets/renaissance-perf/scene.18c00b5cabf504e2.js"};(()=>{function x({width:e,height:o,dpr:i=1,touch:h=!1,memory:u=8,forced:t=""}){let r=t==="mobile"||t!=="desktop"&&(h||e<760||u<=4),a=Math.min(i,r?1.2:1.5,Math.sqrt((r?115e4:32e5)/Math.max(1,e*o)));return{name:r?"mobile":"desktop",mobile:r,ratio:a,post:!r,shadowSize:r?0:2048,lampShadow:!r,textureSize:r?1024:2048}}function b(){return x({width:innerWidth,height:innerHeight,dpr:devicePixelRatio||1,touch:matchMedia("(pointer:coarse)").matches||navigator.maxTouchPoints>1,memory:navigator.deviceMemory||8,forced:new URLSearchParams(location.search).get("quality")||""})}async function f(e,o,{signal:i,onProgress:h,cacheOnly:u=!1}){i?.throwIfAborted();let t=await fetch(e,{...u?{cache:"only-if-cached",mode:"same-origin"}:{cache:new URLSearchParams(location.search).has("cache")?"no-store":"force-cache"},signal:i});if(!t.ok)throw new Error("Scene asset "+t.status);let r=new Uint8Array(o.bytes),n=0;if(t.body){let a=t.body.getReader();try{for(;;){let{done:c,value:l}=await a.read();if(c)break;if(n+l.length>r.length)throw new Error("Invalid scene size");r.set(l,n),n+=l.length,h(n/r.length)}}catch(c){throw await a.cancel(c).catch(()=>{}),c}finally{a.releaseLock()}}else{let a=new Uint8Array(await t.arrayBuffer());if(a.length!==r.length)throw new Error("Incomplete scene");r.set(a),n=a.length}if(n!==r.length)throw new Error("Incomplete scene");if(o.version&&globalThis.crypto?.subtle){let a=await crypto.subtle.digest("SHA-256",r.buffer);if(![...new Uint8Array(a)].map(l=>l.toString(16).padStart(2,"0")).join("").startsWith(o.version))throw new Error("Scene integrity mismatch")}return r.buffer}async function y(e,{signal:o,onProgress:i=()=>{},onSource:h=()=>{}}={}){if(!e.cdnModel)return f(e.model,e,{signal:o,onProgress:i});if(!new URLSearchParams(location.search).has("cache"))try{let s=await f(e.model,e,{signal:o,onProgress:i,cacheOnly:!0});return h("cache"),s}catch{o?.throwIfAborted()}let u=[new AbortController,new AbortController],t,r=!1,n,a=new Promise(s=>{n=()=>{r||(r=!0,clearTimeout(t),s())},t=setTimeout(n,1500)}),c=()=>{u.forEach(s=>s.abort(o?.reason)),n()};o?.aborted?c():o?.addEventListener("abort",c,{once:!0});let l=(s,w)=>f(s,e,{signal:u[w].signal,onProgress:m=>{i(m),w===0&&!r&&(clearTimeout(t),t=setTimeout(n,2500))}}).then(m=>({buffer:m,index:w})),v=l(e.cdnModel,0).catch(s=>{throw n(),s}),P=a.then(()=>l(e.model,1));try{let s=await Promise.any([v,P]);return h(s.index===0?"cdn":"origin"),s.buffer}finally{c(),o?.removeEventListener("abort",c)}}var p=document.documentElement,E=new URLSearchParams(location.search);p.classList.add("studio-poster");p.dataset.sceneState="loading";var g=b(),S=window.RYAN_STUDIO_MANIFEST.models[g.name],A=["#studio-detail","#desktop-detail","#report-preview"].includes(location.hash);A&&p.classList.add("studio-reserved");var d=window.RyanStudioBoot={quality:g,model:S.model,sceneLink:A,startedAt:performance.now(),controller:new AbortController,progress:0,promise:null};location.protocol!=="file:"&&window.WebAssembly&&E.get("scene")!=="poster"&&(d.promise=y(S,{signal:d.controller.signal,onProgress:e=>{d.progress=Math.max(d.progress,e),d.onProgress?.(d.progress)},onSource:e=>{d.source=e}}).then(e=>(d.downloadedAt=performance.now(),{buffer:e}),e=>({error:e})));})();
-</script></head><body><a class="skip" href="#work">跳到项目正文</a><div aria-hidden="true" id="glove"></div><header id="site-header"><a class="brand" href="#top">RYAN WANG</a><nav aria-label="主导航"><a aria-label="Switch to English" class="language-link" data-language-switch="" href="?lang=en">EN</a><a href="#work">作品</a><a href="#timeline">经历</a><a href="#contact">联系 ↗</a><button aria-controls="menu-dialog" aria-haspopup="dialog" class="menu-toggle" id="menu-open">目录 ☰</button></nav></header><div aria-controls="page-main" aria-label="页面滚动" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" id="page-scrollbar" role="scrollbar" tabindex="0"><span class="scroll-thumb"></span></div><canvas aria-hidden="true" id="project-flight"></canvas><main id="page-main"><section aria-label="当代创作室三维场景，向下滚动进入项目" class="track" id="top"><span aria-hidden="true" class="scene-waypoint studio-waypoint" id="studio-detail"></span><span aria-hidden="true" class="scene-waypoint desktop-waypoint" id="desktop-detail"></span><span aria-hidden="true" class="scene-waypoint report-waypoint" id="report-preview"></span><div class="stage"><img class="scene-poster" src="assets/renaissance-perf/poster.c81e5a1f016d7a78.webp" alt="" fetchpriority="high" decoding="async"/><canvas aria-label="完整雕塑戴蓝色耳机，坐在现代工作台前；古典壁画位于身后。滚动时，摄影机沿桌侧绕至肩后，再进入 Ryan 的个人桌面。" id="scene"></canvas><div class="loading" hidden="" role="status">正在载入工作室…</div><div class="scene-gate" data-state="loading" id="scene-gate"><div class="gate-inner"><div class="gate-caption"><p aria-live="polite" id="gate-status" role="status">正在打开工作室</p><span aria-hidden="true" id="gate-step">01 / 03</span></div><div aria-hidden="true" class="gate-rail"><i id="gate-progress"></i></div><a class="gate-skip" href="#work">先看作品 <span aria-hidden="true">↗</span></a></div></div><div aria-hidden="true" class="stage-wash"></div><div class="hero-copy"><p class="identity">AI 产品与自动化 · 2027 届 · 寻找 AI 产品实习</p><h1>Ryan <em>Wang.</em></h1></div><div class="scene-note"><span id="phase">01 / 工作室</span><p id="phase-line">让信息进入工作流。</p></div><div class="scene-foot"><span>向下滚动 ↓</span></div><div class="takeover-heading"><span>我的桌面</span><h2>我在这里，把想法做出来。</h2></div><div aria-hidden="true" id="report-stage"><div id="report-plane"><img loading="lazy" decoding="async" alt="" src="assets/renaissance-perf/image.b50a4b52b2fb1698.webp"/></div></div><p class="sample-label" hidden aria-hidden="true"></p><div class="takeover-foot"><a href="#work">看我做了什么 ↓</a></div></div></section><div class="portfolio-body"><section aria-labelledby="work-title" class="work-index section" id="work">
+</script></head><body><a class="skip" href="#work">跳到项目正文</a><div aria-hidden="true" id="glove"></div><header id="site-header"><a class="brand" href="#top">RYAN WANG</a><nav aria-label="主导航"><a aria-label="Switch to English" class="language-link" data-language-switch="" href="?lang=en">EN</a><a href="#work">作品</a><a href="#timeline">经历</a><a href="#contact">联系 ↗</a><button aria-controls="menu-dialog" aria-haspopup="dialog" class="menu-toggle" id="menu-open">目录 ☰</button></nav></header><div aria-controls="page-main" aria-label="页面滚动" aria-orientation="vertical" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" id="page-scrollbar" role="scrollbar" tabindex="0"><span class="scroll-thumb"></span></div><main id="page-main"><section aria-label="当代创作室三维场景，向下滚动进入项目" class="track" id="top"><span aria-hidden="true" class="scene-waypoint studio-waypoint" id="studio-detail"></span><span aria-hidden="true" class="scene-waypoint desktop-waypoint" id="desktop-detail"></span><span aria-hidden="true" class="scene-waypoint report-waypoint" id="report-preview"></span><div class="stage"><img class="scene-poster" src="assets/renaissance-perf/poster.c81e5a1f016d7a78.webp" alt="" fetchpriority="high" decoding="async"/><canvas aria-label="完整雕塑戴蓝色耳机，坐在现代工作台前；古典壁画位于身后。滚动时，摄影机沿桌侧绕至肩后，再进入 Ryan 的个人桌面。" id="scene"></canvas><div class="loading" hidden="" role="status">正在载入工作室…</div><div class="scene-gate" data-state="loading" id="scene-gate"><div class="gate-inner"><div class="gate-caption"><p aria-live="polite" id="gate-status" role="status">正在打开工作室</p><span aria-hidden="true" id="gate-step">01 / 03</span></div><div aria-hidden="true" class="gate-rail"><i id="gate-progress"></i></div><a class="gate-skip" href="#work">先看作品 <span aria-hidden="true">↗</span></a></div></div><div aria-hidden="true" class="stage-wash"></div><div class="hero-copy"><p class="identity">AI 产品与自动化 · 2027 届 · 寻找 AI 产品实习</p><h1>Ryan <em>Wang.</em></h1></div><div class="scene-note"><span id="phase">01 / 工作室</span><p id="phase-line">让信息进入工作流。</p></div><div class="scene-foot"><span>向下滚动 ↓</span></div><div class="takeover-heading"><span>我的桌面</span><h2>我在这里，把想法做出来。</h2></div><div aria-hidden="true" id="report-stage"><div id="report-plane"><img loading="lazy" decoding="async" alt="" src="assets/renaissance-perf/image.b50a4b52b2fb1698.webp"/></div></div><p class="sample-label" hidden aria-hidden="true"></p><div class="takeover-foot"><a href="#work">看我做了什么 ↓</a></div></div></section><div class="portfolio-body"><section aria-labelledby="work-title" class="work-index section" id="work">
 <div class="section-top"><p class="label">精选作品</p><span class="label">2025 — 2026</span></div>
 <div class="section-heading"><h2 id="work-title">作品<span class="sup">04</span><span aria-hidden="true" class="work-heading-arrow">↘</span></h2><p>从具体问题，<br/>走到可用的结果。</p></div>
-<div class="work-grid">
+<div class="work-grid"><canvas aria-hidden="true" id="project-flight"></canvas>
 <a aria-label="查看 Lark-Retro 项目与真实报告" class="work-item" href="assets/renaissance-perf/projects/lark-retro.html">
 <div class="work-cover retro-cover"><span class="cover-caption label">示例数据</span><div class="report-sheet"><img loading="lazy" decoding="async" alt="Lark-Retro 回顾报告真实样例，表内为示例业务数据。" height="2327" loading="lazy" src="assets/renaissance-perf/image.de818e8927d14d63.webp" width="2862"/></div><span class="cover-metric">&lt;03 <small>分钟</small></span></div>
 <div class="work-caption"><span class="roman">I</span><div><h3><span class="title-window"><span class="title-line">Lark-Retro</span></span></h3><p>回顾前，把材料找齐。</p></div><span aria-hidden="true" class="work-arrow">↗</span></div>
@@ -805,6 +807,8 @@ html[data-scene-state=loading] #site-header.on-scene{color:var(--ink)}
 /* Curved project planes. Textures are drawn from this site's actual report,
    fixed evidence metrics and mechanism, never from the reference site's art. */
 window.createProjectFlight=async function(canvas,elements){
+ const grid=canvas.closest('.work-grid');
+ if(!grid)return null;
  const gl=canvas.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false,powerPreference:'low-power'});
  if(!gl)return null;
  await document.fonts.ready;
@@ -837,11 +841,20 @@ window.createProjectFlight=async function(canvas,elements){
  const ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(indices),gl.STATIC_DRAW);
  const uniforms={};for(const name of ['uViewport','uResolution','uCenter','uSize','uAngles','uBend','uScale','uFocal'])uniforms[name]=gl.getUniformLocation(program,name);
  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
- let width=1,height=1,lost=false,draws=0,textureWidth=0,lastDpr=0;
- const planes=elements.map(el=>({el,cover:el.querySelector('.work-cover'),texture:gl.createTexture(),width:1,height:1}));
+ let width=1,height=1,lost=false,draws=0,lastDpr=0,gridTop=0,gridLeft=0;
+ const mobile=()=>window.RyanStudioBoot?.quality.mobile??(matchMedia('(pointer:coarse)').matches||navigator.maxTouchPoints>1||innerWidth<760);
+ const maxDimension=Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),gl.getParameter(gl.MAX_TEXTURE_SIZE));
+ const planes=elements.map(el=>({el,cover:el.querySelector('.work-cover'),texture:gl.createTexture(),left:0,top:0,width:1,height:1}));
+ // Read layout coordinates, not transformed screen rectangles. CSS aperture
+ // and hover transforms must never feed back into the canvas geometry.
+ function coverFrame(cover){
+  let left=0,top=0,node=cover;
+  while(node&&node!==grid){left+=node.offsetLeft;top+=node.offsetTop;node=node.offsetParent;}
+  return {left,top,width:cover.offsetWidth,height:cover.offsetHeight};
+ }
  function makeTexture(plane,index){
-  const cover=plane.cover,w=cover.getBoundingClientRect().width,h=cover.getBoundingClientRect().height,dpr=Math.min(devicePixelRatio||1,matchMedia('(pointer:coarse)').matches||innerWidth<760?1.2:1.5),surface=document.createElement('canvas');
-  surface.width=Math.ceil(w*dpr);surface.height=Math.ceil(h*dpr);const c=surface.getContext('2d');c.scale(dpr,dpr);plane.width=w;plane.height=h;
+  const cover=plane.cover,w=plane.width,h=plane.height,dpr=lastDpr,surface=document.createElement('canvas');
+  surface.width=Math.ceil(w*dpr);surface.height=Math.ceil(h*dpr);const c=surface.getContext('2d');c.scale(dpr,dpr);
   c.fillStyle=getComputedStyle(cover).backgroundColor;c.fillRect(0,0,w,h);
   const t=value=>window.RyanI18n?.t(value)??value;
   const pad=w*.043,cream='#F5F0E6',ink=index===1?'#25363B':index===3?'#5F393B':cream;
@@ -865,29 +878,46 @@ window.createProjectFlight=async function(canvas,elements){
   const foot=cover.querySelector('.cover-foot');if(foot)text(foot.textContent.trim(),pad,h-25,w<400?9:10);
   gl.bindTexture(gl.TEXTURE_2D,plane.texture);gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,surface);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
  }
- function resize(){if(lost)return;const oldWidth=width,oldHeight=height;width=innerWidth;height=innerHeight;const dpr=Math.min(devicePixelRatio||1,matchMedia('(pointer:coarse)').matches||width<760?1.2:1.5);if(oldWidth===width&&oldHeight===height&&lastDpr===dpr)return;canvas.width=Math.ceil(width*dpr);canvas.height=Math.ceil(height*dpr);gl.viewport(0,0,canvas.width,canvas.height);gl.uniform2f(uniforms.uViewport,width,height);gl.uniform2f(uniforms.uResolution,canvas.width,canvas.height);if(textureWidth!==width||lastDpr!==dpr){planes.forEach(makeTexture);textureWidth=width;canvas.dataset.textureBuilds=String(Number(canvas.dataset.textureBuilds||0)+1);}lastDpr=dpr;}
+ function resize(){
+  if(lost)return;
+  const oldWidth=width,oldHeight=height,r=grid.getBoundingClientRect();gridTop=r.top+scrollY;gridLeft=r.left;
+  width=Math.max(1,grid.clientWidth);height=Math.max(1,grid.offsetHeight);
+  const pixelBudget=mobile()?1150000:3200000;
+  const dpr=Math.min(devicePixelRatio||1,mobile()?1.2:1.5,Math.sqrt(pixelBudget/(width*height)),maxDimension/Math.max(width,height));
+  const changed=planes.map(p=>{const frame=coverFrame(p.cover),changed=frame.width!==p.width||frame.height!==p.height;Object.assign(p,frame);return changed;});
+  const ratioChanged=lastDpr!==dpr;lastDpr=dpr;
+  if(oldWidth!==width||oldHeight!==height||ratioChanged){
+   canvas.width=Math.max(1,Math.floor(width*dpr));canvas.height=Math.max(1,Math.floor(height*dpr));
+   gl.viewport(0,0,canvas.width,canvas.height);gl.uniform2f(uniforms.uViewport,width,height);gl.uniform2f(uniforms.uResolution,canvas.width,canvas.height);
+  }
+  let rebuilt=false;planes.forEach((p,i)=>{if(ratioChanged||changed[i]){makeTexture(p,i);rebuilt=true;}});
+  if(rebuilt)canvas.dataset.textureBuilds=String(Number(canvas.dataset.textureBuilds||0)+1);
+  canvas.dataset.coordinateSpace='work-grid';canvas.dataset.pixelBudget=String(pixelBudget);
+ }
  function draw(items,actualY,lag,reduced){
   if(lost)return;
-  if(!reduced&&canvas.dataset.visible==='0'&&items.every((it,i)=>it.top-actualY>height+200||it.top-actualY+planes[i].height< -200))return;
+  const visible=planes.filter(p=>{const screen=gridTop+p.top-actualY;return screen<innerHeight+200&&screen+p.height> -200;}).length;
+  if(!reduced&&canvas.dataset.visible==='0'&&!visible)return;
   gl.disable(gl.SCISSOR_TEST);gl.clear(gl.COLOR_BUFFER_BIT);document.documentElement.classList.toggle('flight-ready',!reduced);
   if(reduced){canvas.dataset.mode='static';return;}
-  let visible=0;
-  items.forEach((it,i)=>{const p=planes[i],screen=it.top-actualY;if(screen>height+200||screen+p.height< -200)return;visible++;
-   const centerY=screen+p.height*.5,mobile=width<760;
-   const focused=it.el.matches(':focus-visible'),motion=focused?0:1;
+  // Keep all four covers in the bitmap, including offscreen ones. Native
+  // scrolling can expose the next card before another JS frame runs.
+  planes.forEach(p=>{
+   const centerY=p.top+p.height*.5;
+   const focused=p.el.matches(':focus-visible'),motion=focused?0:1;
    // Same restrained mobile factor as the earlier neoclassical portfolio.
-   const factor=mobile?.65:1;
+   const factor=innerWidth<760?.65:1;
    const rx=motion*lag*19*factor,ry=0,rz=0;
    const bend=motion*lag*.24*p.height*factor,scale=1;
    // Clip each moving plane to its own cover window. The reserved caption
    // strip is outside this rectangle, including while scrolling backwards.
    const sx=canvas.width/width,sy=canvas.height/height,pad=6;
-   const x0=Math.max(0,Math.floor((it.left-pad)*sx)),x1=Math.min(canvas.width,Math.ceil((it.left+p.width+pad)*sx));
-   const y0=Math.max(0,Math.floor((screen-pad)*sy)),y1=Math.min(canvas.height,Math.ceil((screen+p.height+pad)*sy));
+   const x0=Math.max(0,Math.floor((p.left-pad)*sx)),x1=Math.min(canvas.width,Math.ceil((p.left+p.width+pad)*sx));
+   const y0=Math.max(0,Math.floor((p.top-pad)*sy)),y1=Math.min(canvas.height,Math.ceil((p.top+p.height+pad)*sy));
    if(x1<=x0||y1<=y0)return;
    gl.enable(gl.SCISSOR_TEST);gl.scissor(x0,canvas.height-y1,x1-x0,y1-y0);
-   p.cover.dataset.frameRect=[it.left,screen,p.width,p.height].map(v=>v.toFixed(2)).join(',');
-   gl.bindTexture(gl.TEXTURE_2D,p.texture);gl.uniform2f(uniforms.uCenter,it.left+p.width*.5,centerY);gl.uniform2f(uniforms.uSize,p.width,p.height);gl.uniform3f(uniforms.uAngles,rx*Math.PI/180,ry*Math.PI/180,rz*Math.PI/180);gl.uniform1f(uniforms.uBend,bend);gl.uniform1f(uniforms.uScale,scale);gl.uniform1f(uniforms.uFocal,Math.min(1200,p.width*1.6));gl.drawElements(gl.TRIANGLES,indices.length,gl.UNSIGNED_SHORT,0);
+   p.cover.dataset.frameRect=[gridLeft+p.left,gridTop+p.top-actualY,p.width,p.height].map(v=>v.toFixed(2)).join(',');
+   gl.bindTexture(gl.TEXTURE_2D,p.texture);gl.uniform2f(uniforms.uCenter,p.left+p.width*.5,centerY);gl.uniform2f(uniforms.uSize,p.width,p.height);gl.uniform3f(uniforms.uAngles,rx*Math.PI/180,ry*Math.PI/180,rz*Math.PI/180);gl.uniform1f(uniforms.uBend,bend);gl.uniform1f(uniforms.uScale,scale);gl.uniform1f(uniforms.uFocal,Math.min(1200,p.width*1.6));gl.drawElements(gl.TRIANGLES,indices.length,gl.UNSIGNED_SHORT,0);
    p.cover.dataset.peakAngle=String(Math.max(Number(p.cover.dataset.peakAngle||0),Math.abs(rx)));
    p.cover.dataset.flight=`${rx.toFixed(3)},${ry.toFixed(3)},${bend.toFixed(3)}`;
   });

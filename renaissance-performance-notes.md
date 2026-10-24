@@ -10,12 +10,12 @@ The live HTML was checked against the local baseline by SHA-256: `dbb7ec2cbba8b8
 
 | Resource | Before | After |
 | --- | ---: | ---: |
-| Main HTML | 4,587,261 | 184,616 |
+| Main HTML | 4,587,261 | 185,929 |
 | Scene runtime | 2,285,089 | 955,364 |
 | Scene model on phones/tablets | 11,416,888 | 3,871,140 |
 | Scene model on desktop | 11,416,888 | 5,949,676 |
 
-HTML reduction: 96.0%. Mobile scene-model reduction: 66.1%. These are file sizes, not a measured download-time or FPS claim. Cacheable assets are no longer repeatedly embedded in HTML.
+HTML reduction: 95.9%. Mobile scene-model reduction: 66.1%. These are file sizes, not a measured download-time or FPS claim. Cacheable assets are no longer repeatedly embedded in HTML.
 
 ## Runtime changes
 
@@ -71,6 +71,18 @@ The model files and image quality remain byte-for-byte unchanged from the deploy
 From the development machine during diagnosis, the original Pages mobile-model request took approximately 70.5 seconds; the pinned mirror took 35.8 seconds on a cold request and 7.25 seconds on a subsequent request. These measurements show why a second delivery route is useful, but are not an iPhone/iPad benchmark or a speed guarantee. The received mirror model was verified against the original SHA-256. The model itself is still 3,871,140 bytes uncompressed.
 
 Cache behavior reference: https://developer.mozilla.org/en-US/docs/Web/API/Request/cache
+
+## Card/caption scrolling correction — 2026-10-24
+
+During native or compositor-driven scrolling, the previous viewport-fixed WebGL canvas could show a cover at the last JavaScript scroll position while its HTML title had already moved with the document. The renderer also measured transformed cover rectangles during initialization, allowing animation transforms to affect its cached geometry.
+
+- Mount the single animated-cover canvas inside `.work-grid`, using absolute positioning within the grid. The browser now scrolls cover pixels and HTML captions together even before another JavaScript frame runs.
+- Draw in grid-relative layout coordinates, independent of `scrollY`. Scroll velocity still controls the restrained bend; each cover remains clipped to its own rounded rectangle, above its caption.
+- Populate all four cover windows, including offscreen ones, so native scrolling does not expose an undrawn card between JavaScript frames. Offscreen idle still stops rendering.
+- Read untransformed layout offsets and cover dimensions. Captions retain their existing spacing, accessible text and project links.
+- Keep one WebGL context. Bound the full grid buffer to 1.15 million pixels on mobile/tablets and 3.2 million on desktop, also respecting GPU dimension limits. Mobile browser-bar height changes do not rebuild textures.
+
+Validation: all 17 Node tests pass. New cases exercise the actual renderer with DOM/WebGL stubs at phone, tablet and desktop dimensions, assert unchanged cover coordinates under forward/reverse scroll, check clipping stays outside the title gap, verify pixel budgets and height-only resize reuse, and retain reduced-motion/offscreen behavior. Visible copy, project detail pages and the 3D startup runtime are unchanged. These tests do not constitute browser visual or physical iPhone/iPad validation; the previously reported saved browser permission restriction remains unresolved.
 
 ## Deployment / rollback
 
