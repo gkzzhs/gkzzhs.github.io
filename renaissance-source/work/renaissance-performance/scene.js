@@ -122,10 +122,10 @@ async function openStudio(){
 openStudio().catch(error=>{gate.fail(error);fail('三维画面未能载入，仍可查看下方作品。');});
 function fail(text){
  if(disposed)return;disposed=true;ready=false;cancelAnimationFrame(raf);raf=0;clearTimeout(resizeTimer);
- nightLighting?.dispose();disposeSceneGraph(model,{excludeTextures:new Set([scene.environment])});
+ nightLighting?.dispose();nightLighting=undefined;disposeSceneGraph(model,{excludeTextures:new Set([scene.environment])});
  if(model)scene.remove(model);model=undefined;reportMesh=undefined;cameraLens=undefined;
  scene.environment=null;environmentTarget.dispose();
- for(const pass of composer?.passes??[])pass.dispose?.();composer?.dispose();renderer.dispose();
+ for(const pass of composer?.passes??[])pass.dispose?.();composer?.dispose();composer=null;contactAO=null;renderer.dispose();
  document.body.classList.add('scene-failed');loading.hidden=false;loading.textContent=text;canvas.dataset.failed='true';window.RyanSceneGate?.fail(new Error(text));
 }
 addEventListener('scroll',()=>{if(ready&&!activated&&scrollY<=1)activateStudio();target=scrollY;lastInput=performance.now();releaseEntry();if(target===0)rendered=0;request();},{passive:true});addEventListener('resize',scheduleResize);reduced.addEventListener('change',()=>{if(entry.active&&isReduced())endEntry();rendered=target;px=py=tx=ty=0;request();});
