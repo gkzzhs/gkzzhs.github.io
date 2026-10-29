@@ -3,6 +3,7 @@ import {browserQuality} from './quality.js';
 import {MeshoptDecoder} from 'meshoptimizer/decoder';
 import {installNightLighting} from './night-lighting.js';
 import {sceneBuffer} from './scene-assets.js';
+import {disposeSceneGraph} from './dispose-scene.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
@@ -25,7 +26,7 @@ if(quality.post&&renderer.extensions.has('EXT_color_buffer_float')){
  composer.addPass(new RenderPass(scene,camera));contactAO=new GTAOPass(scene,camera,sceneWidth,sceneHeight,undefined,{radius:.16,thickness:.20,scale:.65,samples:8},{radius:5,samples:8});contactAO.blendIntensity=.30;composer.addPass(contactAO);composer.addPass(new OutputPass());
 }
 canvas.dataset.postprocessing=composer?'gtao':'none';
-const pmrem=new THREE.PMREMGenerator(renderer),environment=new RoomEnvironment();scene.environment=pmrem.fromScene(environment,.05).texture;scene.environmentIntensity=.12;environment.dispose();pmrem.dispose();
+const pmrem=new THREE.PMREMGenerator(renderer),environment=new RoomEnvironment(),environmentTarget=pmrem.fromScene(environment,.05);scene.environment=environmentTarget.texture;scene.environmentIntensity=.12;environment.dispose();pmrem.dispose();
 const ambient=new THREE.HemisphereLight('#e0e9e8','#8e7962',.18);scene.add(ambient);
 const sun=new THREE.DirectionalLight('#fff1d8',.85);sun.position.set(-3,5,4);sun.target.position.set(.6,1,-.5);sun.castShadow=!quality.mobile;sun.shadow.mapSize.set(quality.shadowSize||1,quality.shadowSize||1);Object.assign(sun.shadow.camera,{left:-6,right:6,top:6,bottom:-6,near:.2,far:24});sun.shadow.bias=-.00012;sun.shadow.normalBias=.0015;scene.add(sun,sun.target);
 const fill=new THREE.DirectionalLight('#c5dcec',.35);fill.position.set(4,3,-4);scene.add(fill);
@@ -33,7 +34,7 @@ RectAreaLightUniformsLib.init();const softKey=new THREE.RectAreaLight('#ffe6c6',
 const keys=__CAMERA_PATH__.map(k=>({...k,position:new THREE.Vector3(k.position[0],k.position[2],-k.position[1]),target:new THREE.Vector3(k.target[0],k.target[2],-k.target[1])}));
 const displayGeometry=__SCREEN_GEOMETRY__;
 const screenCorners=__SCREEN_CORNERS__.map(v=>new THREE.Vector3(v[0],v[2],-v[1]));
-let cameraLens,warming=false,nightLighting,reportMesh,model,ready=false,activated=false,raf=0,last=0,lastInput=0,rendered=scrollY,target=scrollY,px=0,py=0,tx=0,ty=0,travel=1;
+let cameraLens,warming=false,nightLighting,reportMesh,model,ready=false,activated=false,disposed=false,raf=0,last=0,lastInput=0,rendered=scrollY,target=scrollY,px=0,py=0,tx=0,ty=0,travel=1;
 // One camera, one world: a short dolly settles into the first scroll key.
 // Offsets stay inside the studio, rather than flying through the window wall.
 const entry={active:false,factor:0,light:1,start:0,release:null,duration:1650,samples:[],sampleAt:0};
@@ -69,7 +70,7 @@ function paint(){if(!ready)return;if(!warming&&rendered>=travel+innerHeight){can
  if(entry.active&&entry.start&&performance.now()-entry.sampleAt>100){entry.sampleAt=performance.now();entry.samples.push({ms:Math.round(entry.sampleAt-entry.start),factor:+entry.factor.toFixed(4),camera:camera.position.toArray().map(v=>+v.toFixed(4))});canvas.dataset.entryTrace=JSON.stringify(entry.samples);}
  renderer.toneMappingExposure=1.05*entry.light;renderer.info.reset();if(composer)composer.render();else renderer.render(scene,camera);canvas.dataset.renders=String(++renderCount);canvas.dataset.progress=q.toFixed(7);canvas.dataset.camera=camera.position.toArray().map(v=>v.toFixed(5)).join(',');canvas.dataset.target=aim.toArray().map(v=>v.toFixed(5)).join(',');canvas.dataset.takeover=takeover.toFixed(7);canvas.dataset.mode=isReduced()?'reduced':'continuous-3d';canvas.dataset.lighting=nightLighting?.value.toFixed(4)??'0';canvas.dataset.screen='personal-desktop';canvas.dataset.drawCalls=renderer.info.render.calls;canvas.dataset.triangles=renderer.info.render.triangles;canvas.dataset.pixelRatio=renderer.getPixelRatio().toFixed(3);canvas.dataset.renderSize=sceneWidth+'x'+sceneHeight;canvas.dataset.shadowSize=String(quality.shadowSize);
 }
-function tick(now){if(!ready||!activated){last=0;return false;}raf=0;target=scrollY;if(!entry.active&&target>=travel+innerHeight){rendered=target;last=0;canvas.dataset.visible='false';return false;}const dt=last?Math.min(80,now-last):16;last=now;if(quality.mobile&&!entry.active&&renderCount>120){slowFrames=dt>30?slowFrames+1:Math.max(0,slowFrames-1);if(slowFrames>=12&&pixelRatio>.72){pixelRatio=Math.max(.70,pixelRatio*.85);slowFrames=0;resize();canvas.dataset.adaptive='reduced-resolution';}}updateEntry(now);const themeMoving=nightLighting?.update(dt,isReduced())??false;if(isReduced()){rendered=target;px=py=0;}else if(window.RyanMotion){rendered=target;px+=(tx-px)*(1-Math.exp(-dt/100));py+=(ty-py)*(1-Math.exp(-dt/100));}else{rendered+=(target-rendered)*(1-Math.exp(-dt/TAU));px+=(tx-px)*(1-Math.exp(-dt/100));py+=(ty-py)*(1-Math.exp(-dt/100));if(Math.abs(target-rendered)<.03||now-lastInput>=FOLLOW_DURATION_MS)rendered=target;}paint();canvas.dataset.settled=String(ready&&!entry.active&&Math.abs(target-rendered)<.03&&(isReduced()||window.RyanMotion.settled&&Math.abs(tx-px)+Math.abs(ty-py)<.001));const moving=!isReduced()&&(themeMoving||entry.active||Math.abs(target-rendered)>.03||Math.abs(tx-px)+Math.abs(ty-py)>.001||!window.RyanMotion.settled);if(!moving)last=0;return moving;}
+function tick(now){if(!ready||!activated){last=0;return false;}raf=0;target=scrollY;if(!entry.active&&target>=travel+innerHeight){rendered=target;last=0;canvas.dataset.visible='false';return false;}const dt=last?Math.min(80,now-last):16;last=now;if(quality.mobile&&!entry.active&&renderCount>120){slowFrames=dt>30?slowFrames+1:Math.max(0,slowFrames-1);if(slowFrames>=12&&pixelRatio>.72){pixelRatio=Math.max(.70,pixelRatio*.85);slowFrames=0;resize();canvas.dataset.adaptive='reduced-resolution';}}updateEntry(now);if(!entry.active)nightLighting?.begin();const themeMoving=nightLighting?.update(dt,isReduced())??false;if(isReduced()){rendered=target;px=py=0;}else if(window.RyanMotion){rendered=target;px+=(tx-px)*(1-Math.exp(-dt/100));py+=(ty-py)*(1-Math.exp(-dt/100));}else{rendered+=(target-rendered)*(1-Math.exp(-dt/TAU));px+=(tx-px)*(1-Math.exp(-dt/100));py+=(ty-py)*(1-Math.exp(-dt/100));if(Math.abs(target-rendered)<.03||now-lastInput>=FOLLOW_DURATION_MS)rendered=target;}paint();canvas.dataset.settled=String(ready&&!entry.active&&Math.abs(target-rendered)<.03&&(isReduced()||window.RyanMotion.settled&&Math.abs(tx-px)+Math.abs(ty-py)<.001));const moving=!isReduced()&&(themeMoving||entry.active||Math.abs(target-rendered)>.03||Math.abs(tx-px)+Math.abs(ty-py)>.001||!window.RyanMotion.settled);if(!moving)last=0;return moving;}
 function request(){window.RyanMotion.request();}
 window.RyanMotion.addFrame(tick);
 let resizeTimer=0;
@@ -101,6 +102,7 @@ async function openStudio(){
  const boot=window.RyanStudioBoot,clock=boot?.startedAt??performance.now(),runtimeAt=performance.now();
  const buffer=await sceneBuffer(manifest,gate,canvas);const decodedAt=performance.now();gate.phase(2,'正在准备材质');gate.progress(.80);
  const loader=new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);const gltf=await loader.parseAsync(buffer,'');const parsedAt=performance.now();
+ if(disposed||gate.signal.aborted){disposeSceneGraph(gltf.scene);return;}
  model=gltf.scene;model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;if(o.material){o.material.envMapIntensity=o.material.userData.static_diffuse_baked?.04:o.material.name==='MacBook Pro satin aluminium'?.85:o.material.metalness>.3?.8:.3;if(o.material.name==='MacBook Pro satin aluminium'){o.material.envMap=scene.environment;o.material.envMapIntensity=.85;}if(o.material.aoMap)o.material.aoMapIntensity=.8;}if(o.name==='Laptop_camera_lens'||o.name==='Laptop camera lens'){cameraLens=o;o.castShadow=false;}if(o.name==='Actual_sample_report'||o.name==='Actual sample report'){reportMesh=o;o.castShadow=false;}}});scene.add(model);nightLighting=installNightLighting(model,scene,[ambient,sun,fill,softKey,softReturn],quality);gate.signal.throwIfAborted();
  gate.phase(3,'正在点亮工作室');gate.progress(.94);loading.hidden=true;
  canvas.dataset.engine='three-webgl';canvas.dataset.reportFound=String(Boolean(reportMesh));canvas.dataset.meshes=String(model.getObjectsByProperty('type','Mesh').length);
@@ -110,15 +112,22 @@ async function openStudio(){
  // Warm the renderer without touching the readable poster or expanding the
  // document. Scroll position stays unchanged if the visitor has moved on.
  if(composer)composer.render();else renderer.render(scene,camera);
- renderer.shadowMap.autoUpdate=false;await new Promise(requestAnimationFrame);
+ renderer.shadowMap.autoUpdate=false;await new Promise(requestAnimationFrame);gate.signal.throwIfAborted();
  if(composer)composer.render();else renderer.render(scene,camera);
  ready=true;canvas.dataset.shadows='static';canvas.dataset.pending='true';
  canvas.dataset.startup=JSON.stringify({cache:canvas.dataset.cache,source:canvas.dataset.assetSource??'origin',runtimeMs:Math.round(runtimeAt-clock),assetMs:Math.round((boot?.downloadedAt??decodedAt)-clock),parseMs:Math.round(parsedAt-decodedAt),warmupMs:Math.round(performance.now()-parsedAt),totalMs:Math.round(performance.now()-clock)});
  activateStudio();await gate.finish({flying:entry.active,pending:!activated});
- canvas.dataset.visibleMs=String(Math.round(performance.now()-clock));nightLighting.begin();request();
+ if(disposed)return;canvas.dataset.visibleMs=String(Math.round(performance.now()-clock));request();
 }
 openStudio().catch(error=>{gate.fail(error);fail('三维画面未能载入，仍可查看下方作品。');});
-function fail(text){ready=false;composer?.dispose();renderer.dispose();document.body.classList.add('scene-failed');loading.hidden=false;loading.textContent=text;canvas.dataset.failed='true';window.RyanSceneGate?.fail(new Error(text));}
+function fail(text){
+ if(disposed)return;disposed=true;ready=false;cancelAnimationFrame(raf);raf=0;clearTimeout(resizeTimer);
+ nightLighting?.dispose();disposeSceneGraph(model,{excludeTextures:new Set([scene.environment])});
+ if(model)scene.remove(model);model=undefined;reportMesh=undefined;cameraLens=undefined;
+ scene.environment=null;environmentTarget.dispose();
+ for(const pass of composer?.passes??[])pass.dispose?.();composer?.dispose();renderer.dispose();
+ document.body.classList.add('scene-failed');loading.hidden=false;loading.textContent=text;canvas.dataset.failed='true';window.RyanSceneGate?.fail(new Error(text));
+}
 addEventListener('scroll',()=>{if(ready&&!activated&&scrollY<=1)activateStudio();target=scrollY;lastInput=performance.now();releaseEntry();if(target===0)rendered=0;request();},{passive:true});addEventListener('resize',scheduleResize);reduced.addEventListener('change',()=>{if(entry.active&&isReduced())endEntry();rendered=target;px=py=tx=ty=0;request();});
 const fine=matchMedia('(pointer:fine)'),glove=document.querySelector('#glove');function pointerMode(){document.documentElement.classList.toggle('fine-pointer',fine.matches);}fine.addEventListener('change',pointerMode);pointerMode();
 addEventListener('pointermove',e=>{if(fine.matches){glove.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;if(!isReduced()){tx=e.clientX/innerWidth*2-1;ty=1-e.clientY/innerHeight*2;request();}}},{passive:true});addEventListener('pointerover',e=>{glove.classList.toggle('is-hot',Boolean(e.target.closest('a,button')));},{passive:true});addEventListener('pointerout',e=>{if(!e.relatedTarget){tx=ty=0;glove.style.transform='translate(-100px,-100px)';request();}},{passive:true});

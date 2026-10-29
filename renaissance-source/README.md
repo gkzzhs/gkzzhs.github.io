@@ -7,7 +7,7 @@ Use Node 22.12 or later. From this directory:
 ```sh
 npm ci --prefix work/real-3d-atelier
 node work/renaissance-performance/build.mjs
-node --test work/renaissance-performance/project-flight.test.mjs work/renaissance-performance/performance.test.mjs work/renaissance-performance/startup.test.mjs work/renaissance-performance/preload.test.mjs
+node --test work/renaissance-performance/project-flight.test.mjs work/renaissance-performance/performance.test.mjs work/renaissance-performance/startup.test.mjs work/renaissance-performance/preload.test.mjs work/renaissance-performance/resources.test.mjs
 ```
 
 The generated page and content-hashed assets appear in `outputs/ryan-renaissance-performance/`. This build does not deploy. Production currently lives on the separate `gh-pages` branch; update only the intended files through a reviewed change and verify the result before deployment. Do not run the old root `scripts/deploy.sh`.
