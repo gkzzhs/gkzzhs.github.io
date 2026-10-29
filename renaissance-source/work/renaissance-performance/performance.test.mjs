@@ -10,6 +10,12 @@ test('wide desktop-UA iPad gets mobile GPU budget',()=>{
  assert.equal(q.name,'mobile');assert.equal(q.post,false);assert.equal(q.lampShadow,false);
  assert.ok(1366*1024*q.ratio*q.ratio<=1150001);assert.ok(q.shadowSize<=1024);
 });
+test('forced desktop mode cannot override touch or low-memory protection',()=>{
+ for(const device of [{width:1366,height:1024,dpr:2,touch:true,forced:'desktop'},{width:1440,height:900,dpr:2,memory:4,forced:'desktop'}]){
+  const q=qualityFor(device);assert.equal(q.name,'mobile');assert.equal(q.post,false);assert.ok(q.ratio<=1.2);
+ }
+ assert.equal(qualityFor({width:1440,height:900,dpr:2,forced:'desktop'}).name,'desktop');
+});
 test('phone and low-memory device stay within pixel budget',()=>{
  for(const device of [{width:390,height:844,dpr:3},{width:1024,height:768,dpr:2,memory:4}]){
   const q=qualityFor(device);assert.equal(q.name,'mobile');assert.ok(q.ratio<=1.2);assert.equal(q.post,false);
@@ -35,6 +41,7 @@ test('release has small HTML, separate tier models and all referenced assets',as
  for(const f of manifest.files)await access(new URL(f.name,out));
  const html=await readFile(new URL('renaissance-preview.html',out),'utf8');
  assert.ok(!html.includes('base64,'));assert.ok(!html.includes('scene.b026522770378c0d.js'));
+ assert.ok(!/<link[^>]+as="script"[^>]+scene\./.test(html),'poster mode must not have a static runtime preload');
  for(const name of ['lark-retro','xmind','lark-dispatch','life'])await access(new URL('assets/renaissance-perf/projects/'+name+'.html',out));
 });
 test('mirror failure falls back to the original model and uses immutable cache',async()=>{

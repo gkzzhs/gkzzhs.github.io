@@ -81,7 +81,7 @@ html[data-scene-state=loading] #site-header.on-scene{color:var(--ink)}
 .scene-failed .stage{background:var(--paper)}
 `;
 html=html.replace('</style>','\n'+fixes+'</style>');
-html=html.replace('</head>',`<link rel="preload" as="image" href="${poster}"/><link rel="preload" as="script" href="${manifest.runtime}"/><script>window.RYAN_STUDIO_MANIFEST=${JSON.stringify(manifest)};${preload.outputFiles[0].text}</script></head>`);
+html=html.replace('</head>',`<link rel="preload" as="image" href="${poster}"/><script>window.RYAN_STUDIO_MANIFEST=${JSON.stringify(manifest)};${preload.outputFiles[0].text}</script></head>`);
 if(/__(CAMERA_PATH|SCREEN_CORNERS|SCREEN_GEOMETRY|NIGHT_MAPS)__/.test(html+runtime))throw new Error('Unresolved token');
 await copyIdentity(out);
 for(const name of identityFiles)inventory.push({name:identityPath+name,bytes:(await readFile(path.join(out,identityPath,name))).length});

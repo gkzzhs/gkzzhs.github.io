@@ -9,6 +9,15 @@
    if(root.classList.contains('reduced-motion')||matchMedia('(prefers-reduced-motion: reduce)').matches){gate.hidden=true;gate.dataset.state='closed';return;}
    const a=gate.animate([{opacity:1},{opacity:0}],{duration:160,easing:'linear'});await a.finished.catch(()=>{});gate.hidden=true;gate.dataset.state='closed';a.cancel();},
   fail(error){if(done)return;done=true;clearTimeout(timer);gate.hidden=true;gate.dataset.state='failed';root.dataset.sceneState='failed';canvas.setAttribute('aria-busy','false');canvas.dataset.failed='true';document.body.classList.add('scene-failed');
+   // Deep links reserve the full scene height. If loading fails, collapse it
+   // while preserving the work section's viewport position for visitors below it.
+   if(root.classList.contains('studio-reserved')){
+    const track=document.querySelector('.track'),work=document.querySelector('#work');
+    const preserve=track&&work&&track.getBoundingClientRect().bottom<=0;
+    const before=preserve?work.getBoundingClientRect().top:0;
+    root.classList.remove('studio-reserved');
+    if(preserve){const delta=work.getBoundingClientRect().top-before;if(Math.abs(delta)>.5)window.scrollBy(0,delta);}
+   }
    const hint=document.querySelector('.loading');hint.hidden=false;hint.textContent=t('三维画面暂不可用，可以继续查看作品。');
    controller.abort(error);if(window.RyanStudioBoot)window.RyanStudioBoot.promise=null;console.warn('Studio fallback:',error?.message||error);window.RyanMotion?.request();}
  };
