@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local tool state must never be committed or copied into the public site.
+.mimosa/
+**/.mimosa/
