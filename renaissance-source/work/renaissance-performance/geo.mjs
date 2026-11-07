@@ -36,6 +36,7 @@ const PERSON={'@type':'Person','@id':ORIGIN+'/#person',name:'王冠行',alternat
  knowsAbout:['AI 产品','工作流自动化','需求拆解','用户反馈分类','自动化采集','飞书 CLI','n8n','Gemini','Claude','Codex','豆包','PostgreSQL','Prometheus']};
 const OG_TITLE='王冠行 Ryan Wang — AI 产品与自动化 · 寻找 AI 产品实习';
 const OG_DESC='王冠行（Ryan Wang），2027 届软件工程本科生，寻找 AI 产品方向实习。作品集：Lark-Retro 材料整理、Xmind 用户反馈分类、Lark-Dispatch 会议纪要起草与人工确认、独立游戏《人生新起点》（全国三等奖）。AI 辅助执行，人工把关决策点。';
+const OG_IMG_ALT='王冠行 Ryan Wang 作品集封面：3D 工作室场景海报';
 
 function mainHead({portraitUrl,ogImageUrl,dateModified}={}){
  const og=abs(ogImageUrl||OG_COVER);
@@ -57,11 +58,13 @@ ${THEME_COLORS}
 <meta property="og:description" content="${attr(OG_DESC)}"/>
 <meta property="og:url" content="${PAGE_URL}"/>
 <meta property="og:image" content="${og}"/>
+<meta property="og:image:alt" content="${attr(OG_IMG_ALT)}"/>
 <meta property="og:locale" content="zh_CN"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="${attr(OG_TITLE)}"/>
 <meta name="twitter:description" content="${attr(OG_DESC)}"/>
 <meta name="twitter:image" content="${og}"/>
+<meta name="twitter:image:alt" content="${attr(OG_IMG_ALT)}"/>
 <script type="application/ld+json">${ld({'@context':'https://schema.org','@graph':graph})}</script>
 <!--GEO:END-->
 `;
@@ -99,11 +102,13 @@ ${THEME_COLORS}
 <meta property="og:description" content="${attr(description)}"/>
 <meta property="og:url" content="${canon}"/>
 <meta property="og:image" content="${og}"/>
+<meta property="og:image:alt" content="${attr(title)} 封面图"/>
 <meta property="og:locale" content="zh_CN"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="${attr(title)}"/>
 <meta name="twitter:description" content="${attr(description)}"/>
 <meta name="twitter:image" content="${og}"/>
+<meta name="twitter:image:alt" content="${attr(title)} 封面图"/>
 <script type="application/ld+json">${ld(projectGraph({url:canon,title,description,dateModified}))}</script>
 <!--GEO:END-->
 `;
