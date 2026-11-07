@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {copyIdentity,withIdentity,identityFiles,identityPath} from '../site-identity/identity.mjs';
+import {applyGeo,writeSiteFiles,ORIGIN} from './geo.mjs';
 const src=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(src,'../..'),base=path.join(root,'work/renaissance-3d'),legacy=path.join(root,'outputs/ryan-renaissance-3d-preview'),out=path.join(root,'outputs/ryan-renaissance-performance'),prefix='assets/renaissance-perf/',assets=path.join(out,prefix),deps=path.join(root,'work/real-3d-atelier/node_modules');
 const sharp=createRequire(path.join(root,'work/real-3d-atelier/package.json'))('sharp'),hash=b=>createHash('sha256').update(b).digest('hex').slice(0,16);
 await rm(assets,{recursive:true,force:true});await mkdir(assets,{recursive:true});
@@ -54,6 +55,8 @@ let portraitCount=0;
 html=html.replace(/<img\b[^>]*alt="王冠行 \/ Ryan Wang 的个人头像"[^>]*>/g,tag=>{portraitCount++;return tag.replace(/src="[^"]*"/,`src="${portrait}"`);});
 if(portraitCount!==1)throw new Error(`Expected one portrait, found ${portraitCount}`);
 const poster=await asset(await sharp(path.join(legacy,'wide-draft.png')).resize({width:1600,withoutEnlargement:true}).webp({quality:80}).toBuffer(),'webp','poster');
+// OG 封面：1200×630 JPEG。部分分享平台不支持 WebP 的 og:image，封面单独出一份 JPEG
+const ogCover=await asset(await sharp(path.join(legacy,'wide-draft.png')).resize({width:1200,height:630,fit:'cover'}).jpeg({quality:82}).toBuffer(),'jpg','og-cover');
 html=html.replace('<canvas aria-label="完整雕塑','<img class="scene-poster" src="'+poster+'" alt="" fetchpriority="high" decoding="async"/><canvas aria-label="完整雕塑');
 // Lazy-load below-the-fold images. Keep the single stage screen available for takeover.
 html=html.replace(/<img\b([^>]*?)>/g,(tag,attrs)=>/scene-poster/.test(attrs)?tag:'<img loading="lazy" decoding="async"'+attrs+'>');
@@ -86,6 +89,7 @@ if(/__(CAMERA_PATH|SCREEN_CORNERS|SCREEN_GEOMETRY|NIGHT_MAPS)__/.test(html+runti
 await copyIdentity(out);
 for(const name of identityFiles)inventory.push({name:identityPath+name,bytes:(await readFile(path.join(out,identityPath,name))).length});
 html=withIdentity(html);
+html=applyGeo(html,{kind:'main',portraitUrl:portrait,ogImageUrl:ogCover});
 await writeFile(path.join(out,'renaissance-preview.html'),html);await writeFile(path.join(out,'index.html'),html);
 await mkdir(path.join(assets,'projects'),{recursive:true});
 for(const name of ['lark-retro','xmind','lark-dispatch','life']){
@@ -93,10 +97,12 @@ for(const name of ['lark-retro','xmind','lark-dispatch','life']){
  page=await externalize(page,'../../../');
  page=page.replace(/\.\.\/index\.html/g,'../../../renaissance-preview.html');
  page=withIdentity(page,'../../../');
+ page=applyGeo(page,{kind:'project',url:ORIGIN+'/assets/renaissance-perf/projects/'+name+'.html',ogImageUrl:ogCover});
  await writeFile(path.join(assets,'projects',name+'.html'),page);
 }
 for(const f of ['THREE-LICENSE.txt','MESHOPT-LICENSE.md','LENIS-LICENSE.txt','instrumentsans-OFL.txt','instrumentserif-OFL.txt','notosanssc-OFL.txt'])await copyFile(path.join(legacy,f),path.join(assets,f));
 await copyFile(path.join(legacy,'SOURCE-ACKNOWLEDGEMENT.txt'),path.join(assets,'SOURCE-ACKNOWLEDGEMENT.txt'));
 await writeFile(path.join(assets,'CREDITS.md'),await readFile(path.join(legacy,'CREDITS.md'),'utf8')+'\n\n## Performance variants — 2026-10-21\n\nThe same seated figure, original pose and studio scene are retained. The figure and keyboard mesh have reduced tessellation. Mobile texture atlases are limited to 1024px (occlusion 512px); desktop atlases to 2048px (occlusion 1024px). Files use WebP and Meshopt compression. No David replacement or handoff animation is included.\n');
 await writeFile(path.join(out,'asset-manifest.json'),JSON.stringify({...manifest,htmlBytes:Buffer.byteLength(html),runtimeBytes:Buffer.byteLength(runtime),files:inventory},null,2));
+await writeSiteFiles(out); // GEO：robots.txt / sitemap.xml / llms.txt 写到站点根
 console.log(JSON.stringify({htmlBytes:Buffer.byteLength(html),runtimeBytes:Buffer.byteLength(runtime),mobileModelBytes:models.mobile.bytes,desktopModelBytes:models.desktop.bytes,posterBytes:inventory.find(x=>x.name===poster).bytes}));
