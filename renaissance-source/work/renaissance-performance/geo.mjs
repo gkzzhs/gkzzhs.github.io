@@ -14,6 +14,8 @@ const PORTRAIT=ORIGIN+'/assets/renaissance-perf/portrait.0259c428dd0ef3fa.webp';
 const POSTER=ORIGIN+'/assets/renaissance-perf/poster.c81e5a1f016d7a78.webp';
 const OG_COVER=ORIGIN+'/assets/renaissance-perf/og-cover.jpg';
 const GITHUB='https://github.com/gkzzhs',X='https://x.com/Ryanwanggh';
+// 移动端浏览器框色：跟随页面纸色/暗色底（与 CSS 的 --paper 一致）
+const THEME_COLORS='<meta name="theme-color" content="#E9E4DA" media="(prefers-color-scheme: light)"/>\n<meta name="theme-color" content="#191C1B" media="(prefers-color-scheme: dark)"/>';
 const abs=u=>u.startsWith('http')?u:ORIGIN+'/'+u.replace(/^\//,'');
 const attr=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ld=v=>JSON.stringify(v).replace(/</g,'\\u003c');
@@ -48,6 +50,7 @@ function mainHead({portraitUrl,ogImageUrl,dateModified}={}){
  return `<!--GEO:BEGIN geo.mjs-->
 <link rel="canonical" href="${PAGE_URL}"/>
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1"/>
+${THEME_COLORS}
 <meta property="og:site_name" content="王冠行 Ryan Wang 作品集"/>
 <meta property="og:type" content="profile"/>
 <meta property="og:title" content="${attr(OG_TITLE)}"/>
@@ -90,6 +93,7 @@ export function applyGeo(html,opts={}){
   const og=abs(opts.ogImageUrl||POSTER);
   block=`<!--GEO:BEGIN geo.mjs-->
 <link rel="canonical" href="${canon}"/>
+${THEME_COLORS}
 <meta property="og:type" content="article"/>
 <meta property="og:title" content="${attr(title)}"/>
 <meta property="og:description" content="${attr(description)}"/>
@@ -188,12 +192,39 @@ ${WORKS.map(w=>`  <url><loc>${w.url}</loc><lastmod>${dateModified}</lastmod><cha
 </urlset>
 `;}
 
-// robots.txt / sitemap.xml / llms.txt 写到站点根（构建产物目录或 gh-pages 检出目录）
+// 品牌化 404：GitHub Pages 对任意未知路径返回它。纸色/暗色跟随系统，无外部依赖。
+const NOT_FOUND=`<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>404 — 王冠行 Ryan Wang</title>
+<link rel="icon" href="/assets/identity/lamp-v2/favicon.svg" type="image/svg+xml"/>
+<style>
+:root{--paper:#E9E4DA;--ink:#252622;--muted:#77786E;--wine:#642B36;--serif:Baskerville,"Iowan Old Style","Times New Roman",serif;--sans:Arial,"PingFang SC","Microsoft YaHei",sans-serif}
+@media(prefers-color-scheme:dark){:root{--paper:#191C1B;--ink:#E8E3D8;--muted:#A1A69B}}
+*{box-sizing:border-box}html{background:var(--paper);color:var(--ink);font-family:var(--sans)}
+body{margin:0;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vw,80px)}
+p{margin:0}.mono{font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+h1{font:400 clamp(72px,14vw,180px)/.95 var(--serif);letter-spacing:-.055em;margin:18px 0 10px;font-weight:400}
+h1 em{font-style:italic;color:var(--wine)}
+p.note{font-size:13px;line-height:1.9;color:var(--muted);max-width:34em}
+a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--muted);padding-bottom:4px;font-size:12px;letter-spacing:.06em;display:inline-block;margin-top:30px}
+a:hover,a:focus-visible{color:var(--wine);border-color:var(--wine)}
+</style></head>
+<body>
+<p class="mono">404 · Page not found</p>
+<h1>这一页<em>还没画好</em>。</h1>
+<p class="note">你要找的页面不在这里。作品集在下面等你。</p>
+<a href="/renaissance-preview.html">回到作品集 →</a>
+</body></html>
+`;
+
+// robots.txt / sitemap.xml / llms.txt / 404.html 写到站点根（构建产物目录或 gh-pages 检出目录）
 export async function writeSiteFiles(dir,{dateModified}={}){
  const date=dateModified??new Date().toISOString().slice(0,10);
  await writeFile(path.join(dir,'robots.txt'),ROBOTS);
  await writeFile(path.join(dir,'sitemap.xml'),sitemap(date));
  await writeFile(path.join(dir,'llms.txt'),llms(date));
+ await writeFile(path.join(dir,'404.html'),NOT_FOUND);
 }
 
 // CLI：node geo.mjs <构建目录>。给既有产物打补丁（幂等），跳过非作品集的 index.html 壳页。
@@ -219,5 +250,5 @@ if(process.argv[1]===fileURLToPath(import.meta.url)){
   }
  }catch{}
  await writeSiteFiles(dir,{date});
- console.log(JSON.stringify({main:mainCount,projects:projCount,skipped,siteFiles:['robots.txt','sitemap.xml','llms.txt']}));
+ console.log(JSON.stringify({main:mainCount,projects:projCount,skipped,siteFiles:['robots.txt','sitemap.xml','llms.txt','404.html']}));
 }
