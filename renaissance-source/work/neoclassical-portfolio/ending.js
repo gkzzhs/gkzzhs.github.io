@@ -9,9 +9,10 @@ window.createEnding=function({isReduced}){
  const clamp=n=>Math.min(1,Math.max(0,n)),ease=n=>n*n*(3-2*n);
  root.querySelectorAll('[data-letter-line]').forEach(line=>{
   const text=line.dataset.letterLine;line.textContent='';
+  const sr=document.createElement('span');sr.className='invitation-sr';sr.textContent=text;sr.style.cssText='position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap';line.append(sr);
   text.split(' ').forEach((word,wi)=>{
-   if(wi){const gap=document.createElement('span');gap.className='invitation-word-gap';gap.textContent=' ';line.append(gap);}
-   const wordNode=document.createElement('span');wordNode.className='invitation-word';
+   if(wi){const gap=document.createElement('span');gap.className='invitation-word-gap';gap.setAttribute('aria-hidden','true');gap.textContent=' ';line.append(gap);}
+   const wordNode=document.createElement('span');wordNode.className='invitation-word';wordNode.setAttribute('aria-hidden','true');
    for(const character of word){const window=document.createElement('span'),track=document.createElement('span');window.className='letter-window';track.className='letter-track';for(let i=0;i<2;i++){const glyph=document.createElement('span');glyph.className='letter-glyph';glyph.textContent=character;track.append(glyph);}window.append(track);wordNode.append(window);}
    line.append(wordNode);
   });

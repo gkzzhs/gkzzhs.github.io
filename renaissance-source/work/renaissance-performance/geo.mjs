@@ -25,7 +25,7 @@ export const isMainHtml=html=>html.includes('<div class="work-grid">');
 
 const WORKS=[
  {url:ORIGIN+'/assets/renaissance-perf/projects/lark-retro.html',name:'Lark-Retro',description:'回顾会前把材料找齐：自动化材料整理，示例数据下整理耗时 3 分钟内。'},
- {url:ORIGIN+'/assets/renaissance-perf/projects/xmind.html',name:'Xmind 用户反馈分类',description:'两类反馈、两套门控：14 条入库样本人工核对命中 12 条（86%），单次过滤约 94%，定时运行 10/10 成功。'},
+ {url:ORIGIN+'/assets/renaissance-perf/projects/xmind.html',name:'Xmind 用户反馈分类',description:'两类反馈、两套门控：14 条入库样本人工核对命中 12 条（86%），单次过滤 18 条候选滤除 17 条 → 1 条入库（约 94%），定时运行 10/10 成功。'},
  {url:ORIGIN+'/assets/renaissance-perf/projects/lark-dispatch.html',name:'Lark-Dispatch',description:'AI 先起草会议纪要、人工逐条确认：三场会议 25/25 核验，整理提速 17–25 倍（50–75 分钟 → 3 分钟）。'},
  {url:ORIGIN+'/assets/renaissance-perf/projects/life.html',name:'人生新起点',description:'独立开发的选择-后果叙事游戏，获全国三等奖。'},
 ];
@@ -168,7 +168,7 @@ function llms(dateModified){return `# 王冠行（Ryan Wang）作品集
 ## 结果口径
 
 - 分类核对：14 条入库样本中人工命中 12 条（86%）。
-- 单次过滤：约 94%，单次 18 条候选 → 1 条入库。
+- 单次过滤：约 94%（18 条候选滤除 17 条 → 1 条入库）。
 - 定时运行：10 次全部成功（45s–8m33s），11 周产出 10 期周报。
 - 整理提速：17–25 倍（50–75 分钟 → 3 分钟）。
 - 人工核验：三场会议共 25 条，25/25 逐条核对。
