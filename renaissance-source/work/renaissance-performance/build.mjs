@@ -82,7 +82,9 @@ html[data-scene-state=entering] #site-header.on-scene{opacity:1}
 html[data-scene-state=loading] #site-header.on-scene{color:var(--ink)}
 .scene-failed .hero-copy{opacity:1!important}.scene-failed .scene-note,.scene-failed #report-stage,.scene-failed .takeover-heading,.scene-failed .takeover-foot{display:none}
 .scene-failed .stage{background:var(--paper)}
-@media(max-width:760px){#site-header.dark{background:linear-gradient(180deg,#ece8dc 42%,rgba(236,232,220,0))}html[data-theme=dark] #site-header.dark{background:linear-gradient(180deg,#191C1B 42%,rgba(25,28,27,0))}}
+@media(max-width:760px){#site-header.dark{background:linear-gradient(180deg,#ece8dc 0px,#ece8dc 76px,rgba(236,232,220,0) 128px)}html[data-theme=dark] #site-header.dark{background:linear-gradient(180deg,#191C1B 0px,#191C1B 76px,rgba(25,28,27,0) 128px)}}
+html:not([data-theme=dark]) #site-header.on-scene{background:linear-gradient(180deg,rgba(236,232,220,.66) 0px,rgba(236,232,220,0) 112px)}
+html:not([data-theme=dark]) #site-header.on-scene::after{content:"";position:absolute;inset:0 0 auto;height:52px;background:rgba(236,232,220,.34);filter:blur(14px);z-index:-1}
 `;
 html=html.replace('</style>','\n'+fixes+'</style>');
 html=html.replace('</head>',`<link rel="preload" as="image" href="${poster}"/><script>window.RYAN_STUDIO_MANIFEST=${JSON.stringify(manifest)};${preload.outputFiles[0].text}</script></head>`);
